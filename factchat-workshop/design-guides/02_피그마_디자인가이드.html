@@ -1,0 +1,689 @@
+<meta charset="utf-8">
+<title>피그마 스타일 디자인 가이드 · 국민대학교 보고서 발간용</title>
+<style>
+/* ============ Figma Style Design Guide — self-contained ============ */
+:root{
+  --canvas:#F5F5F5;      /* light gray canvas */
+  --card:#FFFFFF;        /* white card */
+  --ink:#1E1E1E;         /* text */
+  --sub:#767676;         /* secondary text */
+  --border:#E6E6E6;      /* borders */
+  --border-strong:#D8D8D8;
+  /* Figma brand multicolor */
+  --blue:#0D99FF;
+  --purple:#A259FF;
+  --red:#F24E1E;
+  --green:#0FA958;
+  --cyan:#1ABCFE;
+  --orange:#FF7262;
+  --blue-050:#EAF6FF;
+  --purple-050:#F4ECFF;
+  --green-050:#E7F7EE;
+  --red-050:#FDEDE8;
+  --mono:"SF Mono","JetBrains Mono","Roboto Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Inter","Pretendard","Apple SD Gothic Neo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r-sm:8px; --r-md:10px; --r-lg:13px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--canvas);
+  /* faint blueprint dot grid on canvas */
+  background-image:radial-gradient(rgba(13,153,255,.10) 1px, transparent 1.4px);
+  background-size:22px 22px;
+  background-position:-11px -11px;
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:-0.006em;
+}
+.wrap{max-width:940px;margin:0 auto;padding:40px 28px 88px}
+section{margin:0 0 30px}
+
+/* ---------- typography ---------- */
+h1,h2,h3,h4{font-weight:700;letter-spacing:-0.02em;line-height:1.18;margin:0}
+h2{font-size:26px;margin:0 0 4px}
+h3{font-size:19px;margin:0 0 10px}
+h4{font-size:15px;margin:0 0 6px}
+p{margin:0 0 12px}
+.lead{font-size:17px;color:#3a3a3a;line-height:1.65}
+.sub{color:var(--sub)}
+small,.small{font-size:12.5px}
+a{color:var(--blue);text-decoration:none}
+
+/* ---------- card / frame ---------- */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:26px 28px;box-shadow:var(--shadow);
+}
+.frame{
+  /* Figma component frame: dashed selection */
+  border:1.5px dashed var(--purple);border-radius:var(--r-md);
+  padding:20px;background:#fff;position:relative;
+}
+.frame::before{
+  content:attr(data-name);position:absolute;top:-9px;left:14px;
+  font-family:var(--mono);font-size:11px;color:var(--purple);
+  background:#fff;padding:0 6px;letter-spacing:0;
+}
+
+/* ---------- section eyebrow / number rail ---------- */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12px;color:var(--sub);
+  letter-spacing:0;margin-bottom:12px;
+}
+.eyebrow .num{
+  display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;
+  background:var(--ink);color:#fff;border-radius:6px;font-weight:600;font-size:11px;
+}
+.eyebrow .dot{width:8px;height:8px;border-radius:2px}
+
+/* ---------- token chip (monospace pill) ---------- */
+.chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:12.5px;color:#2b2b2b;
+  background:#F3F3F3;border:1px solid var(--border);border-radius:999px;
+  padding:4px 11px 4px 8px;line-height:1;white-space:nowrap;
+}
+.chip .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.chip.plain{padding:4px 11px}
+
+/* ---------- palette swatch row (hero) ---------- */
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.swatch{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-md);
+  padding:0;overflow:hidden;width:104px;box-shadow:var(--shadow-sm);
+}
+.swatch .fill{height:52px}
+.swatch .meta{padding:8px 10px}
+.swatch .nm{font-size:11.5px;font-weight:600;line-height:1.3}
+.swatch .hex{font-family:var(--mono);font-size:10.5px;color:var(--sub)}
+
+/* ---------- hero ---------- */
+.hero{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  box-shadow:var(--shadow);padding:34px 32px 30px;position:relative;overflow:hidden;
+}
+.hero::after{ /* faint dot grid inside hero corner */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--border) 1px,transparent 1.4px);
+  background-size:20px 20px;opacity:.5;
+  -webkit-mask-image:linear-gradient(120deg,transparent 55%,#000);
+          mask-image:linear-gradient(120deg,transparent 55%,#000);
+}
+.hero>*{position:relative;z-index:1}
+.brandbar{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+.brandbar .cluster{display:flex;gap:5px}
+.brandbar .cluster i{width:13px;height:13px;border-radius:4px;display:block}
+.brandbar .label{
+  font-family:var(--mono);font-size:11.5px;color:var(--sub);letter-spacing:.02em;
+}
+.hero h1{font-size:42px;letter-spacing:-0.03em;line-height:1.06}
+.hero .en{font-family:var(--mono);font-size:14px;color:var(--blue);margin-top:8px}
+.hero .philo{font-size:17px;color:#3a3a3a;max-width:60ch;margin-top:14px}
+.pill-tag{
+  display:inline-flex;align-items:center;gap:7px;margin-top:20px;
+  background:var(--blue-050);color:#0b6dbf;border:1px solid #bfe4ff;
+  border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:600;
+}
+
+/* ---------- generic grids ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* ---------- principle tiles ---------- */
+.prin{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:18px 18px 16px;box-shadow:var(--shadow-sm)}
+.prin .k{font-family:var(--mono);font-size:11px;color:var(--sub);margin-bottom:9px}
+.prin .badge{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;margin-bottom:12px}
+.prin h4{font-size:16px}
+.prin p{font-size:13.5px;color:var(--sub);margin:0}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm)}
+.tbl th{
+  text-align:left;font-weight:600;font-size:11.5px;letter-spacing:.03em;
+  color:var(--sub);text-transform:uppercase;background:#FAFAFA;
+  padding:11px 14px;border-bottom:1px solid var(--border);font-family:var(--mono);
+}
+.tbl td{padding:11px 14px;border-bottom:1px solid #F0F0F0;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.mono,.tbl .mono{font-family:var(--mono);font-size:12.5px}
+.num{font-variant-numeric:tabular-nums}
+.rolepill{display:inline-block;font-family:var(--mono);font-size:11px;color:#fff;border-radius:5px;padding:2px 7px;font-weight:600}
+
+/* ---------- color system big swatches ---------- */
+.colorgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.colorgrid{grid-template-columns:1fr 1fr}}
+.ccard{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.ccard .fill{height:74px;display:flex;align-items:flex-end;padding:8px 10px}
+.ccard .tk{font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.9);background:rgba(0,0,0,.16);border-radius:5px;padding:2px 6px}
+.ccard .meta{padding:9px 11px}
+.ccard .nm{font-size:12.5px;font-weight:600}
+.ccard .hx{font-family:var(--mono);font-size:11px;color:var(--sub)}
+
+/* ratio bar */
+.ratiobar{display:flex;height:38px;border-radius:8px;overflow:hidden;border:1px solid var(--border);font-family:var(--mono);font-size:11px}
+.ratiobar span{display:grid;place-items:center;color:#fff;font-weight:600}
+
+/* contrast chips */
+.contrast{display:flex;flex-wrap:wrap;gap:10px}
+.cc{border-radius:8px;padding:12px 14px;font-size:13px;font-weight:600;border:1px solid transparent}
+.cc .pass{font-family:var(--mono);font-size:10.5px;opacity:.85;display:block;margin-top:3px;font-weight:400}
+
+/* ---------- typography samples ---------- */
+.typesample>div{padding:12px 0;border-bottom:1px solid #F0F0F0}
+.typesample>div:last-child{border-bottom:0}
+.typesample .tag{font-family:var(--mono);font-size:11px;color:var(--sub);display:block;margin-bottom:3px}
+
+/* ---------- surfaces demo ---------- */
+.surf{border-radius:var(--r-md);padding:18px;border:1px solid var(--border)}
+.dotpanel{
+  background:#fff;background-image:radial-gradient(rgba(13,153,255,.18) 1px,transparent 1.5px);
+  background-size:16px 16px;border:1px solid var(--border);border-radius:var(--r-md);padding:22px;
+}
+.layerrail{display:flex;gap:14px}
+.layerrail .rail{
+  width:190px;flex:0 0 auto;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);
+  padding:10px;font-family:var(--mono);font-size:12px;color:#444;box-shadow:var(--shadow-sm)
+}
+.layerrail .rail .row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px}
+.layerrail .rail .row.sel{background:var(--blue-050);color:#0b6dbf}
+.layerrail .rail .row i{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+
+/* ---------- components: buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;
+  font-size:14px;border-radius:8px;padding:10px 18px;border:1px solid transparent;cursor:default;
+}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.secondary{background:#fff;color:var(--ink);border-color:var(--border-strong)}
+.btn.purple{background:var(--purple);color:#fff}
+.btn.ghost{background:transparent;color:var(--blue);border-color:transparent}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* callouts */
+.callout{border-radius:var(--r-md);padding:16px 18px;border-left:4px solid;font-size:14px;display:flex;gap:12px}
+.callout .ico{font-family:var(--mono);font-weight:700;flex:0 0 auto}
+.callout.info{background:var(--blue-050);border-color:var(--blue);color:#0b5c9e}
+.callout.tip{background:var(--purple-050);border-color:var(--purple);color:#6d33c0}
+.callout.ok{background:var(--green-050);border-color:var(--green);color:#0a7a41}
+.callout.warn{background:var(--red-050);border-color:var(--red);color:#b23417}
+.callout b{color:inherit}
+
+blockquote{
+  margin:0;padding:14px 18px;background:#FAFAFA;border-left:3px solid var(--purple);
+  border-radius:0 8px 8px 0;color:#3a3a3a;font-size:14.5px
+}
+
+/* ---------- do/don't ---------- */
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.dodont{grid-template-columns:1fr}}
+.dd{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:#fff}
+.dd .hd{padding:11px 16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;font-family:var(--mono)}
+.dd.do .hd{background:var(--green-050);color:#0a7a41}
+.dd.dont .hd{background:var(--red-050);color:#b23417}
+.dd ul{margin:0;padding:14px 18px 16px 34px;font-size:13.5px;color:#333}
+.dd li{margin-bottom:8px}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;margin:0;padding:0;font-size:14px}
+.check li{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid #F0F0F0}
+.check li:last-child{border-bottom:0}
+.check .box{width:19px;height:19px;border:1.5px solid var(--blue);border-radius:5px;flex:0 0 auto;margin-top:1px;position:relative}
+.check .box::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid var(--blue);border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+/* ---------- divider / cover-band ---------- */
+.coverband{
+  border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);
+  background:linear-gradient(135deg,#0D99FF 0%,#1ABCFE 42%,#A259FF 100%);color:#fff;position:relative;
+}
+.coverband::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.4px);
+  background-size:20px 20px;
+}
+.coverband .inner{position:relative;padding:36px 34px}
+.coverband .kdot{font-family:var(--mono);font-size:12px;opacity:.9;margin-bottom:10px}
+.coverband h3{font-size:24px;color:#fff}
+.coverband p{color:rgba(255,255,255,.92);margin:6px 0 0;max-width:56ch}
+
+/* ---------- mockup (application example) ---------- */
+.mock{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden}
+.mock .topbar{height:36px;background:#FAFAFA;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;padding:0 14px}
+.mock .topbar i{width:11px;height:11px;border-radius:50%}
+.mock .topbar .fname{font-family:var(--mono);font-size:11px;color:var(--sub);margin-left:8px}
+.mock .body{padding:26px 30px}
+.mock .kicker{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.04em}
+.mock h3.mt{font-size:24px;margin:6px 0 4px}
+
+.foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--sub);font-size:12.5px}
+.foot .chiprow{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.spec-note{font-family:var(--mono);font-size:11.5px;color:var(--sub);margin-top:8px}
+hr.rule{border:0;border-top:1px solid var(--border);margin:34px 0}
+.tokline{font-family:var(--mono);font-size:12px;color:var(--sub)}
+</style>
+
+<div class="wrap">
+
+<!-- ===================== 0. COVER / HERO ===================== -->
+<section class="hero" aria-label="표지">
+  <div class="brandbar">
+    <span class="cluster">
+      <i style="background:var(--red)"></i><i style="background:var(--orange)"></i>
+      <i style="background:var(--purple)"></i><i style="background:var(--blue)"></i>
+      <i style="background:var(--green)"></i>
+    </span>
+    <span class="label">design-system / figma-style / v1.0</span>
+  </div>
+  <h1>피그마 스타일</h1>
+  <div class="en">Figma Style — Design Tokens &amp; Components</div>
+  <p class="philo">디자인 토큰과 컴포넌트로 사고하는 체계적이면서 경쾌한 스타일. 모든 색·간격·서체를
+  명명된 토큰으로 다루고, 멀티컬러를 규칙 안에서 즐겁게 쓴다. <b>구조는 시스템, 표현은 리듬.</b></p>
+  <div class="pill-tag">
+    <span style="width:8px;height:8px;border-radius:2px;background:var(--blue);display:inline-block"></span>
+    국민대학교 보고서 발간용 디자인 가이드
+  </div>
+
+  <div class="swatches" aria-label="팔레트 스와치">
+    <div class="swatch"><div class="fill" style="background:var(--blue)"></div><div class="meta"><div class="nm">Figma Blue</div><div class="hex">#0D99FF</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--purple)"></div><div class="meta"><div class="nm">Purple</div><div class="hex">#A259FF</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--cyan)"></div><div class="meta"><div class="nm">Cyan</div><div class="hex">#1ABCFE</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--green)"></div><div class="meta"><div class="nm">Green</div><div class="hex">#0FA958</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--red)"></div><div class="meta"><div class="nm">Red</div><div class="hex">#F24E1E</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--orange)"></div><div class="meta"><div class="nm">Orange</div><div class="hex">#FF7262</div></div></div>
+    <div class="swatch"><div class="fill" style="background:var(--canvas);box-shadow:inset 0 0 0 1px var(--border)"></div><div class="meta"><div class="nm">Canvas</div><div class="hex">#F5F5F5</div></div></div>
+  </div>
+</section>
+
+<!-- ===================== 1. OVERVIEW ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">01</span> OVERVIEW · 언제 쓰나</div>
+  <h2>개요 · 언제 쓰나</h2>
+  <p class="lead">피그마 스타일은 <b>디자인 시스템처럼 조립되는 문서</b>를 위한 언어입니다. 정보가
+  카드·토큰·컴포넌트 단위로 명확히 분해되고, 멀티컬러가 카테고리를 경쾌하게 구분합니다.</p>
+  <div class="grid3" style="margin-top:18px">
+    <div class="prin"><div class="k">FIT · 잘 맞음</div><h4>시스템형 자료</h4><p>대시보드 해설, 데이터·지표 리포트, 컴포넌트/프로세스 정리처럼 요소가 반복·모듈화되는 문서.</p></div>
+    <div class="prin"><div class="k">FIT · 잘 맞음</div><h4>워크숍·실습 결과</h4><p>여러 항목을 색으로 분류하고, 경쾌하고 친근한 인상이 필요한 발표·공유용 자료.</p></div>
+    <div class="prin"><div class="k">AVOID · 지양</div><h4>격식 공문</h4><p>엄숙한 대외 공식 문서에는 로얄블루/로얄그린 스타일이 더 적합합니다.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 2. PRINCIPLES ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">02</span> PRINCIPLES · 디자인 원칙</div>
+  <h2>디자인 원칙</h2>
+  <p class="sub" style="margin-bottom:18px">네 가지 원칙이 이 스타일의 성격을 정의합니다.</p>
+  <div class="grid2">
+    <div class="prin">
+      <div class="badge" style="background:var(--blue-050)"><span style="color:var(--blue);font-family:var(--mono);font-weight:700">{}</span></div>
+      <div class="k">principle / 01</div><h4>토큰으로 사고한다</h4>
+      <p>색·간격·서체를 임의 값이 아니라 <b>명명된 토큰</b>(color/primary/500)으로 다룬다. 값이 아니라 의미를 배치한다.</p>
+    </div>
+    <div class="prin">
+      <div class="badge" style="background:var(--purple-050)"><span style="color:var(--purple);font-family:var(--mono);font-weight:700">▦</span></div>
+      <div class="k">principle / 02</div><h4>컴포넌트로 조립한다</h4>
+      <p>버튼·카드·표를 재사용 컴포넌트로 보고 일관 규격으로 반복한다. 한 번 정하면 문서 전체가 같은 규칙을 따른다.</p>
+    </div>
+    <div class="prin">
+      <div class="badge" style="background:var(--green-050)"><span style="color:var(--green);font-family:var(--mono);font-weight:700">◨</span></div>
+      <div class="k">principle / 03</div><h4>멀티컬러는 체계적으로</h4>
+      <p>여러 색을 쓰되 <b>역할별로</b> 배정한다. 색이 곧 카테고리이며, 장식이 아니라 분류다.</p>
+    </div>
+    <div class="prin">
+      <div class="badge" style="background:#FFF1D9"><span style="color:var(--orange);font-family:var(--mono);font-weight:700">⌘</span></div>
+      <div class="k">principle / 04</div><h4>구조는 엄격, 표현은 경쾌</h4>
+      <p>그리드·간격은 엄격히 지키되, 색과 리듬으로 가볍고 즐거운 인상을 낸다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. COLOR SYSTEM ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">03</span> COLOR · 색상 시스템</div>
+  <h2>색상 시스템</h2>
+  <p class="sub">중립 캔버스 위에 피그마 브랜드 멀티컬러를 역할별로 배정합니다. 토큰명은 모노스페이스로 표기합니다.</p>
+
+  <h3 style="margin-top:22px">중립 · 표면</h3>
+  <div class="tbl" style="margin-bottom:20px">
+    <table>
+      <thead><tr><th style="width:130px">Role</th><th>Token</th><th style="width:110px">HEX</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rolepill" style="background:#9a9a9a">canvas</span></td><td class="mono">surface/canvas</td><td class="mono">#F5F5F5</td><td>페이지 배경(라이트 그레이 캔버스)</td></tr>
+        <tr><td><span class="rolepill" style="background:#9a9a9a">card</span></td><td class="mono">surface/card</td><td class="mono">#FFFFFF</td><td>카드·패널 표면</td></tr>
+        <tr><td><span class="rolepill" style="background:#1E1E1E">ink</span></td><td class="mono">text/primary</td><td class="mono">#1E1E1E</td><td>본문·제목 텍스트</td></tr>
+        <tr><td><span class="rolepill" style="background:#767676">sub</span></td><td class="mono">text/secondary</td><td class="mono">#767676</td><td>보조 설명·캡션</td></tr>
+        <tr><td><span class="rolepill" style="background:#c9c9c9;color:#333">border</span></td><td class="mono">border/default</td><td class="mono">#E6E6E6</td><td>구분선·카드 테두리</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>브랜드 멀티컬러 · 역할별</h3>
+  <div class="colorgrid" style="margin:12px 0 22px">
+    <div class="ccard"><div class="fill" style="background:var(--blue)"><span class="tk">color/primary/500</span></div><div class="meta"><div class="nm">Figma Blue · 주강조</div><div class="hx">#0D99FF · 링크/버튼/선택</div></div></div>
+    <div class="ccard"><div class="fill" style="background:var(--purple)"><span class="tk">color/accent/500</span></div><div class="meta"><div class="nm">Purple · 보조강조</div><div class="hx">#A259FF · 컴포넌트/프레임</div></div></div>
+    <div class="ccard"><div class="fill" style="background:var(--cyan)"><span class="tk">color/info/400</span></div><div class="meta"><div class="nm">Cyan · 정보</div><div class="hx">#1ABCFE · 데이터/보조</div></div></div>
+    <div class="ccard"><div class="fill" style="background:var(--green)"><span class="tk">color/success/500</span></div><div class="meta"><div class="nm">Green · 성공</div><div class="hx">#0FA958 · 완료/긍정</div></div></div>
+    <div class="ccard"><div class="fill" style="background:var(--red)"><span class="tk">color/danger/500</span></div><div class="meta"><div class="nm">Red · 경고</div><div class="hx">#F24E1E · 주의/오류</div></div></div>
+    <div class="ccard"><div class="fill" style="background:var(--orange)"><span class="tk">color/warning/400</span></div><div class="meta"><div class="nm">Orange · 강조</div><div class="hx">#FF7262 · 하이라이트</div></div></div>
+  </div>
+
+  <h3>사용 비율 60 : 30 : 10</h3>
+  <div class="ratiobar" style="margin:12px 0 6px">
+    <span style="flex:60;background:#EDEDED;color:#555">60 · 중립 캔버스/카드</span>
+    <span style="flex:30;background:var(--blue)">30 · 블루·퍼플 주도</span>
+    <span style="flex:10;background:var(--green)">10 · 기타색</span>
+  </div>
+  <p class="small sub">중립이 지면의 60%를 채우고, 블루·퍼플이 구조를 이끌며, 그린·레드·오렌지·시안은 카테고리 강조로 10% 이내에서만 등장합니다.</p>
+
+  <h3 style="margin-top:22px">대비 · WCAG AA</h3>
+  <div class="contrast" style="margin-top:10px">
+    <div class="cc" style="background:var(--blue);color:#fff">Blue on White<span class="pass">버튼 텍스트 · AA ✓ (3.3:1, large/UI)</span></div>
+    <div class="cc" style="background:#fff;color:#0b5c9e;border-color:#bfe4ff">Blue text tuned<span class="pass">본문 링크 #0b5c9e · AA ✓ 4.9:1</span></div>
+    <div class="cc" style="background:#fff;color:var(--ink);border-color:var(--border)">Ink on White<span class="pass">본문 · AAA ✓ 15.3:1</span></div>
+    <div class="cc" style="background:var(--purple);color:#fff">Purple on White<span class="pass">라벨/버튼 · AA ✓ (UI)</span></div>
+  </div>
+  <p class="spec-note">※ 브랜드 원색(#0D99FF/#A259FF)은 대형 텍스트·UI 요소에 사용하고, 본문 링크는 대비 강화값(#0b5c9e 등)으로 조정해 4.5:1을 확보합니다.</p>
+</section>
+
+<!-- ===================== 4. TYPOGRAPHY ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">04</span> TYPE · 타이포그래피</div>
+  <h2>타이포그래피</h2>
+  <p class="sub">시그니처 서체는 <b>Inter</b>(의도적 사용, 폴백 Pretendard). 토큰·코드·수치는 모노스페이스로.</p>
+
+  <div class="grid2" style="margin:16px 0 20px">
+    <div class="frame" data-name="type/sans">
+      <div class="tokline">font/sans</div>
+      <div style="font-size:30px;font-weight:700;letter-spacing:-.02em;margin-top:4px">Inter · 국민대 보고서</div>
+      <p class="small sub" style="margin:6px 0 0">"Inter", "Pretendard", system-ui, sans-serif</p>
+    </div>
+    <div class="frame" data-name="type/mono">
+      <div class="tokline">font/mono</div>
+      <div style="font-family:var(--mono);font-size:22px;margin-top:6px">color/primary/500</div>
+      <p class="small sub" style="margin:8px 0 0">"SF Mono","JetBrains Mono",monospace</p>
+    </div>
+  </div>
+
+  <h3>타입 스케일 · 비율 1.25</h3>
+  <div class="tbl" style="margin:10px 0 22px">
+    <table>
+      <thead><tr><th>단계</th><th class="num">크기</th><th class="num">굵기</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">display</td><td class="mono num">42px</td><td class="num">700</td><td>표지 타이틀</td></tr>
+        <tr><td class="mono">h2</td><td class="mono num">26px</td><td class="num">700</td><td>섹션 제목</td></tr>
+        <tr><td class="mono">h3</td><td class="mono num">19px</td><td class="num">700</td><td>소제목</td></tr>
+        <tr><td class="mono">body-lg</td><td class="mono num">17px</td><td class="num">400</td><td>리드 문단</td></tr>
+        <tr><td class="mono">body</td><td class="mono num">16px</td><td class="num">400</td><td>본문</td></tr>
+        <tr><td class="mono">caption</td><td class="mono num">12.5px</td><td class="num">400–600</td><td>캡션·토큰칩</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>위계 샘플</h3>
+  <div class="frame" data-name="text/hierarchy" style="margin-top:10px">
+    <div class="typesample">
+      <div><span class="tag">display · 42 / 700</span><div style="font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.05">워크숍 결과보고서</div></div>
+      <div><span class="tag">h2 · 26 / 700</span><div style="font-size:26px;font-weight:700;letter-spacing:-.02em">데이터 기반 의사결정</div></div>
+      <div><span class="tag">h3 · 19 / 700</span><div style="font-size:19px;font-weight:700">주요 지표 요약</div></div>
+      <div><span class="tag">body · 16 / 400 · line-height 1.6</span><p style="margin:0">본문은 16px, 행간 1.6으로 편안한 가독성을 유지합니다. 제목에는 음수 자간을 주어 밀도를 높이고, 본문은 넉넉한 행간으로 읽기 리듬을 확보합니다.</p></div>
+      <div><span class="tag">mono · caption</span><span class="chip"><span class="sw" style="background:var(--blue)"></span>space/md · 16px</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. GRID / LAYOUT ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">05</span> LAYOUT · 그리드 · 여백</div>
+  <h2>레이아웃 · 그리드 · 여백</h2>
+  <div class="grid2" style="margin-top:16px">
+    <div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>항목</th><th>값</th></tr></thead>
+          <tbody>
+            <tr><td>문서 폭</td><td class="mono">max-width 940px 중앙</td></tr>
+            <tr><td>A4 여백</td><td class="mono num">상하 20mm · 좌우 18mm</td></tr>
+            <tr><td>기준 그리드</td><td class="mono num">12 컬럼 · gutter 16px</td></tr>
+            <tr><td>간격 토큰</td><td class="mono num">4 · 8 · 12 · 16 · 24 · 32</td></tr>
+            <tr><td>베이스라인</td><td class="mono num">8px 배수</td></tr>
+            <tr><td>라운딩</td><td class="mono num">8 · 10 · 13px</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec-note">모든 간격은 4의 배수(space/xs=4 … space/2xl=32)로 스냅합니다.</p>
+    </div>
+    <div class="dotpanel">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div style="height:44px;background:var(--blue-050);border:1px dashed var(--blue);border-radius:6px"></div>
+        <div style="height:44px;background:var(--purple-050);border:1px dashed var(--purple);border-radius:6px"></div>
+        <div style="height:44px;background:var(--green-050);border:1px dashed var(--green);border-radius:6px"></div>
+        <div style="height:44px;background:var(--red-050);border:1px dashed var(--red);border-radius:6px"></div>
+      </div>
+      <p class="small sub" style="margin:12px 0 0">4열 모듈 위에 컴포넌트를 스냅. 닷그리드는 정렬 기준선을 시각화합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. BACKGROUND / SURFACE ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">06</span> SURFACE · 배경 · 표면 처리</div>
+  <h2>배경 · 표면 처리</h2>
+  <p class="sub">라이트 그레이 캔버스 + 흰 카드가 기본. 닷그리드·점선 프레임·레이어 레일이 피그마 정체성을 만듭니다.</p>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="surf" style="background:var(--canvas);background-image:radial-gradient(rgba(13,153,255,.14) 1px,transparent 1.4px);background-size:18px 18px">
+      <h4 style="font-family:var(--mono);font-size:12px;color:var(--sub)">surface/canvas + dot-grid</h4>
+      <div class="card" style="margin-top:10px;padding:16px">
+        <b>흰 카드가 캔버스 위에 떠 있는 구조</b>
+        <p class="small sub" style="margin:6px 0 0">캔버스=중립, 카드=콘텐츠. 이 대비가 문서의 기본 리듬입니다.</p>
+      </div>
+    </div>
+    <div>
+      <div class="frame" data-name="component / card" style="margin-bottom:14px">
+        점선 선택 프레임 — 컴포넌트를 감싸 "선택된 요소"의 느낌을 줍니다.
+      </div>
+      <div class="layerrail">
+        <div class="rail">
+          <div class="row"><i style="background:var(--purple)"></i>Frame · 표지</div>
+          <div class="row sel"><i style="background:var(--blue)"></i>Card · 지표요약</div>
+          <div class="row"><i style="background:var(--green)"></i>Table · 결과</div>
+          <div class="row"><i style="background:var(--orange)"></i>Callout · 안내</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="ico">✦</span><div><b>틴트 표면</b>은 카테고리 색의 050 단계(#EAF6FF·#F4ECFF·#E7F7EE·#FDEDE8)로만. 진한 원색을 넓은 면적에 깔지 않습니다.</div></div>
+</section>
+
+<!-- ===================== 7. COMPONENTS ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">07</span> COMPONENTS · 컴포넌트 라이브러리</div>
+  <h2>컴포넌트</h2>
+  <p class="sub">실제 스타일링된 라이브 샘플. 그대로 문서에 재사용합니다.</p>
+
+  <h3 style="margin-top:20px">버튼</h3>
+  <div class="frame" data-name="component / button" style="margin:8px 0 20px">
+    <div class="btnrow">
+      <span class="btn primary">주 버튼 · Primary</span>
+      <span class="btn purple">Accent</span>
+      <span class="btn secondary">보조 · Secondary</span>
+      <span class="btn ghost">고스트 링크 →</span>
+    </div>
+  </div>
+
+  <h3>카드 · 토큰칩</h3>
+  <div class="grid2" style="margin:8px 0 20px">
+    <div class="card" style="box-shadow:var(--shadow);padding:20px">
+      <div class="chip" style="margin-bottom:10px"><span class="sw" style="background:var(--blue)"></span>metric/active</div>
+      <div style="font-size:30px;font-weight:700;letter-spacing:-.02em">1,284</div>
+      <p class="small sub" style="margin:2px 0 0">활성 사용자 · 전주 대비 +12%</p>
+    </div>
+    <div class="frame" data-name="tokens" style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+      <span class="chip"><span class="sw" style="background:var(--blue)"></span>color/primary/500</span>
+      <span class="chip"><span class="sw" style="background:var(--purple)"></span>color/accent/500</span>
+      <span class="chip"><span class="sw" style="background:var(--green)"></span>color/success/500</span>
+      <span class="chip"><span class="sw" style="background:var(--red)"></span>color/danger/500</span>
+      <span class="chip plain">radius/md · 10px</span>
+      <span class="chip plain">space/lg · 24px</span>
+    </div>
+  </div>
+
+  <h3>표</h3>
+  <div class="tbl" style="margin:8px 0 20px">
+    <table>
+      <thead><tr><th>항목</th><th class="num">값</th><th class="num">증감</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td>참여 인원</td><td class="mono num">128</td><td class="mono num" style="color:var(--green)">+8</td><td><span class="chip plain" style="color:#0a7a41;background:var(--green-050);border-color:#bfe6cf">완료</span></td></tr>
+        <tr><td>제출 보고서</td><td class="mono num">94</td><td class="mono num" style="color:var(--green)">+15</td><td><span class="chip plain" style="color:#0b5c9e;background:var(--blue-050);border-color:#bfe4ff">진행</span></td></tr>
+        <tr><td>미제출</td><td class="mono num">34</td><td class="mono num" style="color:var(--red)">-6</td><td><span class="chip plain" style="color:#b23417;background:var(--red-050);border-color:#f6c9bb">주의</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>콜아웃 · 인용</h3>
+  <div style="display:grid;gap:12px;margin:8px 0 0">
+    <div class="callout info"><span class="ico">i</span><div><b>정보</b> — 블루 계열은 중립적 안내와 참고 정보에 사용합니다.</div></div>
+    <div class="callout ok"><span class="ico">✓</span><div><b>성공</b> — 그린은 완료·달성 상태를 나타냅니다.</div></div>
+    <div class="callout warn"><span class="ico">!</span><div><b>주의</b> — 레드/오렌지는 오류·경고에만 희소하게.</div></div>
+    <blockquote>"토큰으로 정의하면 문서 전체가 한 번의 수정으로 함께 바뀐다." — 디자인 시스템 원칙</blockquote>
+  </div>
+</section>
+
+<!-- ===================== 8. COVER / DIVIDER / HEADER-FOOTER ===================== -->
+<section>
+  <div class="eyebrow" style="margin-left:2px"><span class="num">08</span> COVER &amp; DIVIDER · 표지 · 간지 · 머리말/꼬리말</div>
+  <div class="coverband">
+    <div class="inner">
+      <div class="kdot">section · 01 / 04</div>
+      <h3>간지 · 섹션 표지</h3>
+      <p>블루→시안→퍼플 그라디언트 밴드에 닷그리드를 얹어 장(章) 전환을 표시합니다. 섹션 번호는 모노스페이스로.</p>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card" style="padding:18px">
+      <h4 style="font-family:var(--mono);font-size:12px;color:var(--sub)">header · 머리말</h4>
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:10px;margin-top:8px">
+        <span style="font-weight:700">국민대학교 · 워크숍 결과보고서</span>
+        <span class="chip plain">2026</span>
+      </div>
+    </div>
+    <div class="card" style="padding:18px">
+      <h4 style="font-family:var(--mono);font-size:12px;color:var(--sub)">footer · 꼬리말</h4>
+      <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:10px;margin-top:8px;font-size:13px;color:var(--sub)">
+        <span class="mono">figma-style / v1.0</span>
+        <span class="mono num">p. 12</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 9. APPLICATION EXAMPLE ===================== -->
+<section>
+  <div class="eyebrow" style="margin-left:2px"><span class="num">09</span> EXAMPLE · 문서 적용 예시</div>
+  <div class="mock">
+    <div class="topbar"><i style="background:var(--red)"></i><i style="background:var(--orange)"></i><i style="background:var(--green)"></i><span class="fname">워크숍_결과보고서.fig</span></div>
+    <div class="body">
+      <div class="kicker">REPORT · 2026 상반기</div>
+      <h3 class="mt">FactChat 워크숍 결과보고서</h3>
+      <p class="sub" style="margin-top:0">데이터 기반 의사결정 실습 · 참여 부서 요약</p>
+
+      <div class="grid3" style="margin:16px 0">
+        <div class="card" style="padding:14px"><div class="chip" style="margin-bottom:8px"><span class="sw" style="background:var(--blue)"></span>참여</div><div style="font-size:24px;font-weight:700" class="num">128</div></div>
+        <div class="card" style="padding:14px"><div class="chip" style="margin-bottom:8px"><span class="sw" style="background:var(--green)"></span>완료</div><div style="font-size:24px;font-weight:700" class="num">94</div></div>
+        <div class="card" style="padding:14px"><div class="chip" style="margin-bottom:8px"><span class="sw" style="background:var(--orange)"></span>만족도</div><div style="font-size:24px;font-weight:700" class="num">4.6</div></div>
+      </div>
+
+      <div class="tbl" style="margin-bottom:16px">
+        <table>
+          <thead><tr><th>부서</th><th class="num">참여</th><th class="num">제출</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td>기획처</td><td class="mono num">32</td><td class="mono num">30</td><td class="sub">우수</td></tr>
+            <tr><td>교무처</td><td class="mono num">28</td><td class="mono num">24</td><td class="sub">진행중</td></tr>
+            <tr><td>학생처</td><td class="mono num">26</td><td class="mono num">21</td><td class="sub">진행중</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout tip"><span class="ico">✦</span><div><b>인사이트</b> — 색으로 부서 카테고리를 구분하면 표를 훑는 속도가 눈에 띄게 빨라집니다.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10. DO / DON'T ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">10</span> DO / DON'T</div>
+  <h2>Do / Don't</h2>
+  <div class="dodont" style="margin-top:16px">
+    <div class="dd do">
+      <div class="hd">✓ DO</div>
+      <ul>
+        <li>색은 <b>역할(카테고리)</b>에 배정해 일관되게 반복한다.</li>
+        <li>간격·라운딩을 토큰 값(4배수·8/10/13px)으로 스냅한다.</li>
+        <li>토큰명·수치·코드는 모노스페이스 칩으로 표기한다.</li>
+        <li>흰 카드를 캔버스 위에 띄워 콘텐츠 단위를 분리한다.</li>
+      </ul>
+    </div>
+    <div class="dd dont">
+      <div class="hd">✕ DON'T</div>
+      <ul>
+        <li>같은 정보에 매번 다른 색을 쓰지 않는다(색=의미 붕괴).</li>
+        <li>진한 원색을 넓은 배경에 깔지 않는다(틴트 050만).</li>
+        <li>강조색을 10% 넘게 쓰지 않는다(멀티컬러 ≠ 무질서).</li>
+        <li>임의 간격·둥근값을 눈대중으로 넣지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11. CHECKLIST ===================== -->
+<section class="card">
+  <div class="eyebrow"><span class="num">11</span> CHECKLIST · 발간 전 체크리스트</div>
+  <h2>발간 전 체크리스트</h2>
+  <ul class="check" style="margin-top:14px">
+    <li><span class="box"></span><div>캔버스 <span class="chip plain">#F5F5F5</span> + 흰 카드 구조가 유지되는가</div></li>
+    <li><span class="box"></span><div>강조색이 역할별로 배정되고 총 사용량이 10% 이내인가</div></li>
+    <li><span class="box"></span><div>토큰명·수치가 모노스페이스로 일관 표기되는가</div></li>
+    <li><span class="box"></span><div>본문 대비 4.5:1(AA) 이상, 링크색은 강화값을 썼는가</div></li>
+    <li><span class="box"></span><div>간격·라운딩이 토큰 값(4배수·8/10/13px)에 스냅되는가</div></li>
+    <li><span class="box"></span><div>타입 스케일(1.25)과 3단계 이상 굵기 대비가 지켜지는가</div></li>
+    <li><span class="box"></span><div>표 숫자에 tabular-nums가 적용되었는가</div></li>
+  </ul>
+</section>
+
+<!-- SPEC SUMMARY -->
+<section class="card">
+  <div class="eyebrow"><span class="dot" style="background:var(--purple)"></span> SPEC · 명시 스펙 요약(AI 참조용)</div>
+  <h3>스펙 표</h3>
+  <div class="tbl" style="margin-top:10px">
+    <table>
+      <thead><tr><th>항목</th><th>값</th></tr></thead>
+      <tbody>
+        <tr><td>Sans 폰트</td><td class="mono">"Inter","Pretendard",system-ui,sans-serif</td></tr>
+        <tr><td>Mono 폰트</td><td class="mono">"SF Mono","JetBrains Mono",monospace</td></tr>
+        <tr><td>캔버스 / 카드</td><td class="mono">#F5F5F5 / #FFFFFF</td></tr>
+        <tr><td>텍스트 / 보조 / 보더</td><td class="mono">#1E1E1E / #767676 / #E6E6E6</td></tr>
+        <tr><td>브랜드 색</td><td class="mono">#0D99FF #A259FF #1ABCFE #0FA958 #F24E1E #FF7262</td></tr>
+        <tr><td>틴트 050</td><td class="mono">#EAF6FF #F4ECFF #E7F7EE #FDEDE8</td></tr>
+        <tr><td>타입 스케일 / 라운딩</td><td class="mono">ratio 1.25 / 8·10·13px</td></tr>
+        <tr><td>간격 토큰</td><td class="mono">4·8·12·16·24·32</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="foot">
+  <p>본 가이드는 교육/실습용 예시입니다. 실제 발간 시 조직의 브랜드 규정에 맞춰 색·서체를 조정하세요.</p>
+  <div class="chiprow">
+    <span class="chip plain">국민대학교 보고서 발간용 디자인 가이드</span>
+    <span class="chip"><span class="sw" style="background:var(--purple)"></span>figma-style / v1.0</span>
+  </div>
+</div>
+
+</div>

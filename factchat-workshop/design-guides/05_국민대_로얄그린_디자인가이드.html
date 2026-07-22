@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국민대 로얄그린 · 디자인 가이드</title>
+<style>
+  /* ============================================================
+     국민대 로얄그린 (Royal Green) 디자인 가이드
+     오프라인 self-contained — 외부 폰트/CDN/이미지 없음
+     ============================================================ */
+
+  /* ---- 디자인 토큰 (색상 교체 슬롯 포함) ---- */
+  :root{
+    /* ★ 대학 공식 CI 확정 시 아래 3개 그린 + 골드를 교체하십시오 (교체 슬롯) */
+    --green-deep:  #0F3D2E;   /* 표지/헤더 밴드, 최상위 강조  ★교체 슬롯 */
+    --green-mid:   #1B6047;   /* 섹션 헤더, 중간 강조         ★교체 슬롯 */
+    --green-bright:#2E8A66;   /* 링크·아이콘·데이터 강조      ★교체 슬롯 */
+    --gold:        #C2A14D;   /* 골드 괘선·엠블럼·구분선      ★교체 슬롯 */
+    --gold-deep:   #A8842F;   /* 딥골드 강조                 ★교체 슬롯 */
+
+    --bg:          #FFFFFF;
+    --tint:        #EAF3EE;   /* 그린 틴트 밴드/표면 */
+    --tint-2:      #F4F9F6;   /* 더 옅은 표면 */
+    --text:        #17281F;   /* 본문 */
+    --text-sub:    #46604F;   /* 보조 텍스트 */
+    --hair:        #D2E2D8;   /* 헤어라인 */
+
+    --serif:  "Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif;
+    --sans:   "Pretendard","Malgun Gothic","Apple SD Gothic Neo","Segoe UI",sans-serif;
+    --mono:   "SF Mono","JetBrains Mono","D2Coding",ui-monospace,monospace;
+
+    --maxw: 900px;
+    --pad: 56px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:#DEE6E0; color:var(--text);
+    font-family:var(--sans);
+    font-size:16px; line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    font-feature-settings:"tnum" 0;
+  }
+
+  /* 문서 프레임 (A4 느낌의 흰 지면) */
+  .doc{
+    max-width:var(--maxw); margin:36px auto 64px; background:var(--bg);
+    box-shadow:0 2px 4px rgba(15,61,46,.06), 0 18px 50px rgba(15,61,46,.12);
+    border:1px solid var(--hair);
+  }
+
+  /* ============ 0. 표지 밴드 ============ */
+  .cover{
+    background:
+      linear-gradient(180deg,#123f30 0%, var(--green-deep) 55%, #0b3325 100%);
+    color:#fff; padding:52px var(--pad) 44px; position:relative;
+    border-bottom:3px solid var(--gold);
+  }
+  /* 골드 상단 이중 괘선 */
+  .cover::before{
+    content:""; position:absolute; left:var(--pad); right:var(--pad); top:20px;
+    height:0; border-top:2px solid var(--gold);
+    box-shadow:0 4px 0 -3px rgba(194,161,77,.55);
+  }
+  .cover .kicker{
+    font-family:var(--sans); font-size:12.5px; letter-spacing:.32em;
+    text-transform:uppercase; color:var(--gold);
+    font-weight:600; margin:8px 0 26px;
+  }
+  .emblem{
+    display:flex; align-items:center; gap:16px; margin-bottom:22px;
+  }
+  .emblem .crest{
+    width:56px; height:56px; flex:0 0 auto;
+  }
+  .emblem .org{
+    font-family:var(--serif); font-size:15px; letter-spacing:.06em;
+    color:#eaf3ee; line-height:1.4;
+  }
+  .emblem .org small{display:block; font-size:11px; letter-spacing:.24em; color:var(--gold); font-family:var(--sans); margin-top:3px;}
+  .cover h1{
+    font-family:var(--serif); font-weight:700;
+    font-size:44px; line-height:1.18; letter-spacing:-.01em;
+    margin:0 0 6px; color:#fff;
+  }
+  .cover h1 .en{display:block; font-size:22px; font-weight:500; color:#cfe3d7; letter-spacing:.02em; margin-top:10px;}
+  .cover .philo{
+    font-family:var(--serif); font-size:16.5px; color:#dcebe2; font-style:normal;
+    max-width:640px; margin:20px 0 0; line-height:1.7;
+    padding-left:16px; border-left:2px solid var(--gold);
+  }
+  /* 표지 팔레트 스와치 행 */
+  .cover-swatches{
+    display:flex; flex-wrap:wrap; gap:0; margin-top:34px;
+    border:1px solid rgba(194,161,77,.5);
+  }
+  .cover-swatches .sw{
+    flex:1 1 0; min-width:96px; padding:12px 12px 11px;
+    font-size:11px; line-height:1.35;
+    border-right:1px solid rgba(255,255,255,.12);
+  }
+  .cover-swatches .sw:last-child{border-right:0;}
+  .cover-swatches .sw .nm{display:block; font-weight:600; letter-spacing:.02em; margin-bottom:3px;}
+  .cover-swatches .sw .hx{font-family:var(--mono); font-size:10.5px; opacity:.82;}
+  .cover-swatches .sw.dark{color:#eaf3ee;}
+  .cover-swatches .sw.light{color:#17281F;}
+
+  /* ============ 본문 공통 ============ */
+  .body{padding:8px var(--pad) 40px;}
+  section{padding:30px 0 6px; border-top:1px solid var(--hair);}
+  section:first-of-type{border-top:0;}
+
+  h2.sec{
+    font-family:var(--serif); font-weight:700; font-size:25px; letter-spacing:-.01em;
+    color:var(--green-deep); margin:6px 0 18px; padding-left:16px;
+    position:relative; line-height:1.3;
+  }
+  h2.sec::before{
+    content:""; position:absolute; left:0; top:2px; bottom:2px; width:5px;
+    background:var(--green-mid);
+    box-shadow:2px 0 0 var(--gold);
+  }
+  h2.sec .num{color:var(--gold-deep); font-family:var(--sans); font-weight:700; margin-right:10px; font-size:20px;}
+
+  h3.sub{
+    font-family:var(--sans); font-weight:700; font-size:16.5px; color:var(--green-mid);
+    margin:26px 0 12px; letter-spacing:-.005em;
+    padding-bottom:6px; border-bottom:1px solid var(--hair);
+  }
+  p{margin:0 0 14px;}
+  .lede{font-size:16.5px; color:var(--text-sub);}
+  strong{font-weight:700; color:var(--text);}
+  a{color:var(--green-bright); text-decoration:none; border-bottom:1px solid rgba(46,138,102,.4);}
+
+  .label-band{
+    background:var(--tint); border-left:4px solid var(--gold);
+    padding:13px 18px; margin:0; font-size:13.5px; color:var(--text-sub);
+    letter-spacing:.01em;
+  }
+  .label-band b{color:var(--green-deep);}
+  .label-band .code{font-family:var(--mono); color:var(--gold-deep); font-weight:700; margin:0 4px;}
+
+  /* 원칙 리스트 */
+  .principle{margin:0 0 16px; padding-left:0;}
+  .principle .pt{font-family:var(--serif); font-weight:700; color:var(--green-deep); font-size:16.5px;}
+  .principle .pt .idx{
+    display:inline-block; min-width:26px; margin-right:8px;
+    color:var(--gold-deep); font-family:var(--sans);
+  }
+
+  /* ---- 표 ---- */
+  table{
+    width:100%; border-collapse:collapse; margin:16px 0 20px;
+    font-size:13.5px; font-variant-numeric:tabular-nums;
+  }
+  thead th{
+    background:var(--green-deep); color:#fff; text-align:left;
+    padding:11px 14px; font-weight:600; font-size:13px; letter-spacing:.02em;
+    border-right:1px solid rgba(255,255,255,.14);
+  }
+  thead th:last-child{border-right:0;}
+  tbody td{padding:10px 14px; border-bottom:1px solid var(--hair); vertical-align:top;}
+  tbody tr:nth-child(even){background:var(--tint-2);}
+  tbody tr:hover{background:var(--tint);}
+  td .role{font-weight:700; color:var(--green-deep);}
+  .hex{font-family:var(--mono); font-size:12.5px; color:var(--gold-deep); background:var(--tint); padding:2px 7px; border-radius:2px; white-space:nowrap;}
+  .chip{display:inline-block; width:15px; height:15px; border-radius:2px; vertical-align:-2px; margin-right:8px; border:1px solid rgba(0,0,0,.12);}
+
+  /* ---- 색상 스와치 시각화 ---- */
+  .swatch-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 8px;}
+  .swatch{border:1px solid var(--hair); border-radius:3px; overflow:hidden;}
+  .swatch .top{height:76px;}
+  .swatch .meta{padding:9px 11px; font-size:11.5px;}
+  .swatch .meta .nm{display:block; font-weight:700; color:var(--text); margin-bottom:2px;}
+  .swatch .meta .hx{font-family:var(--mono); font-size:11px; color:var(--text-sub);}
+
+  /* 60:30:10 비율 바 */
+  .ratio{display:flex; height:40px; border-radius:3px; overflow:hidden; margin:8px 0 6px; border:1px solid var(--hair);}
+  .ratio div{display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600;}
+
+  /* 대비 예시 */
+  .contrast-row{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:14px 0;}
+  .contrast{padding:14px 16px; border-radius:3px; font-size:13.5px; border:1px solid var(--hair);}
+  .contrast .ratio-tag{font-family:var(--mono); font-size:11.5px; opacity:.9; display:block; margin-top:6px;}
+  .pass{color:#1a5c40;} .ok-badge{font-weight:700;}
+
+  /* CI 교체 슬롯 콜아웃 */
+  .callout{
+    border:1px solid var(--gold); border-left:5px solid var(--gold);
+    background:linear-gradient(180deg,#fbf7ec,#fefdf9);
+    padding:15px 18px; margin:18px 0; border-radius:3px; font-size:14px;
+  }
+  .callout .ct{font-family:var(--serif); font-weight:700; color:var(--gold-deep); display:block; margin-bottom:5px; font-size:15px;}
+  .callout.green{border-color:var(--green-mid); border-left-color:var(--green-mid); background:linear-gradient(180deg,#eef6f1,#fafdfb);}
+  .callout.green .ct{color:var(--green-deep);}
+
+  /* ---- 타이포 위계 샘플 ---- */
+  .type-spec{border:1px solid var(--hair); border-radius:3px; padding:22px 24px; margin:16px 0; background:var(--tint-2);}
+  .type-spec > div{padding:9px 0; border-bottom:1px dashed var(--hair);}
+  .type-spec > div:last-child{border-bottom:0;}
+  .type-spec .tag{font-family:var(--mono); font-size:11px; color:var(--gold-deep); display:block; margin-bottom:2px; letter-spacing:.04em;}
+  .ts-display{font-family:var(--serif); font-weight:700; font-size:40px; line-height:1.15; letter-spacing:-.015em; color:var(--green-deep);}
+  .ts-h1{font-family:var(--serif); font-weight:700; font-size:30px; color:var(--green-deep); letter-spacing:-.01em;}
+  .ts-h2{font-family:var(--serif); font-weight:700; font-size:23px; color:var(--green-mid);}
+  .ts-h3{font-family:var(--sans); font-weight:700; font-size:18px; color:var(--green-mid);}
+  .ts-body{font-family:var(--sans); font-weight:400; font-size:16px; color:var(--text);}
+  .ts-cap{font-family:var(--sans); font-weight:400; font-size:12.5px; color:var(--text-sub);}
+
+  /* ---- 그리드/여백 시각 ---- */
+  .grid-demo{display:grid; grid-template-columns:repeat(12,1fr); gap:6px; margin:14px 0;}
+  .grid-demo span{height:44px; background:var(--tint); border:1px solid var(--hair); border-radius:2px;}
+  .margin-demo{border:1px solid var(--hair); border-radius:3px; padding:0; overflow:hidden; margin:14px 0; background:var(--tint-2);}
+  .margin-demo .page{margin:22px; background:#fff; border:1px dashed var(--green-bright); padding:20px; position:relative;}
+  .margin-demo .mtag{position:absolute; font-family:var(--mono); font-size:10.5px; color:var(--green-bright);}
+
+  /* ---- 배경/표면 예시 ---- */
+  .surface-demos{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0;}
+  .surface-band{
+    background:var(--green-deep); color:#fff; padding:22px 20px; border-radius:3px;
+    border-bottom:3px solid var(--gold); position:relative; overflow:hidden;
+  }
+  .surface-band .st{font-family:var(--serif); font-weight:700; font-size:17px; margin-bottom:4px;}
+  .surface-band .sd{font-size:12.5px; color:#cfe3d7;}
+  .surface-tint{background:var(--tint); border:1px solid var(--hair); border-left:4px solid var(--green-mid); padding:22px 20px; border-radius:3px;}
+  .surface-tint .st{font-family:var(--serif); font-weight:700; font-size:17px; color:var(--green-deep); margin-bottom:4px;}
+  .gold-rule{height:0; border-top:2px solid var(--gold); margin:6px 0; box-shadow:0 3px 0 -2px rgba(194,161,77,.5);}
+
+  /* ---- 컴포넌트 ---- */
+  .comp-block{border:1px solid var(--hair); border-radius:4px; padding:20px 22px; margin:14px 0; background:#fff;}
+  .comp-block .clabel{font-family:var(--mono); font-size:11px; color:var(--text-sub); letter-spacing:.04em; margin-bottom:14px; display:block;}
+  .btn{
+    display:inline-block; font-family:var(--sans); font-weight:600; font-size:14px;
+    padding:10px 22px; border-radius:2px; cursor:default; margin:0 8px 8px 0; border:1px solid transparent;
+  }
+  .btn.primary{background:var(--green-deep); color:#fff;}
+  .btn.gold{background:var(--gold); color:#3a2f0c; border-color:var(--gold-deep);}
+  .btn.ghost{background:#fff; color:var(--green-deep); border-color:var(--green-mid);}
+  .btn.link{background:transparent; color:var(--green-bright); padding-left:0; border-bottom:1px solid var(--green-bright); border-radius:0;}
+
+  .card{border:1px solid var(--hair); border-top:3px solid var(--green-mid); border-radius:3px; padding:18px 20px; background:#fff;}
+  .card h4{font-family:var(--serif); font-weight:700; font-size:17px; color:var(--green-deep); margin:0 0 8px;}
+  .card p{font-size:13.5px; color:var(--text-sub); margin:0;}
+
+  blockquote{
+    margin:14px 0; padding:14px 20px; border-left:4px solid var(--gold);
+    background:var(--tint-2); font-family:var(--serif); font-size:16px; color:var(--green-deep);
+  }
+  blockquote cite{display:block; font-family:var(--sans); font-size:12.5px; color:var(--text-sub); font-style:normal; margin-top:8px;}
+
+  .quote-callout{border:1px solid var(--hair); background:var(--tint); border-radius:3px; padding:16px 18px; font-size:14px; display:flex; gap:14px; align-items:flex-start;}
+  .quote-callout .ico{flex:0 0 auto; width:28px; height:28px; border-radius:50%; background:var(--green-deep); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-weight:700; font-size:16px;}
+
+  /* ---- 머리/꼬리말 지침 예시 ---- */
+  .hf-demo{border:1px solid var(--hair); border-radius:3px; overflow:hidden; margin:14px 0; font-size:12px;}
+  .hf-head{background:var(--green-deep); color:#eaf3ee; padding:9px 16px; display:flex; justify-content:space-between; border-bottom:2px solid var(--gold); font-family:var(--serif);}
+  .hf-body{padding:26px 16px; color:var(--text-sub); background:#fff; text-align:center; font-size:12px;}
+  .hf-foot{background:var(--tint); color:var(--text-sub); padding:8px 16px; display:flex; justify-content:space-between; border-top:1px solid var(--hair); font-family:var(--mono); font-size:11px;}
+
+  /* ---- 문서 적용 미니 목업 ---- */
+  .mockup{border:1px solid var(--hair); border-radius:4px; overflow:hidden; margin:16px 0; box-shadow:0 8px 24px rgba(15,61,46,.08);}
+  .mk-cover{background:linear-gradient(180deg,#123f30,var(--green-deep)); color:#fff; padding:30px 30px 26px; border-bottom:3px solid var(--gold); position:relative;}
+  .mk-cover::before{content:""; position:absolute; left:30px; right:30px; top:14px; border-top:1.5px solid var(--gold);}
+  .mk-cover .mk-kick{font-size:10.5px; letter-spacing:.28em; color:var(--gold); text-transform:uppercase; margin:6px 0 14px; font-weight:600;}
+  .mk-cover .mk-title{font-family:var(--serif); font-weight:700; font-size:26px; line-height:1.25;}
+  .mk-cover .mk-sub{font-family:var(--serif); font-size:13px; color:#cfe3d7; margin-top:8px;}
+  .mk-body{padding:24px 30px 28px; background:#fff;}
+  .mk-body h5{font-family:var(--serif); font-weight:700; color:var(--green-deep); font-size:17px; margin:0 0 4px; padding-left:12px; border-left:4px solid var(--green-mid);}
+  .mk-body .mk-lead{font-size:13px; color:var(--text-sub); margin:0 0 14px;}
+  .mk-body table{margin:8px 0 14px; font-size:12px;}
+  .mk-body thead th{padding:8px 12px; font-size:11.5px;}
+  .mk-body tbody td{padding:7px 12px;}
+  .mk-callout{border-left:4px solid var(--gold); background:var(--tint); padding:11px 14px; font-size:12.5px; color:var(--green-deep); border-radius:2px;}
+
+  /* ---- Do / Don't ---- */
+  .dodont{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0;}
+  .dodont .col{border:1px solid var(--hair); border-radius:4px; overflow:hidden;}
+  .dodont .ch{padding:11px 16px; font-weight:700; font-size:14px; color:#fff;}
+  .dodont .do .ch{background:var(--green-deep);}
+  .dodont .dont .ch{background:#7a3b32;}
+  .dodont ul{margin:0; padding:14px 18px 14px 34px; font-size:13.5px; color:var(--text-sub);}
+  .dodont li{margin-bottom:9px; line-height:1.55;}
+  .dodont li::marker{color:var(--gold-deep);}
+
+  /* ---- 체크리스트 ---- */
+  .checklist{list-style:none; margin:14px 0; padding:0;}
+  .checklist li{position:relative; padding:9px 0 9px 34px; border-bottom:1px solid var(--hair); font-size:14px;}
+  .checklist li::before{
+    content:""; position:absolute; left:2px; top:11px; width:18px; height:18px;
+    border:1.5px solid var(--green-mid); border-radius:3px; background:#fff;
+  }
+  .checklist li::after{
+    content:"✓"; position:absolute; left:6px; top:8px; color:var(--gold-deep); font-weight:700; font-size:14px;
+  }
+  .checklist li b{color:var(--green-deep);}
+
+  /* ---- 명시 스펙 표 강조 ---- */
+  .spec-note{font-size:12.5px; color:var(--text-sub); margin:6px 0 0; font-style:italic;}
+
+  /* ---- 푸터 ---- */
+  .foot{
+    background:var(--green-deep); color:#cfe3d7; padding:26px var(--pad) 30px;
+    font-size:12.5px; line-height:1.7; border-top:3px solid var(--gold);
+  }
+  .foot b{color:var(--gold);}
+  .foot .frule{height:0; border-top:1px solid rgba(194,161,77,.4); margin:0 0 16px;}
+
+  /* 반응형: 좁은 화면 */
+  @media (max-width:680px){
+    :root{--pad:26px;}
+    .doc{margin:0; border:0;}
+    .cover h1{font-size:32px;}
+    .swatch-grid{grid-template-columns:repeat(2,1fr);}
+    .surface-demos,.contrast-row,.dodont{grid-template-columns:1fr;}
+    .cover-swatches .sw{min-width:33%;}
+    table{font-size:12.5px;}
+  }
+  /* 표 가로 오버플로 방지 */
+  .tbl-wrap{overflow-x:auto;}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============ 0. 표지 밴드 ============ -->
+  <header class="cover">
+    <div class="kicker">국민대학교 보고서 발간용 디자인 가이드</div>
+
+    <div class="emblem">
+      <!-- 엠블럼 자리 (플레이스홀더) — 공식 엠블럼/교표 SVG로 교체 -->
+      <svg class="crest" viewBox="0 0 56 56" role="img" aria-label="엠블럼 자리">
+        <circle cx="28" cy="28" r="26" fill="none" stroke="#C2A14D" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="21" fill="none" stroke="#C2A14D" stroke-width="0.75" opacity="0.7"/>
+        <path d="M28 12 L32 24 L44 24 L34 32 L38 44 L28 36 L18 44 L22 32 L12 24 L24 24 Z" fill="#C2A14D" opacity="0.9"/>
+        <text x="28" y="52" text-anchor="middle" font-size="5" fill="#C2A14D" font-family="serif">EMBLEM</text>
+      </svg>
+      <div class="org">국민대학교<small>KOOKMIN UNIVERSITY</small></div>
+    </div>
+
+    <h1>국민대 로얄그린<span class="en">Kookmin Royal Green — Design Guide</span></h1>
+    <p class="philo">자연과 품격의 공식 그린. 깊은 포레스트 그린과 골드 괘선으로 대학 공식 문서의 위엄과 신뢰를 세운다. 로얄블루 가이드의 자매 규격 — 격식은 그대로, 색은 그린과 골드.</p>
+
+    <!-- 팔레트 스와치 행 -->
+    <div class="cover-swatches">
+      <div class="sw dark" style="background:#0F3D2E;"><span class="nm">Deep Green</span><span class="hx">#0F3D2E</span></div>
+      <div class="sw dark" style="background:#1B6047;"><span class="nm">Mid Green</span><span class="hx">#1B6047</span></div>
+      <div class="sw dark" style="background:#2E8A66;"><span class="nm">Bright Green</span><span class="hx">#2E8A66</span></div>
+      <div class="sw dark" style="background:#C2A14D;color:#2a2205;"><span class="nm">Gold</span><span class="hx">#C2A14D</span></div>
+      <div class="sw dark" style="background:#A8842F;"><span class="nm">Deep Gold</span><span class="hx">#A8842F</span></div>
+      <div class="sw light" style="background:#EAF3EE;"><span class="nm">Tint</span><span class="hx">#EAF3EE</span></div>
+      <div class="sw light" style="background:#FFFFFF;"><span class="nm">Paper</span><span class="hx">#FFFFFF</span></div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="label-band">
+      대학 보고서 발간용 디자인 가이드 · 워크숍 기획 실습 교육보조재료 · 코드명<span class="code">05</span>· <b>격식·품격의 공식 그린 트랙</b> (04 로얄블루의 자매 규격)
+    </div>
+
+    <!-- ============ 1. 개요 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">1.</span>가이드 개요 · 언제 쓰나</h2>
+      <p><strong>가이드 이름:</strong> 국민대 로얄그린 (Kookmin Royal Green)</p>
+      <p><strong>디자인 철학 요약:</strong> 색을 절제해 위엄을 세운다. 깊은 포레스트 그린을 표지·헤더 밴드에 앉히고, 골드 괘선을 규율 있는 강조로만 사용한다. 명조(明朝) 제목이 격식을, 넉넉한 여백과 정형(定型)의 각(角)이 품격을 만든다. 화면을 장식하는 대신 <strong>공문서다운 신뢰와 일관성</strong>을 목표로 한다.</p>
+      <p><strong>자매 규격:</strong> 본 가이드는 <strong>국민대 로얄블루</strong>와 구조가 완전히 동일하며 <strong>색상만 로얄/포레스트 그린 + 골드</strong>로 변주한 자매 규격이다. 두 가이드를 나란히 쓰면 부서·발간 목적에 따라 색만 달리해 통일된 격식을 유지할 수 있다.</p>
+      <p><strong>어울리는 보고서 성격:</strong> 대학 본부·처(處)·단과대학이 발간하는 <strong>연차보고서, 정책·사업 결과보고서, 백서, 위원회 심의자료, 기념·의전 문서</strong>처럼 격식과 신뢰가 중요한 공식 문서. 친근·경쾌함이 필요한 홍보물보다, 위엄과 정확성이 요구되는 공문형 발간물에 최적화되어 있다.</p>
+    </section>
+
+    <!-- ============ 2. 디자인 원칙 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">2.</span>디자인 원칙</h2>
+      <div class="principle"><p class="pt"><span class="idx">원칙 1</span>절제된 색, 깊은 위엄.</p>
+        <p>화면의 대부분은 흰 지면과 먹색 활자다. 딥 그린과 골드는 <strong>표지·헤더 밴드·괘선·강조점</strong>에만 쓴다. 강조색 총량은 지면의 10% 미만으로 유지해, 색이 '소리치지' 않고 '앉아 있게' 한다.</p></div>
+      <div class="principle"><p class="pt"><span class="idx">원칙 2</span>명조가 격식을, 산세리프가 가독을 맡는다.</p>
+        <p>제목·표지·간지는 <strong>명조(Noto Serif KR)</strong>로 공문서의 격식을 세우고, 본문·표·캡션은 <strong>산세리프(Pretendard)</strong>로 밀도 높은 정보를 또렷하게 전한다. 두 서체의 역할을 섞지 않는다.</p></div>
+      <div class="principle"><p class="pt"><span class="idx">원칙 3</span>골드 괘선은 규율 있게, 정확하게.</p>
+        <p>골드는 <strong>구분 괘선·표지 이중선·강조 하이라이트</strong>로만 쓴다. 골드 활자는 큰 제목·괘선·엠블럼에 한정하고, <strong>작은 본문 글자색으로는 쓰지 않는다</strong>(대비 부족). "선을 하나 더할까"보다 "이 선이 규격에 맞는가"를 먼저 묻는다.</p></div>
+      <div class="principle"><p class="pt"><span class="idx">원칙 4</span>정형(定型)의 각, 절제된 곡선.</p>
+        <p>모서리는 2~6px의 얕은 각으로 정형화한다. 과한 라운딩·그림자·그라디언트는 배제한다. 공문서의 무게는 <strong>반듯한 정렬과 균형</strong>에서 나온다.</p></div>
+      <div class="principle"><p class="pt"><span class="idx">원칙 5</span>반복이 곧 신뢰.</p>
+        <p>표 머리글, 소제목, 캡션, 머리/꼬리말, 페이지 번호는 문서 전체에서 <strong>완전히 동일한 규격</strong>으로 반복한다. 규격서형 문서의 신뢰는 일관성에서 나온다.</p></div>
+    </section>
+
+    <!-- ============ 3. 색상 시스템 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">3.</span>색상 시스템</h2>
+      <p class="lede">주색은 로얄/포레스트 그린 3단계, 강조는 골드 2단계. 흰 지면·먹 활자가 화면 대부분을 채우고, 그린과 골드는 위계와 강조에만 쓴다.</p>
+
+      <!-- ★ CI 교체 슬롯 콜아웃 -->
+      <div class="callout">
+        <span class="ct">★ 학교 공식 CI 색상으로 교체 가능 (교체 슬롯)</span>
+        아래 그린 3단계 및 골드 2단계는 본 가이드가 제안하는 <strong>명명된 테마색</strong>이며, 국민대학교 <strong>공식 CI 색상값이 아닙니다</strong>. 공식 CI가 확정되면 CSS 변수 <span class="hex">--green-deep / --green-mid / --green-bright / --gold / --gold-deep</span> 다섯 값만 교체하면 문서 전체 색이 일괄 변경됩니다. 공식 CI 값을 단정하지 마십시오.
+      </div>
+
+      <h3 class="sub">3.1 팔레트</h3>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>역할</th><th>이름</th><th>HEX</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip" style="background:#0F3D2E;"></span><span class="role">Primary ★</span></td><td>Deep Green</td><td><span class="hex">#0F3D2E</span></td><td>표지·헤더 밴드, 표 머리글, 최상위 강조 <b>(★ CI 주색상 교체 슬롯)</b></td></tr>
+          <tr><td><span class="chip" style="background:#1B6047;"></span><span class="role">Primary(중) ★</span></td><td>Mid Green</td><td><span class="hex">#1B6047</span></td><td>섹션 헤더 바, 카드 상단선, 중간 강조 <b>(★ 교체 슬롯)</b></td></tr>
+          <tr><td><span class="chip" style="background:#2E8A66;"></span><span class="role">Primary(명) ★</span></td><td>Bright Green</td><td><span class="hex">#2E8A66</span></td><td>링크, 아이콘, 데이터 강조 <b>(★ 교체 슬롯)</b></td></tr>
+          <tr><td><span class="chip" style="background:#C2A14D;"></span><span class="role">Accent ★</span></td><td>Gold</td><td><span class="hex">#C2A14D</span></td><td>골드 괘선·표지 이중선·엠블럼·강조 하이라이트 <b>(★ 교체 슬롯)</b></td></tr>
+          <tr><td><span class="chip" style="background:#A8842F;"></span><span class="role">Accent(농) ★</span></td><td>Deep Gold</td><td><span class="hex">#A8842F</span></td><td>골드 활자(큰 제목·번호), 딥 강조 <b>(★ 교체 슬롯)</b></td></tr>
+          <tr><td><span class="chip" style="background:#FFFFFF;"></span><span class="role">Background</span></td><td>Paper White</td><td><span class="hex">#FFFFFF</span></td><td>본문 지면</td></tr>
+          <tr><td><span class="chip" style="background:#EAF3EE;"></span><span class="role">Tint Band</span></td><td>Green Tint</td><td><span class="hex">#EAF3EE</span></td><td>강조 밴드, 콜아웃·표면 틴트</td></tr>
+          <tr><td><span class="chip" style="background:#17281F;"></span><span class="role">Text</span></td><td>Ink</td><td><span class="hex">#17281F</span></td><td>본문 활자</td></tr>
+          <tr><td><span class="chip" style="background:#46604F;"></span><span class="role">Text Sub</span></td><td>Sub Ink</td><td><span class="hex">#46604F</span></td><td>보조·캡션 활자</td></tr>
+          <tr><td><span class="chip" style="background:#D2E2D8;"></span><span class="role">Hairline</span></td><td>Hairline</td><td><span class="hex">#D2E2D8</span></td><td>표·구분 헤어라인</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sub">3.2 컬러 스와치</h3>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="top" style="background:#0F3D2E;"></div><div class="meta"><span class="nm">Deep Green</span><span class="hx">#0F3D2E</span></div></div>
+        <div class="swatch"><div class="top" style="background:#1B6047;"></div><div class="meta"><span class="nm">Mid Green</span><span class="hx">#1B6047</span></div></div>
+        <div class="swatch"><div class="top" style="background:#2E8A66;"></div><div class="meta"><span class="nm">Bright Green</span><span class="hx">#2E8A66</span></div></div>
+        <div class="swatch"><div class="top" style="background:#C2A14D;"></div><div class="meta"><span class="nm">Gold</span><span class="hx">#C2A14D</span></div></div>
+        <div class="swatch"><div class="top" style="background:#A8842F;"></div><div class="meta"><span class="nm">Deep Gold</span><span class="hx">#A8842F</span></div></div>
+        <div class="swatch"><div class="top" style="background:#EAF3EE;"></div><div class="meta"><span class="nm">Green Tint</span><span class="hx">#EAF3EE</span></div></div>
+        <div class="swatch"><div class="top" style="background:#46604F;"></div><div class="meta"><span class="nm">Sub Ink</span><span class="hx">#46604F</span></div></div>
+        <div class="swatch"><div class="top" style="background:#17281F;"></div><div class="meta"><span class="nm">Ink</span><span class="hx">#17281F</span></div></div>
+      </div>
+
+      <h3 class="sub">3.3 사용 비율 — 60 : 30 : 10</h3>
+      <div class="ratio">
+        <div style="flex:60; background:#FFFFFF; color:#17281F; border-right:1px solid var(--hair);">60% 흰 지면 · 먹 활자</div>
+        <div style="flex:30; background:#0F3D2E; color:#fff;">30% 딥 그린</div>
+        <div style="flex:10; background:#C2A14D; color:#2a2205;">10% 골드</div>
+      </div>
+      <p class="spec-note">지면·활자(중립) 60 · 그린(주색) 30 · 골드(강조) 10. 골드 총량이 10%를 넘지 않도록 유지한다.</p>
+
+      <h3 class="sub">3.4 대비 (WCAG AA)</h3>
+      <div class="contrast-row">
+        <div class="contrast" style="background:#0F3D2E; color:#ffffff;">딥 그린 위 흰 텍스트 — 표지·헤더 밴드<span class="ratio-tag ok-badge">대비 약 13.6:1 · AAA 통과 ✓</span></div>
+        <div class="contrast" style="background:#ffffff; color:#17281F;">흰 지면 위 먹 활자 — 본문<span class="ratio-tag pass ok-badge">대비 약 15.3:1 · AAA 통과 ✓</span></div>
+        <div class="contrast" style="background:#ffffff; color:#46604F;">흰 지면 위 보조 활자 — 캡션<span class="ratio-tag pass ok-badge">대비 약 6.6:1 · AA 통과 ✓</span></div>
+        <div class="contrast" style="background:#C2A14D; color:#2a2205;">골드 위 짙은 갈먹 — 골드 버튼 라벨<span class="ratio-tag ok-badge">대비 약 6.9:1 · AA 통과 ✓</span></div>
+      </div>
+      <p class="spec-note">⚠ 골드(#C2A14D)를 흰 지면 위 <strong>작은 본문 글자색</strong>으로 쓰면 대비가 부족하다(약 2.4:1). 골드 활자는 큰 제목·괘선·엠블럼에만 한정한다.</p>
+    </section>
+
+    <!-- ============ 4. 타이포그래피 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">4.</span>타이포그래피</h2>
+      <p><strong>제목 서체:</strong> <span class="hex">Noto Serif KR</span> → Nanum Myeongjo → 시스템 명조 (명조 계열, 표지·제목·간지)<br>
+      <strong>본문 서체:</strong> <span class="hex">Pretendard</span> → Malgun Gothic → 시스템 산세리프 (본문·표·캡션)</p>
+      <p class="spec-note">오프라인 원칙에 따라 웹폰트를 링크하지 않으며, 명조·산세리프 시스템 폰트 스택으로 폴백한다. 발간 환경에 위 서체가 설치되어 있으면 지정 서체로 렌더된다.</p>
+
+      <h3 class="sub">4.1 타입 스케일 (1.25 비율)</h3>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>단계</th><th>크기 / 행간</th><th>서체 · 굵기</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td><span class="role">Display</span></td><td>40 / 1.15</td><td>명조 700</td><td>표지 대제목</td></tr>
+          <tr><td><span class="role">H1</span></td><td>30 / 1.25</td><td>명조 700</td><td>장(章) 제목</td></tr>
+          <tr><td><span class="role">H2</span></td><td>23 / 1.3</td><td>명조 700</td><td>절(節) 제목</td></tr>
+          <tr><td><span class="role">H3</span></td><td>18 / 1.4</td><td>산세리프 700</td><td>소제목</td></tr>
+          <tr><td><span class="role">Body</span></td><td>16 / 1.65</td><td>산세리프 400</td><td>본문</td></tr>
+          <tr><td><span class="role">Caption</span></td><td>12.5 / 1.5</td><td>산세리프 400</td><td>캡션·출처·주석</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sub">4.2 위계 샘플</h3>
+      <div class="type-spec">
+        <div><span class="tag">DISPLAY · 명조 700 · 40px</span><div class="ts-display">국민대학교 연차보고서</div></div>
+        <div><span class="tag">H1 · 명조 700 · 30px</span><div class="ts-h1">제1장 사업 개요와 추진 배경</div></div>
+        <div><span class="tag">H2 · 명조 700 · 23px</span><div class="ts-h2">1.2 연도별 성과 지표</div></div>
+        <div><span class="tag">H3 · 산세리프 700 · 18px</span><div class="ts-h3">가. 정량 성과 요약</div></div>
+        <div><span class="tag">BODY · 산세리프 400 · 16px</span><div class="ts-body">본문은 산세리프로 조판해 밀도 높은 정보를 또렷하게 전달한다. 행간 1.65, 제목은 음수 자간으로 긴장감을 준다.</div></div>
+        <div><span class="tag">CAPTION · 산세리프 400 · 12.5px</span><div class="ts-cap">표 1. 2021–2025 연도별 예산 집행 현황 (단위: 백만 원) · 출처: 기획처</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 5. 레이아웃 · 그리드 · 여백 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">5.</span>레이아웃 · 그리드 · 여백</h2>
+      <p>A4(210×297mm) 세로를 기준으로 한다. 넉넉한 여백으로 격식을, 12단 그리드로 정렬의 규율을 확보한다.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>항목</th><th>규격</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><span class="role">판형</span></td><td>A4 세로 210 × 297 mm</td><td>공식 발간 기본</td></tr>
+          <tr><td><span class="role">여백</span></td><td>상 25 · 하 22 · 좌우 22 mm</td><td>머리/꼬리말 포함 시 상하 여유</td></tr>
+          <tr><td><span class="role">그리드</span></td><td>12단 · 단 간격 6mm</td><td>표·본문 모두 스냅</td></tr>
+          <tr><td><span class="role">본문 단</span></td><td>1단(장문) 또는 2단(밀도)</td><td>보고서 성격에 따라</td></tr>
+          <tr><td><span class="role">베이스라인</span></td><td>4mm 그리드</td><td>수직 리듬 통일</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h3 class="sub">12단 그리드</h3>
+      <div class="grid-demo"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <h3 class="sub">A4 여백 모식도</h3>
+      <div class="margin-demo">
+        <div class="page">
+          <span class="mtag" style="top:-16px; left:0;">상 25mm</span>
+          <span class="mtag" style="left:-18px; top:40%; transform:rotate(-90deg);">좌 22mm</span>
+          본문 영역 — 12단 그리드에 정렬. 넉넉한 여백이 격식과 가독을 함께 확보한다.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. 배경 · 표면 처리 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">6.</span>배경 · 표면 처리</h2>
+      <p>흰 본문 지면 위에 <strong>딥 그린 밴드</strong>와 <strong>골드 괘선</strong>, <strong>그린 틴트 표면</strong>을 규율 있게 얹는다. 텍스처·사진 배경은 쓰지 않는다.</p>
+      <div class="surface-demos">
+        <div class="surface-band">
+          <div class="st">딥 그린 밴드</div>
+          <div class="sd">표지·간지·섹션 도입에 사용. 하단 3px 골드 괘선으로 마감. 흰 텍스트(AAA 대비).</div>
+        </div>
+        <div class="surface-tint">
+          <div class="st">그린 틴트 표면</div>
+          <div class="sd" style="color:var(--text-sub);">콜아웃·강조 박스·표 짝수 행. 좌측 그린/골드 강조선으로 위계 표시.</div>
+        </div>
+      </div>
+      <h3 class="sub">골드 괘선 예시</h3>
+      <p style="margin-bottom:4px;">표지 이중 괘선 · 섹션 구분 · 표 상단 강조에 사용:</p>
+      <div class="gold-rule"></div>
+      <p style="font-size:12.5px; color:var(--text-sub); margin-top:14px;">골드 괘선은 2px 실선 + 옅은 그림자로 '음각(陰刻)'의 무게를 준다. 장식적 반복은 피하고 구분·강조 지점에만.</p>
+    </section>
+
+    <!-- ============ 7. 컴포넌트 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">7.</span>컴포넌트 라이브러리</h2>
+
+      <h3 class="sub">7.1 버튼</h3>
+      <div class="comp-block">
+        <span class="clabel">BUTTONS — 주 / 강조 / 보조 / 링크</span>
+        <span class="btn primary">주 버튼 · 딥 그린</span>
+        <span class="btn gold">강조 · 골드</span>
+        <span class="btn ghost">보조 · 고스트</span>
+        <span class="btn link">텍스트 링크 →</span>
+      </div>
+
+      <h3 class="sub">7.2 카드</h3>
+      <div class="comp-block">
+        <span class="clabel">CARD — 상단 그린 강조선</span>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="card"><h4>추진 성과</h4><p>상단 3px 그린 강조선과 헤어라인 테두리로 정형화한다. 명조 제목 + 산세리프 본문.</p></div>
+          <div class="card"><h4>향후 계획</h4><p>그림자를 배제하고 반듯한 각으로 공문서의 무게를 유지한다.</p></div>
+        </div>
+      </div>
+
+      <h3 class="sub">7.3 표 (그린 헤더 줄무늬)</h3>
+      <div class="comp-block">
+        <span class="clabel">TABLE — 딥 그린 머리글 + 짝수 행 틴트</span>
+        <div class="tbl-wrap">
+        <table style="margin:0;">
+          <thead><tr><th>연도</th><th>예산(백만)</th><th>집행률</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td>2023</td><td>1,240</td><td>96.4%</td><td>정상</td></tr>
+            <tr><td>2024</td><td>1,385</td><td>98.1%</td><td>증액</td></tr>
+            <tr><td>2025</td><td>1,502</td><td>97.3%</td><td>정상</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="sub">7.4 콜아웃 · 인용</h3>
+      <div class="callout green"><span class="ct">알림 콜아웃</span>중요 지침·유의사항은 그린 좌측선 콜아웃으로 표시한다. 골드 콜아웃은 강조·주의에 한정한다.</div>
+      <blockquote>“대학 공식 문서의 권위는 화려함이 아니라 절제와 일관성에서 나온다.”<cite>— 발간 원칙</cite></blockquote>
+      <div class="quote-callout"><div class="ico">”</div><div>인용 콜아웃 — 심의 의견·원문 인용은 그린 원형 아이콘과 틴트 표면으로 감싼다.</div></div>
+    </section>
+
+    <!-- ============ 8. 표지·간지·머리/꼬리말 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">8.</span>표지 · 간지 · 머리말 / 꼬리말</h2>
+      <p><strong>표지:</strong> 딥 그린 전면 밴드 + 상단 골드 이중 괘선 + 엠블럼 자리 + 명조 대제목. <strong>간지:</strong> 딥 그린 밴드에 장(章) 번호·제목을 명조로. <strong>머리말:</strong> 좌측 문서명 / 우측 장 제목. <strong>꼬리말:</strong> 좌측 발간 부서 / 우측 페이지 번호.</p>
+      <div class="hf-demo">
+        <div class="hf-head"><span>국민대학교 · 2025 연차보고서</span><span>제1장 사업 개요</span></div>
+        <div class="hf-body">— 본문 지면 (머리말·꼬리말 규격 예시) —</div>
+        <div class="hf-foot"><span>기획처 발간</span><span>· 12 ·</span></div>
+      </div>
+      <p class="spec-note">머리/꼬리말은 전 페이지에서 동일한 위치·서체·크기로 반복한다. 머리말 밑줄은 골드 0.5pt.</p>
+    </section>
+
+    <!-- ============ 9. 문서 적용 예시 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">9.</span>문서 적용 예시 — 미니 목업</h2>
+      <p>본 스타일로 렌더한 '워크숍 결과보고서' 표지 + 본문 1세트.</p>
+      <div class="mockup">
+        <div class="mk-cover">
+          <div class="mk-kick">국민대학교 · 결과보고서</div>
+          <div class="mk-title">2025 학습혁신 워크숍<br>운영 결과보고서</div>
+          <div class="mk-sub">교수학습개발센터 · 2025. 12.</div>
+        </div>
+        <div class="mk-body">
+          <h5>1. 추진 개요</h5>
+          <p class="mk-lead">본 워크숍은 학습혁신 역량 강화를 위해 2025년 하반기 3회에 걸쳐 운영되었으며, 총 참여 인원과 만족도는 아래와 같다.</p>
+          <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>회차</th><th>참여(명)</th><th>만족도</th><th>비고</th></tr></thead>
+            <tbody>
+              <tr><td>1회</td><td>84</td><td>4.6 / 5</td><td>대면</td></tr>
+              <tr><td>2회</td><td>112</td><td>4.7 / 5</td><td>대면</td></tr>
+              <tr><td>3회</td><td>96</td><td>4.8 / 5</td><td>혼합</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="mk-callout"><strong>핵심 성과 —</strong> 3회 평균 만족도 4.7/5, 전년 대비 참여 인원 18% 증가.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10. Do / Don't ============ -->
+    <section>
+      <h2 class="sec"><span class="num">10.</span>Do / Don't</h2>
+      <div class="dodont">
+        <div class="col do">
+          <div class="ch">Do — 이렇게</div>
+          <ul>
+            <li>딥 그린은 표지·헤더·표 머리글 등 <b>구조적 강조</b>에만.</li>
+            <li>골드는 괘선·이중선·엠블럼 등 <b>규율 있는 강조</b>로.</li>
+            <li>제목은 명조, 본문·표는 산세리프로 역할 분리.</li>
+            <li>넉넉한 여백과 정형의 각으로 격식 유지.</li>
+            <li>머리/꼬리말·표 규격을 전 페이지 동일하게 반복.</li>
+          </ul>
+        </div>
+        <div class="col dont">
+          <div class="ch">Don't — 이건 금지</div>
+          <ul>
+            <li>골드를 <b>작은 본문 글자색</b>으로 사용 (대비 부족).</li>
+            <li>그린·골드를 지면 절반 이상 채워 색이 소리치게 함.</li>
+            <li>과한 라운딩·드롭섀도·그라디언트 남발.</li>
+            <li>제목에 산세리프, 본문에 명조 등 역할 혼용.</li>
+            <li>여러 그린 톤을 무질서하게 섞어 위계 붕괴.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 11. 체크리스트 ============ -->
+    <section>
+      <h2 class="sec"><span class="num">11.</span>발간 전 체크리스트</h2>
+      <ul class="checklist">
+        <li><b>색상 슬롯</b> — 공식 CI 확정 시 그린·골드 변수 5개를 교체했는가.</li>
+        <li><b>강조 총량</b> — 그린+골드 사용이 지면의 30:10 비율을 넘지 않는가.</li>
+        <li><b>대비</b> — 딥 그린 위 흰 텍스트, 본문 활자가 WCAG AA 이상인가.</li>
+        <li><b>서체 역할</b> — 제목 명조 / 본문·표 산세리프가 지켜졌는가.</li>
+        <li><b>골드 규율</b> — 골드를 작은 본문 글자색으로 쓰지 않았는가.</li>
+        <li><b>괘선</b> — 골드 괘선이 구분·강조 지점에만 절제되어 있는가.</li>
+        <li><b>반복 규격</b> — 표 머리글·머리/꼬리말·페이지 번호가 전 페이지 동일한가.</li>
+        <li><b>엠블럼</b> — 엠블럼 자리에 공식 교표를 삽입했는가.</li>
+        <li><b>여백·정렬</b> — 12단 그리드·A4 여백에 요소가 스냅되어 있는가.</li>
+      </ul>
+    </section>
+
+  </div><!-- /.body -->
+
+  <!-- ============ 푸터 ============ -->
+  <footer class="foot">
+    <div class="frule"></div>
+    <p style="margin:0 0 8px;"><b>국민대 로얄그린 디자인 가이드</b> · 대학 보고서 발간용 · 코드명 05 (04 로얄블루 자매 규격)</p>
+    <p style="margin:0 0 8px;">본 가이드는 <b>교육 / 실습용 예시</b>입니다. 문서에 표기된 그린·골드 색상은 제안된 명명 테마색이며 <b>국민대학교 공식 CI 색상이 아닙니다</b>. 공식 발간 시 반드시 학교 공식 CI 색상으로 교체하십시오(색상 변수 5개 교체).</p>
+    <p style="margin:0; opacity:.75;">오프라인 self-contained · 인라인 CSS/SVG · 외부 폰트/CDN 없음</p>
+  </footer>
+
+</div><!-- /.doc -->
+</body>
+</html>

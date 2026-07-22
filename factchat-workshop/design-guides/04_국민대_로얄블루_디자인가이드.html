@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국민대 로얄블루 · 디자인 가이드</title>
+<style>
+  /* ============================================================
+     국민대 로얄블루(Royal Blue) 디자인 가이드
+     보고서 발간용 · 격식 있는 대학 공식 문서 테마
+     오프라인 self-contained (인라인 CSS/SVG만)
+     ============================================================ */
+
+  :root{
+    /* --- 주색: 로얄블루 (명명된 테마색 / CI 교체 슬롯) --- */
+    --rb-deep:   #10265C;   /* Royal Blue Deep   — 표지·헤더 밴드·제목 */
+    --rb-mid:    #1D3F87;   /* Royal Blue Mid    — 부제·강조 텍스트 */
+    --rb-bright: #2E5AA8;   /* Royal Blue Bright — 링크·경계·아이콘 */
+    /* --- 강조: 골드 --- */
+    --gold:      #C2A14D;   /* Gold      — 괘선·구분·엠블럼 */
+    --gold-deep: #A8842F;   /* Gold Deep — 강조 텍스트(대형만) */
+    /* --- 중립/표면 --- */
+    --bg:        #FFFFFF;
+    --tint:      #EEF2FB;   /* 블루 틴트 밴드/표면 */
+    --tint-2:    #F6F8FD;   /* 더 옅은 틴트 */
+    --ink:       #16203A;   /* 본문 텍스트 */
+    --ink-soft:  #4A5677;   /* 보조 텍스트 */
+    --hair:      #D6DEEC;   /* 헤어라인 */
+    --hair-blue: #C3D0E8;
+    /* 시맨틱(희소) */
+    --ok:   #2E7D57;
+    --warn: #B7791F;
+    --err:  #B4432E;
+
+    --serif: "Noto Serif KR","Nanum Myeongjo","AppleMyungjo",serif;
+    --sans:  "Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    --mono:  "SF Mono","JetBrains Mono","D2Coding",ui-monospace,monospace;
+
+    --page: 900px;
+    --r-sm: 2px;
+    --r-md: 4px;
+    --r-lg: 6px;   /* 정형 각: 2~6px */
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      linear-gradient(180deg,#F3F6FC 0%, #EAF0FA 100%) fixed;
+    font-size:16.5px;
+    line-height:1.65;
+    letter-spacing:-0.003em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* 페이지 컨테이너 — A4 문서 느낌 */
+  .doc{
+    max-width:var(--page);
+    margin:32px auto 64px;
+    background:var(--bg);
+    border:1px solid var(--hair);
+    border-top:3px solid var(--rb-deep);
+    box-shadow:0 8px 40px rgba(16,38,92,0.10);
+  }
+  .pad{ padding:0 64px; }
+  @media (max-width:720px){ .pad{ padding:0 28px; } .doc{ margin:12px; } }
+
+  h1,h2,h3,h4{ font-family:var(--serif); color:var(--rb-deep); font-weight:700; letter-spacing:-0.01em; line-height:1.28; }
+
+  /* ============ 섹션 헤더 (번호 밴드) ============ */
+  .sec{ padding-top:52px; }
+  .sec-head{ display:flex; align-items:baseline; gap:14px; margin:0 0 6px; }
+  .sec-num{
+    font-family:var(--serif); font-weight:700; font-size:15px;
+    color:#fff; background:var(--rb-deep);
+    min-width:34px; height:34px; padding:0 8px;
+    display:inline-flex; align-items:center; justify-content:center;
+    border-radius:var(--r-sm);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+    align-self:center;
+    letter-spacing:0;
+  }
+  .sec-head h2{ margin:0; font-size:26px; }
+  .sec-head .en{ font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--rb-bright); }
+  /* 골드 괘선 (섹션 구분) */
+  .rule-gold{ height:2px; background:var(--gold); margin:14px 0 22px; position:relative; }
+  .rule-gold::after{ content:""; position:absolute; left:0; top:0; width:64px; height:2px; background:var(--rb-deep); }
+
+  p{ margin:0 0 14px; }
+  .lead{ font-size:17.5px; color:var(--ink); }
+  .muted{ color:var(--ink-soft); }
+  strong{ color:var(--rb-mid); font-weight:700; }
+  code,.mono{ font-family:var(--mono); font-size:.86em; }
+  .hex{ font-family:var(--mono); font-size:.84em; letter-spacing:.02em; }
+
+  /* ================= 0. 표지 밴드 ================= */
+  .cover{
+    background:
+      radial-gradient(120% 90% at 82% -10%, #21407e 0%, rgba(33,64,126,0) 55%),
+      linear-gradient(160deg, #10265C 0%, #16305f 55%, #0d2050 100%);
+    color:#fff; position:relative; overflow:hidden;
+    padding:52px 64px 44px;
+    border-bottom:3px solid var(--gold);
+  }
+  @media (max-width:720px){ .cover{ padding:40px 28px 34px; } }
+  /* 골드 상단 이중 괘선 */
+  .cover::before{
+    content:""; position:absolute; left:0; right:0; top:0; height:6px;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold) 30%,#e0c877 50%,var(--gold) 70%,var(--gold-deep));
+  }
+  /* 은은한 워터마크 격자(공문 문양) */
+  .cover .watermark{
+    position:absolute; right:-40px; top:-30px; width:320px; height:320px;
+    opacity:.10; pointer-events:none;
+  }
+  .cover-kicker{
+    font-family:var(--sans); font-weight:600; font-size:12px;
+    letter-spacing:.24em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:20px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .cover-kicker::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--gold),transparent); max-width:220px; }
+
+  .emblem-row{ display:flex; align-items:center; gap:18px; margin-bottom:26px; }
+  .emblem{
+    width:64px; height:64px; flex:none;
+    border:2px solid var(--gold); border-radius:var(--r-md);
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.04);
+  }
+  .emblem svg{ width:40px; height:40px; }
+  .emblem-cap{ font-size:11px; letter-spacing:.08em; color:#b9c6e4; font-family:var(--sans); }
+  .emblem-cap b{ color:#fff; font-weight:600; display:block; font-size:13.5px; margin-bottom:2px; letter-spacing:.02em; }
+
+  .cover h1{
+    color:#fff; font-size:44px; line-height:1.18; margin:0 0 6px; letter-spacing:-0.02em;
+  }
+  .cover .en-title{ font-family:var(--serif); font-style:italic; color:var(--gold); font-size:20px; font-weight:400; margin-bottom:18px; letter-spacing:.01em; }
+  .cover .philosophy{
+    font-family:var(--serif); font-size:17px; line-height:1.7; color:#dbe4f6;
+    max-width:600px; padding-left:16px; border-left:2px solid var(--gold); margin-bottom:30px;
+  }
+
+  /* 표지 팔레트 스와치 행 */
+  .cover-swatches{ display:flex; flex-wrap:wrap; gap:10px; }
+  .cs{
+    display:flex; flex-direction:column; gap:5px; min-width:78px;
+  }
+  .cs .chip{ height:34px; border-radius:var(--r-sm); box-shadow:inset 0 0 0 1px rgba(255,255,255,.14); }
+  .cs .nm{ font-size:10px; color:#c3cfe8; letter-spacing:.02em; font-family:var(--sans); }
+  .cs .hx{ font-family:var(--mono); font-size:10.5px; color:#fff; }
+
+  .doc-label{
+    margin-top:30px; padding-top:16px; border-top:1px solid rgba(194,161,77,.4);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap;
+    font-family:var(--sans); font-size:12.5px; color:#c3cfe8; letter-spacing:.02em;
+  }
+  .doc-label b{ color:#fff; font-weight:600; }
+  .seal{
+    font-family:var(--serif); font-weight:700; color:var(--gold);
+    border:1.5px solid var(--gold); border-radius:var(--r-sm);
+    padding:6px 12px; font-size:13px; letter-spacing:.14em;
+  }
+
+  /* ================= 공통 카드/박스 ================= */
+  .card{
+    border:1px solid var(--hair); border-radius:var(--r-md); background:#fff;
+    padding:22px 24px;
+  }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:720px){ .grid2,.grid3{ grid-template-columns:1fr; } }
+
+  /* 원칙 카드 */
+  .principle{ border:1px solid var(--hair); border-top:3px solid var(--rb-deep); border-radius:var(--r-md); padding:20px 22px; background:#fff; }
+  .principle .no{ font-family:var(--serif); font-size:13px; color:var(--gold-deep); font-weight:700; letter-spacing:.1em; }
+  .principle h4{ margin:6px 0 8px; font-size:18px; }
+  .principle p{ margin:0; font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+
+  /* ================= 표 (블루 헤더 줄무늬) ================= */
+  table.tbl{ width:100%; border-collapse:collapse; font-size:14px; margin:6px 0 8px; }
+  table.tbl thead th{
+    background:var(--rb-deep); color:#fff; font-family:var(--sans); font-weight:600;
+    text-align:left; padding:11px 14px; font-size:12.5px; letter-spacing:.03em;
+    border-right:1px solid rgba(255,255,255,.12);
+  }
+  table.tbl thead th:last-child{ border-right:none; }
+  table.tbl thead tr{ border-bottom:2px solid var(--gold); }
+  table.tbl td{ padding:10px 14px; border-bottom:1px solid var(--hair); vertical-align:top; }
+  table.tbl tbody tr:nth-child(even){ background:var(--tint-2); }
+  table.tbl tbody tr:hover{ background:var(--tint); }
+  table.tbl td.num{ font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; }
+  .tbl-cap{ font-size:12px; color:var(--ink-soft); margin:2px 0 20px; }
+
+  /* ================= 색상 시스템 ================= */
+  .swatch-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin:8px 0 6px; }
+  .sw{ border:1px solid var(--hair); border-radius:var(--r-md); overflow:hidden; background:#fff; }
+  .sw .band{ height:66px; position:relative; }
+  .sw .meta{ padding:8px 11px 10px; }
+  .sw .role{ font-size:11px; color:var(--ink-soft); letter-spacing:.02em; }
+  .sw .name{ font-family:var(--serif); font-weight:700; font-size:14px; color:var(--rb-deep); margin:1px 0 3px; }
+  .sw .hx{ font-family:var(--mono); font-size:11.5px; color:var(--ink); }
+
+  .ratio-bar{ display:flex; height:44px; border-radius:var(--r-md); overflow:hidden; border:1px solid var(--hair); margin:6px 0 6px; font-family:var(--sans); }
+  .ratio-bar > div{ display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; letter-spacing:.02em; }
+
+  /* 대비 예시 */
+  .contrast-row{ display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:12px; }
+  .ce{ border-radius:var(--r-md); padding:14px 16px; font-size:14px; border:1px solid var(--hair); }
+  .ce .ratio{ font-family:var(--mono); font-size:11.5px; opacity:.9; display:block; margin-top:4px; }
+  .badge{ display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:var(--r-sm); letter-spacing:.04em; }
+
+  /* CI 교체 슬롯 주석 박스 */
+  .ci-note{
+    border:1.5px dashed var(--gold); border-radius:var(--r-md);
+    background:linear-gradient(180deg,#fdfbf4,#faf6ea);
+    padding:18px 22px; margin:18px 0 4px; position:relative;
+  }
+  .ci-note .tag{
+    position:absolute; top:-11px; left:18px; background:var(--gold-deep); color:#fff;
+    font-size:11px; font-weight:700; letter-spacing:.08em; padding:2px 10px; border-radius:var(--r-sm);
+    font-family:var(--sans);
+  }
+  .ci-note h4{ margin:6px 0 8px; font-size:16px; color:var(--gold-deep); }
+  .ci-note p{ margin:0 0 6px; font-size:14px; color:var(--ink); }
+  .ci-note .slot{ font-family:var(--mono); font-size:12.5px; background:#fff; border:1px solid #e6dcc0; border-radius:var(--r-sm); padding:2px 8px; }
+
+  /* ================= 타이포 위계 샘플 ================= */
+  .type-sample{ border:1px solid var(--hair); border-radius:var(--r-md); padding:26px 28px; background:#fff; }
+  .type-sample .row{ padding:11px 0; border-bottom:1px dotted var(--hair); display:flex; align-items:baseline; gap:20px; }
+  .type-sample .row:last-child{ border-bottom:none; }
+  .type-sample .lab{ flex:none; width:118px; font-family:var(--mono); font-size:11px; color:var(--ink-soft); padding-top:6px; }
+  .ts-h1{ font-family:var(--serif); font-weight:700; color:var(--rb-deep); font-size:38px; line-height:1.2; letter-spacing:-0.02em; }
+  .ts-h2{ font-family:var(--serif); font-weight:700; color:var(--rb-deep); font-size:28px; }
+  .ts-h3{ font-family:var(--serif); font-weight:700; color:var(--rb-mid); font-size:21px; }
+  .ts-h4{ font-family:var(--serif); font-weight:700; color:var(--rb-mid); font-size:17px; }
+  .ts-body{ font-family:var(--sans); font-size:16px; color:var(--ink); line-height:1.65; }
+  .ts-small{ font-family:var(--sans); font-size:13px; color:var(--ink-soft); }
+
+  /* ================= 그리드/여백 시각화 ================= */
+  .a4-demo{ display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap; }
+  .a4{ width:210px; height:297px; background:#fff; border:1px solid var(--hair); position:relative; flex:none; box-shadow:0 3px 14px rgba(16,38,92,.08); }
+  .a4 .margin{ position:absolute; inset:24px 20px 26px 24px; border:1px dashed var(--rb-bright); }
+  .a4 .band-top{ position:absolute; left:0; right:0; top:0; height:34px; background:var(--rb-deep); border-bottom:2px solid var(--gold); }
+  .a4 .cols{ position:absolute; inset:44px 20px 40px 24px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .a4 .cols span{ background:var(--tint); border-radius:1px; }
+  .a4 .foot{ position:absolute; left:24px; right:20px; bottom:14px; height:8px; border-top:1px solid var(--gold); }
+
+  /* ================= 배경/표면 예시 ================= */
+  .surface-band{
+    background:linear-gradient(160deg,#10265C,#1a3468); color:#fff;
+    border-radius:var(--r-md); padding:26px 28px; position:relative; overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .surface-band h4{ color:#fff; margin:0 0 6px; }
+  .surface-band p{ color:#cdd8ee; margin:0; font-size:14px; }
+  .surface-band .gold-mark{ position:absolute; right:22px; top:22px; width:44px; height:44px; border:1.5px solid var(--gold); border-radius:var(--r-sm); display:flex;align-items:center;justify-content:center; }
+
+  .surface-tint{ background:var(--tint); border:1px solid var(--hair-blue); border-left:4px solid var(--rb-deep); border-radius:var(--r-md); padding:20px 24px; }
+  .surface-tint h4{ margin:0 0 6px; font-size:16px; }
+  .surface-tint p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  .gold-hr{ height:0; border:none; border-top:2px solid var(--gold); position:relative; margin:20px 0; }
+  .gold-hr::before{ content:"❖"; position:absolute; left:50%; top:-13px; transform:translateX(-50%); background:#fff; color:var(--gold); padding:0 12px; font-size:15px; }
+
+  /* ================= 컴포넌트 라이브 ================= */
+  .btn{ font-family:var(--sans); font-weight:600; font-size:14px; border-radius:var(--r-sm); padding:10px 22px; cursor:default; display:inline-flex; align-items:center; gap:8px; letter-spacing:.01em; border:1.5px solid transparent; }
+  .btn-primary{ background:var(--rb-deep); color:#fff; box-shadow:0 2px 6px rgba(16,38,92,.25); }
+  .btn-gold{ background:var(--gold); color:#3a2f10; }
+  .btn-ghost{ background:#fff; color:var(--rb-deep); border-color:var(--rb-deep); }
+  .btn-row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+  .callout{ border-radius:var(--r-md); padding:16px 20px; font-size:14.5px; display:flex; gap:14px; align-items:flex-start; }
+  .callout .ic{ flex:none; width:24px; height:24px; border-radius:var(--r-sm); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px; margin-top:1px; }
+  .callout.info{ background:var(--tint); border:1px solid var(--hair-blue); }
+  .callout.info .ic{ background:var(--rb-bright); }
+  .callout.note{ background:#faf6ea; border:1px solid #e6dcc0; }
+  .callout.note .ic{ background:var(--gold-deep); }
+  .callout h4{ margin:0 0 3px; font-size:15px; }
+  .callout p{ margin:0; color:var(--ink-soft); font-size:13.5px; }
+
+  blockquote.quote{
+    margin:0; font-family:var(--serif); font-size:19px; line-height:1.6; color:var(--rb-deep);
+    padding:18px 26px; border-left:3px solid var(--gold); background:var(--tint-2); border-radius:0 var(--r-md) var(--r-md) 0;
+  }
+  blockquote.quote cite{ display:block; font-family:var(--sans); font-style:normal; font-size:13px; color:var(--ink-soft); margin-top:10px; letter-spacing:.02em; }
+
+  /* 머리/꼬리말 예시 */
+  .hf-demo{ border:1px solid var(--hair); border-radius:var(--r-md); overflow:hidden; }
+  .hf-header{ background:var(--rb-deep); color:#fff; padding:9px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold); font-size:12px; font-family:var(--sans); letter-spacing:.03em; }
+  .hf-header .l{ display:flex; align-items:center; gap:10px; }
+  .hf-header .dot{ width:16px; height:16px; border:1px solid var(--gold); border-radius:2px; }
+  .hf-body{ padding:22px 22px; color:var(--ink-soft); font-size:13px; min-height:60px; background:#fff; }
+  .hf-footer{ background:var(--tint); color:var(--ink-soft); padding:8px 18px; display:flex; justify-content:space-between; font-size:11.5px; border-top:1px solid var(--hair-blue); font-family:var(--mono); }
+
+  /* ================= 적용 예시 미니 목업 ================= */
+  .mock{ border:1px solid var(--hair); border-radius:var(--r-md); overflow:hidden; box-shadow:0 6px 24px rgba(16,38,92,.1); }
+  .mock-band{ background:linear-gradient(160deg,#10265C,#16305f); color:#fff; padding:30px 34px 24px; border-bottom:3px solid var(--gold); position:relative; }
+  .mock-band .k{ font-size:11px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:10px; font-family:var(--sans); }
+  .mock-band h3{ color:#fff; font-size:27px; margin:0 0 4px; }
+  .mock-band .sub{ font-family:var(--serif); color:#c9d4ec; font-size:14px; font-style:italic; }
+  .mock-band .em{ position:absolute; right:30px; top:26px; width:46px; height:46px; border:1.5px solid var(--gold); border-radius:var(--r-sm); display:flex; align-items:center; justify-content:center; }
+  .mock-body{ padding:26px 34px 30px; background:#fff; }
+  .mock-body h4{ font-size:17px; margin:0 0 8px; padding-left:12px; border-left:3px solid var(--gold); }
+  .mock-body p{ font-size:14px; color:var(--ink); }
+
+  /* Do / Don't */
+  .dd{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:720px){ .dd{ grid-template-columns:1fr; } }
+  .dd-col{ border:1px solid var(--hair); border-radius:var(--r-md); overflow:hidden; }
+  .dd-head{ padding:11px 18px; font-family:var(--sans); font-weight:700; font-size:14px; color:#fff; display:flex; align-items:center; gap:9px; letter-spacing:.03em; }
+  .dd-do .dd-head{ background:var(--ok); }
+  .dd-dont .dd-head{ background:var(--err); }
+  .dd ul{ margin:0; padding:14px 18px 16px 34px; }
+  .dd li{ margin:0 0 9px; font-size:13.8px; line-height:1.55; color:var(--ink); }
+  .dd li::marker{ color:var(--ink-soft); }
+
+  /* 체크리스트 */
+  .check{ list-style:none; padding:0; margin:6px 0; display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; }
+  @media (max-width:720px){ .check{ grid-template-columns:1fr; } }
+  .check li{ display:flex; gap:11px; align-items:flex-start; font-size:14px; padding:9px 0; border-bottom:1px solid var(--hair); }
+  .check .box{ flex:none; width:19px; height:19px; border:1.5px solid var(--rb-deep); border-radius:var(--r-sm); position:relative; margin-top:2px; }
+  .check .box::after{ content:"✓"; position:absolute; inset:0; color:var(--gold-deep); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+  /* 스펙 요약 표 강조 */
+  .spec-note{ font-size:12.5px; color:var(--ink-soft); margin-top:4px; }
+
+  /* 푸터 */
+  .foot{ margin-top:56px; background:var(--rb-deep); color:#c3cfe8; padding:26px 64px 30px; border-top:3px solid var(--gold); font-size:12.5px; line-height:1.7; }
+  @media (max-width:720px){ .foot{ padding:24px 28px; } }
+  .foot b{ color:#fff; }
+  .foot .seal-line{ display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .foot .seal-line .s{ font-family:var(--serif); color:var(--gold); border:1.5px solid var(--gold); border-radius:var(--r-sm); padding:5px 12px; letter-spacing:.14em; font-size:12px; }
+
+  .spacer{ height:8px; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============================ 0. 표지 밴드 ============================ -->
+  <header class="cover">
+    <!-- 워터마크 문양 (SVG) -->
+    <svg class="watermark" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="none" stroke="#C2A14D" stroke-width="1.2"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#C2A14D" stroke-width="0.7"/>
+      <path d="M50 8 L58 42 L92 42 L64 62 L74 94 L50 74 L26 94 L36 62 L8 42 L42 42 Z" fill="none" stroke="#C2A14D" stroke-width="1"/>
+    </svg>
+
+    <div class="cover-kicker">국민대학교 보고서 발간용 · 디자인 가이드 04</div>
+
+    <div class="emblem-row">
+      <div class="emblem" title="엠블럼 자리(플레이스홀더)">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="#C2A14D" stroke-width="1.6"/>
+          <path d="M24 9 L28.5 21 L41 21 L30.8 28.6 L34.5 40.5 L24 33 L13.5 40.5 L17.2 28.6 L7 21 L19.5 21 Z" fill="#C2A14D" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="emblem-cap">
+        <b>엠블럼 / 교표 자리</b>
+        플레이스홀더 — 공식 CI 엠블럼으로 교체
+      </div>
+    </div>
+
+    <h1>국민대 로얄블루</h1>
+    <div class="en-title">Kookmin Royal Blue — Formal Report Identity</div>
+    <p class="philosophy">
+      딥 로얄블루와 골드가 격을 세운다. 명조 제목의 무게, 정형의 괘선, 절제된 강조.
+      대학의 공식 문서가 지녀야 할 위엄·신뢰·품격을 화면과 지면 모두에서 일관되게 구현한다.
+    </p>
+
+    <div class="cover-swatches">
+      <div class="cs"><div class="chip" style="background:#10265C"></div><span class="nm">Royal Deep</span><span class="hx">#10265C</span></div>
+      <div class="cs"><div class="chip" style="background:#1D3F87"></div><span class="nm">Royal Mid</span><span class="hx">#1D3F87</span></div>
+      <div class="cs"><div class="chip" style="background:#2E5AA8"></div><span class="nm">Royal Bright</span><span class="hx">#2E5AA8</span></div>
+      <div class="cs"><div class="chip" style="background:#C2A14D"></div><span class="nm">Gold</span><span class="hx">#C2A14D</span></div>
+      <div class="cs"><div class="chip" style="background:#A8842F"></div><span class="nm">Gold Deep</span><span class="hx">#A8842F</span></div>
+      <div class="cs"><div class="chip" style="background:#EEF2FB"></div><span class="nm">Tint</span><span class="hx">#EEF2FB</span></div>
+      <div class="cs"><div class="chip" style="background:#16203A"></div><span class="nm">Ink</span><span class="hx">#16203A</span></div>
+    </div>
+
+    <div class="doc-label">
+      <div>
+        문서 유형 <b>대학 공식 보고서 · 발간물 · 공문</b><br>
+        서체 <b>명조 제목 + 산세리프 본문</b> · 강조 <b>로얄블루 + 골드</b>
+      </div>
+      <div class="seal">직 인</div>
+    </div>
+  </header>
+
+  <div class="pad">
+
+    <!-- ==================== 1. 개요 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <div><div class="en">Overview</div><h2>개요 · 언제 쓰나</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <p class="lead">
+        <strong>국민대 로얄블루</strong>는 5종 가이드 중 <strong>가장 격식 있고 공식적인</strong> 테마입니다.
+        딥 로얄블루 표지 밴드와 골드 괘선, 명조 제목이 만드는 위엄으로, 대외에 공표되는 공식 문서의 신뢰를 전달합니다.
+      </p>
+      <div class="grid2">
+        <div class="card">
+          <h4 style="margin:0 0 10px;font-size:16px;">적합한 문서</h4>
+          <p class="muted" style="margin:0;font-size:14px;line-height:1.7;">
+            총장·본부 명의 공식 보고서 · 정책/기획 보고서 · 대외 발간물 · 기념 자료집 · 위원회 회의자료 · 협약/의전 문서 · 연차보고서.
+          </p>
+        </div>
+        <div class="card">
+          <h4 style="margin:0 0 10px;font-size:16px;">피해야 할 곳</h4>
+          <p class="muted" style="margin:0;font-size:14px;line-height:1.7;">
+            캐주얼한 사내 안내, 학생 대상 이벤트 홍보, 실험적·경쾌함이 필요한 제작물. 이 경우 애플/구글/피그마 테마가 더 적합합니다.
+          </p>
+        </div>
+      </div>
+      <div class="callout info" style="margin-top:16px;">
+        <div class="ic">i</div>
+        <div><h4>한 문장 요약</h4><p>“격식과 위엄이 필요할 때, 로얄블루 + 골드 + 명조.”</p></div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. 디자인 원칙 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <div><div class="en">Principles</div><h2>디자인 원칙</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <div class="grid2">
+        <div class="principle"><div class="no">원칙 01</div><h4>위엄 (Dignity)</h4><p>딥 로얄블루 밴드와 명조 제목으로 공식 문서의 무게를 세운다. 장식보다 격을 우선한다.</p></div>
+        <div class="principle"><div class="no">원칙 02</div><h4>절제된 강조 (Restraint)</h4><p>골드는 괘선·구분·엠블럼에만 희소하게(&lt;10%). 강조가 넘치면 격이 떨어진다.</p></div>
+        <div class="principle"><div class="no">원칙 03</div><h4>정형 (Order)</h4><p>2~6px의 정형 각, 일관된 괘선과 그리드. 라운드는 최소화해 공문다운 질서를 유지한다.</p></div>
+        <div class="principle"><div class="no">원칙 04</div><h4>가독과 대비 (Legibility)</h4><p>딥블루 위 흰 텍스트, 흰 바탕 위 잉크색 본문 — WCAG AA를 지키는 명확한 명암.</p></div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. 색상 시스템 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <div><div class="en">Color System</div><h2>색상 시스템</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+
+      <table class="tbl">
+        <thead><tr><th style="width:120px;">Role</th><th>이름</th><th style="width:110px;">HEX</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>Primary</td><td>Royal Blue Deep</td><td class="num">#10265C</td><td>표지·헤더 밴드·제목·직인</td></tr>
+          <tr><td>Primary</td><td>Royal Blue Mid</td><td class="num">#1D3F87</td><td>부제·강조 텍스트·소제목</td></tr>
+          <tr><td>Primary</td><td>Royal Blue Bright</td><td class="num">#2E5AA8</td><td>링크·아이콘·경계 강조</td></tr>
+          <tr><td>Accent</td><td>Gold</td><td class="num">#C2A14D</td><td>괘선·구분선·엠블럼 테두리</td></tr>
+          <tr><td>Accent</td><td>Gold Deep</td><td class="num">#A8842F</td><td>대형 강조 텍스트·배지</td></tr>
+          <tr><td>Surface</td><td>Blue Tint</td><td class="num">#EEF2FB</td><td>틴트 밴드·표면·콜아웃</td></tr>
+          <tr><td>Surface</td><td>Tint Light</td><td class="num">#F6F8FD</td><td>표 줄무늬·옅은 표면</td></tr>
+          <tr><td>Text</td><td>Ink</td><td class="num">#16203A</td><td>본문 텍스트</td></tr>
+          <tr><td>Text</td><td>Ink Soft</td><td class="num">#4A5677</td><td>보조·캡션 텍스트</td></tr>
+          <tr><td>Line</td><td>Hairline</td><td class="num">#D6DEEC</td><td>구분선·표 경계</td></tr>
+        </tbody>
+      </table>
+
+      <!-- 스와치 시각화 -->
+      <div class="swatch-grid">
+        <div class="sw"><div class="band" style="background:#10265C"></div><div class="meta"><div class="role">Primary</div><div class="name">Royal Deep</div><div class="hx">#10265C</div></div></div>
+        <div class="sw"><div class="band" style="background:#1D3F87"></div><div class="meta"><div class="role">Primary</div><div class="name">Royal Mid</div><div class="hx">#1D3F87</div></div></div>
+        <div class="sw"><div class="band" style="background:#2E5AA8"></div><div class="meta"><div class="role">Primary</div><div class="name">Royal Bright</div><div class="hx">#2E5AA8</div></div></div>
+        <div class="sw"><div class="band" style="background:#C2A14D"></div><div class="meta"><div class="role">Accent</div><div class="name">Gold</div><div class="hx">#C2A14D</div></div></div>
+        <div class="sw"><div class="band" style="background:#A8842F"></div><div class="meta"><div class="role">Accent</div><div class="name">Gold Deep</div><div class="hx">#A8842F</div></div></div>
+        <div class="sw"><div class="band" style="background:#EEF2FB"></div><div class="meta"><div class="role">Surface</div><div class="name">Blue Tint</div><div class="hx">#EEF2FB</div></div></div>
+      </div>
+
+      <!-- 60:30:10 -->
+      <h4 style="margin:26px 0 8px;font-size:16px;">사용 비율 · 60 : 30 : 10</h4>
+      <div class="ratio-bar">
+        <div style="flex:60;background:#FFFFFF;color:#16203A;border-right:1px solid #D6DEEC;">60% · 흰 바탕 / 잉크 본문</div>
+        <div style="flex:30;background:#10265C;color:#fff;">30% · 로얄블루 밴드·제목</div>
+        <div style="flex:10;background:#C2A14D;color:#3a2f10;">10% · 골드 강조</div>
+      </div>
+      <p class="spec-note">본문 흰 바탕이 지배하고, 로얄블루는 구조(밴드·제목)에, 골드는 오직 괘선·강조에만 희소하게.</p>
+
+      <!-- WCAG 대비 -->
+      <h4 style="margin:26px 0 10px;font-size:16px;">명도 대비 · WCAG AA 검증</h4>
+      <div class="contrast-row">
+        <div class="ce" style="background:#10265C;color:#fff;">딥블루 위 흰 텍스트<span class="ratio">대비 14.1:1 · <span class="badge" style="background:#2E7D57;color:#fff;">AAA</span></span></div>
+        <div class="ce" style="background:#fff;color:#16203A;">흰 바탕 위 잉크 본문<span class="ratio">대비 14.6:1 · <span class="badge" style="background:#2E7D57;color:#fff;">AAA</span></span></div>
+        <div class="ce" style="background:#EEF2FB;color:#1D3F87;">틴트 위 미드블루<span class="ratio">대비 7.9:1 · <span class="badge" style="background:#2E7D57;color:#fff;">AAA</span></span></div>
+        <div class="ce" style="background:#fff;color:#A8842F;">흰 바탕 위 딥골드(대형만)<span class="ratio">대비 3.4:1 · <span class="badge" style="background:#B7791F;color:#fff;">AA Large</span></span></div>
+      </div>
+      <p class="spec-note">골드(#C2A14D)는 본문 텍스트로 쓰지 않는다 — 대비가 낮아 <em>괘선·대형 강조·배지</em>에만 사용.</p>
+
+      <!-- CI 교체 슬롯 주석 -->
+      <div class="ci-note">
+        <span class="tag">CI 교체 슬롯 · REPLACEABLE</span>
+        <h4>학교 공식 CI 색상으로 교체 가능</h4>
+        <p>
+          본 가이드의 ‘로얄블루’는 <strong>명명된 테마색</strong>이며, 국민대학교의 <strong>공식 CI 색상값을 단정하지 않습니다.</strong>
+          발간 확정 시, 학교 브랜드 매뉴얼의 정규 색상값으로 아래 토큰을 교체하십시오.
+        </p>
+        <p style="margin-top:10px;">
+          교체 대상 토큰 —
+          <span class="slot">--rb-deep</span>
+          <span class="slot">--rb-mid</span>
+          <span class="slot">--rb-bright</span>
+          <span class="slot">--gold</span>
+          <span class="slot">--gold-deep</span>
+          (CSS <code>:root</code> 상단에 주석으로 표시됨)
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== 4. 타이포그래피 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <div><div class="en">Typography</div><h2>타이포그래피</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <p class="muted">제목은 <strong>명조(Serif)</strong>로 격을, 본문은 <strong>산세리프</strong>로 가독을. 타입 스케일은 1.25 비율을 기준으로 정렬합니다.</p>
+
+      <table class="tbl">
+        <thead><tr><th>단계</th><th>서체</th><th style="width:90px;">크기</th><th style="width:80px;">굵기</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>Display / H1</td><td>Noto Serif KR</td><td class="num">38–44px</td><td class="num">700</td><td>표지 제목</td></tr>
+          <tr><td>H2</td><td>Noto Serif KR</td><td class="num">26–28px</td><td class="num">700</td><td>섹션 제목</td></tr>
+          <tr><td>H3</td><td>Noto Serif KR</td><td class="num">21px</td><td class="num">700</td><td>소제목</td></tr>
+          <tr><td>H4</td><td>Noto Serif KR</td><td class="num">17px</td><td class="num">700</td><td>단락 표제</td></tr>
+          <tr><td>Body</td><td>Pretendard</td><td class="num">16–17px</td><td class="num">400</td><td>본문</td></tr>
+          <tr><td>Caption</td><td>Pretendard</td><td class="num">12–13px</td><td class="num">400</td><td>캡션·주석</td></tr>
+          <tr><td>Mono</td><td>SF Mono</td><td class="num">13px</td><td class="num">400</td><td>수치·HEX·토큰</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-cap">서체 스택: 제목 <code>"Noto Serif KR","Nanum Myeongjo",serif</code> · 본문 <code>"Pretendard","Malgun Gothic",sans-serif</code></p>
+
+      <div class="type-sample">
+        <div class="row"><div class="lab">H1 · Display</div><div class="ts-h1">국민대학교 공식 보고서</div></div>
+        <div class="row"><div class="lab">H2 · Section</div><div class="ts-h2">제1장 · 사업 개요</div></div>
+        <div class="row"><div class="lab">H3 · Sub</div><div class="ts-h3">1.1 추진 배경 및 목적</div></div>
+        <div class="row"><div class="lab">H4 · Head</div><div class="ts-h4">가. 세부 추진 사항</div></div>
+        <div class="row"><div class="lab">Body</div><div class="ts-body">본문은 산세리프로 조판하여 장문 가독성을 확보한다. 행간 1.65, 자간은 소폭 음수로 정돈하여 공식 문서다운 안정감을 유지한다.</div></div>
+        <div class="row"><div class="lab">Caption</div><div class="ts-small">표 1. 연도별 추진 실적 (단위: 백만 원) · 자료: 기획처</div></div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. 레이아웃/그리드/여백 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <div><div class="en">Layout &amp; Grid</div><h2>레이아웃 · 그리드 · 여백</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <div class="a4-demo">
+        <div class="a4">
+          <div class="band-top"></div>
+          <div class="margin"></div>
+          <div class="cols"><span></span><span></span></div>
+          <div class="foot"></div>
+        </div>
+        <div style="flex:1;min-width:240px;">
+          <table class="tbl">
+            <thead><tr><th>항목</th><th>사양</th></tr></thead>
+            <tbody>
+              <tr><td>기준 판형</td><td>A4 세로 (210 × 297mm)</td></tr>
+              <tr><td>상 여백</td><td class="num">24mm (헤더 밴드 포함)</td></tr>
+              <tr><td>하 여백</td><td class="num">22mm (꼬리말 포함)</td></tr>
+              <tr><td>좌·우 여백</td><td class="num">22–24mm</td></tr>
+              <tr><td>단 구성</td><td>1단 기본 · 자료는 2단 허용</td></tr>
+              <tr><td>베이스라인</td><td class="num">4px 그리드</td></tr>
+              <tr><td>본문 폭(웹)</td><td class="num">max-width 900px 중앙</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="spec-note">헤더 밴드(로얄블루)와 골드 괘선은 판형 상단 고정 요소. 본문은 여백 안쪽에서 baseline 그리드에 맞춘다.</p>
+    </section>
+
+    <!-- ==================== 6. 배경 / 표면 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <div><div class="en">Background &amp; Surface</div><h2>배경 · 표면 처리</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <p class="muted">흰 본문을 기본으로, <strong>딥 로얄블루 밴드</strong>와 <strong>골드 괘선</strong>이 위계를 만든다. 표면은 정형 각(2~6px)으로 절제한다.</p>
+
+      <div class="grid2" style="margin-top:8px;">
+        <div class="surface-band">
+          <div class="gold-mark">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2 L14.5 9 L22 9 L16 13.5 L18.2 21 L12 16.5 L5.8 21 L8 13.5 L2 9 L9.5 9 Z" fill="#C2A14D"/></svg>
+          </div>
+          <h4>딥 로얄블루 밴드</h4>
+          <p>표지·장 표제·강조 구획에 사용. 하단 골드 3px 괘선으로 마감하여 격을 세운다.</p>
+        </div>
+        <div class="surface-tint">
+          <h4>블루 틴트 표면 (#EEF2FB)</h4>
+          <p>부가 정보·콜아웃·인용의 바탕. 좌측 로얄블루 4px 강조선으로 본문과 구분한다.</p>
+        </div>
+      </div>
+
+      <hr class="gold-hr">
+      <p class="spec-note" style="text-align:center;">골드 장식 괘선 — 장(章) 구분·표지 마감에만 절제 사용</p>
+    </section>
+
+    <!-- ==================== 7. 컴포넌트 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <div><div class="en">Components</div><h2>컴포넌트 라이브</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+
+      <h4 style="font-size:16px;margin:0 0 12px;">버튼 (공문형)</h4>
+      <div class="btn-row" style="margin-bottom:24px;">
+        <span class="btn btn-primary">주 버튼 · 승인</span>
+        <span class="btn btn-gold">골드 강조</span>
+        <span class="btn btn-ghost">보조 · 고스트</span>
+      </div>
+
+      <h4 style="font-size:16px;margin:0 0 12px;">표 (블루 헤더 줄무늬)</h4>
+      <table class="tbl">
+        <thead><tr><th>구분</th><th>2024</th><th>2025</th><th>증감</th></tr></thead>
+        <tbody>
+          <tr><td>예산 집행률</td><td class="num">92.4%</td><td class="num">95.1%</td><td class="num">+2.7%p</td></tr>
+          <tr><td>참여 인원</td><td class="num">1,240</td><td class="num">1,388</td><td class="num">+148</td></tr>
+          <tr><td>만족도</td><td class="num">4.31</td><td class="num">4.52</td><td class="num">+0.21</td></tr>
+        </tbody>
+      </table>
+      <div class="spacer"></div>
+
+      <div class="grid2">
+        <div>
+          <h4 style="font-size:16px;margin:0 0 12px;">콜아웃</h4>
+          <div class="callout info" style="margin-bottom:12px;">
+            <div class="ic">i</div>
+            <div><h4>안내</h4><p>참고 정보·부가 설명은 블루 틴트 콜아웃으로 제시한다.</p></div>
+          </div>
+          <div class="callout note">
+            <div class="ic">!</div>
+            <div><h4>유의</h4><p>주의가 필요한 사항은 골드 틴트 콜아웃으로 구분한다.</p></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:16px;margin:0 0 12px;">인용</h4>
+          <blockquote class="quote">
+            교육의 본질은 사람을 세우는 데 있다.
+            <cite>— 공식 발간물 인용 예시</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 8. 표지/간지/머리·꼬리말 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">08</span>
+        <div><div class="en">Cover &amp; Header/Footer</div><h2>표지 · 간지 · 머리/꼬리말</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <p class="muted">모든 페이지 상단에 <strong>로얄블루 머리말 밴드 + 골드 괘선</strong>, 하단에 부서·페이지 꼬리말을 둔다.</p>
+      <div class="hf-demo">
+        <div class="hf-header">
+          <div class="l"><span class="dot"></span><span>국민대학교 · KOOKMIN UNIVERSITY</span></div>
+          <div>2025 사업 결과보고서</div>
+        </div>
+        <div class="hf-body">— 본문 영역 (머리말/꼬리말 사이). 장(章) 간지에는 로얄블루 전면 밴드 + 장 번호(명조)를 배치. —</div>
+        <div class="hf-footer">
+          <span>기획처 · 교육혁신팀</span>
+          <span>관인 생략 · - 12 -</span>
+        </div>
+      </div>
+      <div class="grid3" style="margin-top:16px;">
+        <div class="card"><h4 style="margin:0 0 6px;font-size:15px;">표지</h4><p class="muted" style="margin:0;font-size:13px;">로얄블루 전면 밴드 + 엠블럼 + 명조 제목 + 골드 상단 괘선 + 직인 라벨.</p></div>
+        <div class="card"><h4 style="margin:0 0 6px;font-size:15px;">간지</h4><p class="muted" style="margin:0;font-size:13px;">장 번호(명조 대형) + 장 제목 + 골드 괘선. 여백 위주로 위엄 있게.</p></div>
+        <div class="card"><h4 style="margin:0 0 6px;font-size:15px;">머리/꼬리말</h4><p class="muted" style="margin:0;font-size:13px;">머리: 기관명·문서명. 꼬리: 부서명·페이지. 관인/직인 표기 위치 지정.</p></div>
+      </div>
+    </section>
+
+    <!-- ==================== 9. 문서 적용 예시 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">09</span>
+        <div><div class="en">Applied Example</div><h2>문서 적용 예시</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <div class="mock">
+        <div class="mock-band">
+          <div class="em">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2 L14.5 9 L22 9 L16 13.5 L18.2 21 L12 16.5 L5.8 21 L8 13.5 L2 9 L9.5 9 Z" fill="#C2A14D"/></svg>
+          </div>
+          <div class="k">2025 직원역량강화 워크숍</div>
+          <h3>워크숍 결과 보고서</h3>
+          <div class="sub">기획처 교육혁신팀 · 2025. 12.</div>
+        </div>
+        <div class="mock-body">
+          <h4>1. 추진 개요</h4>
+          <p>본 워크숍은 생성형 AI 활용 역량 강화를 목표로 3일간 진행되었으며, 총 참여 인원과 산출물은 아래와 같다.</p>
+          <table class="tbl" style="margin-top:8px;">
+            <thead><tr><th>구분</th><th>계획</th><th>실적</th><th>달성률</th></tr></thead>
+            <tbody>
+              <tr><td>참여 인원</td><td class="num">120</td><td class="num">138</td><td class="num">115%</td></tr>
+              <tr><td>산출물(건)</td><td class="num">40</td><td class="num">52</td><td class="num">130%</td></tr>
+            </tbody>
+          </table>
+          <div class="callout note" style="margin-top:14px;">
+            <div class="ic">!</div>
+            <div><h4>후속 조치</h4><p>우수 산출물은 부서 공유용 템플릿으로 정리하여 배포 예정.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 10. Do / Don't ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">10</span>
+        <div><div class="en">Do &amp; Don't</div><h2>권장 · 지양</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <div class="dd">
+        <div class="dd-col dd-do">
+          <div class="dd-head">✓ 권장 (Do)</div>
+          <ul>
+            <li>제목은 명조, 본문은 산세리프로 서체 역할을 분리한다.</li>
+            <li>골드는 괘선·엠블럼·대형 강조에만 희소하게 쓴다.</li>
+            <li>딥블루 밴드 위에는 반드시 흰 텍스트로 대비를 확보한다.</li>
+            <li>각은 2~6px로 정형을 유지한다.</li>
+            <li>발간 전 CI 색상값으로 토큰을 교체한다.</li>
+          </ul>
+        </div>
+        <div class="dd-col dd-dont">
+          <div class="dd-head">✕ 지양 (Don't)</div>
+          <ul>
+            <li>골드를 본문 텍스트 색으로 쓰지 않는다(대비 부족).</li>
+            <li>과도한 라운드·그림자로 캐주얼하게 만들지 않는다.</li>
+            <li>강조색을 여러 곳에 남발하지 않는다(격 저하).</li>
+            <li>제목을 산세리프로 바꿔 명조의 위엄을 잃지 않는다.</li>
+            <li>공식 CI 값을 임의로 단정해 표기하지 않는다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 11. 체크리스트 ==================== -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">11</span>
+        <div><div class="en">Pre-flight Checklist</div><h2>발간 전 체크리스트</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <ul class="check">
+        <li><span class="box"></span>표지 밴드·엠블럼·골드 괘선·직인 라벨 배치 확인</li>
+        <li><span class="box"></span>제목 명조 / 본문 산세리프 서체 적용 확인</li>
+        <li><span class="box"></span>딥블루 위 흰 텍스트 대비 WCAG AA 이상</li>
+        <li><span class="box"></span>골드 강조 비율 10% 이하 유지</li>
+        <li><span class="box"></span>표 헤더 로얄블루 + 골드 하단선 적용</li>
+        <li><span class="box"></span>머리말/꼬리말·페이지·부서명 표기</li>
+        <li><span class="box"></span>각 2~6px 정형 유지 확인</li>
+        <li><span class="box"></span>공식 CI 색상값으로 토큰 교체 완료</li>
+        <li><span class="box"></span>인쇄 시 여백(A4)·괘선 재현 확인</li>
+        <li><span class="box"></span>엠블럼 플레이스홀더를 실제 교표로 교체</li>
+      </ul>
+    </section>
+
+    <!-- 스펙 요약 표 -->
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-num">✦</span>
+        <div><div class="en">Spec Summary</div><h2>명시 스펙 요약 (AI 참조용)</h2></div>
+      </div>
+      <div class="rule-gold"></div>
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td>테마</td><td>국민대 로얄블루 (Royal Blue) — 명명된 테마색 · CI 교체 슬롯</td></tr>
+          <tr><td>주색</td><td class="num">#10265C / #1D3F87 / #2E5AA8</td></tr>
+          <tr><td>강조색</td><td class="num">Gold #C2A14D / Gold Deep #A8842F</td></tr>
+          <tr><td>표면</td><td class="num">bg #FFFFFF · tint #EEF2FB · #F6F8FD</td></tr>
+          <tr><td>텍스트</td><td class="num">ink #16203A · soft #4A5677 · hair #D6DEEC</td></tr>
+          <tr><td>제목 서체</td><td>Noto Serif KR / Nanum Myeongjo (700)</td></tr>
+          <tr><td>본문 서체</td><td>Pretendard / Malgun Gothic (400)</td></tr>
+          <tr><td>타입 스케일</td><td>1.25 비율 · 본문 16–17px · 행간 1.65</td></tr>
+          <tr><td>모서리 각</td><td class="num">2 / 4 / 6px (정형)</td></tr>
+          <tr><td>강조 비율</td><td>60(중립) : 30(블루) : 10(골드)</td></tr>
+          <tr><td>판형</td><td>A4 세로 · 본문 폭(웹) 900px 중앙</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div><!-- /pad -->
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="foot">
+    <div class="seal-line">
+      <span class="s">직 인</span>
+      <b>국민대학교 보고서 발간용 디자인 가이드 · 04 국민대 로얄블루</b>
+    </div>
+    본 가이드는 <b>교육/실습용 예시</b>입니다. 표기된 ‘로얄블루’·‘골드’는 명명된 테마색이며,
+    국민대학교의 <b>공식 CI 색상값을 단정하지 않습니다.</b>
+    실제 발간 시 학교 브랜드 매뉴얼의 정규 색상값·엠블럼으로 <b>교체 슬롯(--rb-deep 등)</b>을 교체하여 사용하십시오.
+  </footer>
+
+</div>
+</body>
+</html>

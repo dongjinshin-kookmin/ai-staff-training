@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>구글 스타일 디자인 가이드 · Material 3</title>
+<style>
+  /* =========================================================
+     구글 스타일 (Google / Material 3) 디자인 가이드
+     국민대학교 보고서 발간용 · self-contained · 오프라인
+     ========================================================= */
+
+  :root{
+    /* ---- Google 4 colors ---- */
+    --g-blue:#4285F4;
+    --g-blue-primary:#1A73E8;   /* 주 강조 */
+    --g-red:#EA4335;
+    --g-yellow:#FBBC04;
+    --g-green:#34A853;
+
+    /* ---- Tonal surfaces (Material 3 톤 서피스) ---- */
+    --surf-blue:#E8F0FE;
+    --surf-red:#FCE8E6;
+    --surf-yellow:#FEF7E0;
+    --surf-green:#E6F4EA;
+
+    /* on-tonal 텍스트 (AA 대비 확보) */
+    --on-surf-blue:#174EA6;
+    --on-surf-red:#B31412;
+    --on-surf-yellow:#7A5900;
+    --on-surf-green:#1E6E33;
+
+    /* ---- Neutrals ---- */
+    --bg:#FFFFFF;
+    --text:#202124;
+    --text-2:#5F6368;
+    --outline:#DADCE0;
+    --surf-neutral:#F1F3F4;
+    --surf-neutral-2:#F8F9FA;
+
+    /* ---- Radius (큰 라운딩) ---- */
+    --r-xs:8px;
+    --r-sm:12px;
+    --r-md:16px;
+    --r-lg:24px;
+    --r-xl:28px;
+    --r-full:999px;
+
+    /* ---- Elevation ---- */
+    --el-1:0 1px 2px rgba(60,64,67,.10), 0 1px 3px 1px rgba(60,64,67,.06);
+    --el-2:0 1px 3px rgba(60,64,67,.12), 0 4px 8px 3px rgba(60,64,67,.08);
+    --el-3:0 4px 8px 3px rgba(60,64,67,.10), 0 1px 3px rgba(60,64,67,.14);
+
+    /* ---- Type scale (1.25 ratio) ---- */
+    --fs-display:3.05rem;   /* 48.8 */
+    --fs-h1:2.44rem;        /* 39   */
+    --fs-h2:1.95rem;        /* 31.2 */
+    --fs-h3:1.56rem;        /* 25   */
+    --fs-h4:1.25rem;        /* 20   */
+    --fs-body:1.0625rem;    /* 17   */
+    --fs-sm:0.9375rem;      /* 15   */
+    --fs-xs:0.8125rem;      /* 13   */
+
+    --font-sans:"Google Sans","Product Sans","Roboto","Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+    --font-mono:"Roboto Mono","SF Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:1.65;
+    letter-spacing:-0.003em;
+  }
+  .page{max-width:940px;margin:0 auto;padding:0 28px 120px;}
+
+  /* ---------- Typography ---------- */
+  h1,h2,h3,h4{font-family:var(--font-sans);color:var(--text);line-height:1.2;letter-spacing:-0.02em;margin:0;}
+  h2.section-title{
+    font-size:var(--fs-h2);font-weight:500;margin:0 0 6px;
+    letter-spacing:-0.025em;
+  }
+  h3{font-size:var(--fs-h3);font-weight:500;margin:0 0 10px;}
+  h4{font-size:var(--fs-h4);font-weight:500;margin:0 0 8px;}
+  p{margin:0 0 16px;}
+  strong{font-weight:600;color:var(--text);}
+  a{color:var(--g-blue-primary);text-decoration:none;}
+
+  .lead{font-size:1.18rem;color:var(--text-2);line-height:1.6;font-weight:400;}
+  .muted{color:var(--text-2);}
+  .mono{font-family:var(--font-mono);font-size:0.82em;}
+
+  /* ---------- Section rhythm ---------- */
+  section{margin-top:76px;scroll-margin-top:24px;}
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+  .sec-num{
+    flex:none;font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;
+    width:44px;height:44px;border-radius:var(--r-full);
+    display:grid;place-items:center;
+    background:var(--surf-blue);color:var(--on-surf-blue);
+  }
+  .sec-head .kicker{font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);font-weight:600;margin:0 0 2px;}
+
+  /* =========================================================
+     0. 표지 / 히어로
+     ========================================================= */
+  .hero{
+    margin:0 -28px 0;
+    padding:66px 44px 52px;
+    background:
+      radial-gradient(1100px 460px at 88% -12%, rgba(66,133,244,.12), transparent 60%),
+      radial-gradient(760px 420px at -8% 118%, rgba(52,168,83,.10), transparent 60%),
+      linear-gradient(180deg,#FFFFFF 0%, #F8FAFF 100%);
+    border-bottom:1px solid var(--outline);
+  }
+  .hero-inner{max-width:884px;margin:0 auto;}
+  .brand-label{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:var(--fs-xs);font-weight:600;letter-spacing:.02em;
+    color:var(--text-2);
+    background:#fff;border:1px solid var(--outline);
+    padding:7px 16px 7px 12px;border-radius:var(--r-full);
+    box-shadow:var(--el-1);
+  }
+  .brand-dots{display:inline-flex;gap:4px;}
+  .brand-dots i{width:9px;height:9px;border-radius:50%;display:block;}
+  .hero h1{
+    font-size:var(--fs-display);font-weight:500;margin:26px 0 6px;
+    letter-spacing:-0.035em;line-height:1.05;
+  }
+  .hero h1 .en{color:var(--g-blue-primary);}
+  .hero .philo{font-size:1.32rem;color:var(--text-2);font-weight:400;max-width:640px;line-height:1.5;margin:0 0 34px;}
+  .hero .philo b{color:var(--text);font-weight:600;}
+
+  /* palette swatch row */
+  .swatch-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;}
+  .swatch{
+    flex:1 1 118px;min-width:112px;border-radius:var(--r-md);overflow:hidden;
+    background:#fff;border:1px solid var(--outline);box-shadow:var(--el-1);
+  }
+  .swatch .cap{height:64px;}
+  .swatch .meta{padding:9px 12px 11px;}
+  .swatch .nm{font-size:var(--fs-xs);font-weight:600;color:var(--text);}
+  .swatch .hex{font-family:var(--font-mono);font-size:11px;color:var(--text-2);letter-spacing:.02em;}
+
+  /* =========================================================
+     Tonal surface bands / cards
+     ========================================================= */
+  .band{
+    margin:0 -28px;padding:44px;border-radius:0;
+  }
+  .band.rounded{margin:0;border-radius:var(--r-xl);padding:34px 38px;}
+  .band-blue{background:var(--surf-blue);}
+  .band-green{background:var(--surf-green);}
+  .band-yellow{background:var(--surf-yellow);}
+  .band-red{background:var(--surf-red);}
+  .band-neutral{background:var(--surf-neutral-2);}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+
+  /* Cards */
+  .card{
+    background:#fff;border:1px solid var(--outline);border-radius:var(--r-lg);
+    padding:24px 26px;box-shadow:var(--el-1);
+  }
+  .card.elev{box-shadow:var(--el-2);border-color:transparent;}
+  .card h4{margin-bottom:6px;}
+  .card p:last-child{margin-bottom:0;}
+
+  .tcard{border-radius:var(--r-lg);padding:22px 24px;border:1px solid transparent;}
+  .tcard .ico{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;margin-bottom:14px;font-weight:600;font-size:1.1rem;}
+  .tcard.blue{background:var(--surf-blue);color:var(--on-surf-blue);}
+  .tcard.red{background:var(--surf-red);color:var(--on-surf-red);}
+  .tcard.yellow{background:var(--surf-yellow);color:var(--on-surf-yellow);}
+  .tcard.green{background:var(--surf-green);color:var(--on-surf-green);}
+  .tcard h4{color:inherit;}
+  .tcard p{color:inherit;opacity:.9;margin-bottom:0;font-size:var(--fs-sm);}
+
+  /* Principle number chip */
+  .pri-n{font-family:var(--font-mono);font-size:1.7rem;font-weight:600;line-height:1;display:block;margin-bottom:6px;opacity:.55;}
+
+  /* =========================================================
+     Chips & Buttons
+     ========================================================= */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:var(--fs-sm);font-weight:500;
+    padding:8px 16px;border-radius:var(--r-full);
+    background:var(--surf-blue);color:var(--on-surf-blue);
+    border:1px solid transparent;
+  }
+  .chip.outline{background:#fff;border-color:var(--outline);color:var(--text);}
+  .chip.red{background:var(--surf-red);color:var(--on-surf-red);}
+  .chip.green{background:var(--surf-green);color:var(--on-surf-green);}
+  .chip.yellow{background:var(--surf-yellow);color:var(--on-surf-yellow);}
+  .chip i.dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:block;}
+
+  .btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-sans);font-size:var(--fs-sm);font-weight:500;
+    padding:12px 24px;border-radius:var(--r-full);
+    border:1px solid transparent;cursor:pointer;line-height:1;
+    transition:box-shadow .15s ease;
+  }
+  .btn-filled{background:var(--g-blue-primary);color:#fff;box-shadow:var(--el-1);}
+  .btn-tonal{background:var(--surf-blue);color:var(--on-surf-blue);}
+  .btn-outline{background:#fff;border-color:var(--outline);color:var(--g-blue-primary);}
+  .btn-text{background:transparent;color:var(--g-blue-primary);padding-left:12px;padding-right:12px;}
+  .btn.fab{border-radius:var(--r-md);background:var(--surf-blue);color:var(--on-surf-blue);box-shadow:var(--el-2);padding:16px;font-size:1.2rem;}
+
+  /* =========================================================
+     Tables (Material data table)
+     ========================================================= */
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:var(--fs-sm);
+    background:#fff;border:1px solid var(--outline);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--el-1);}
+  thead th{
+    background:var(--surf-neutral-2);text-align:left;font-weight:600;color:var(--text);
+    padding:14px 18px;border-bottom:1px solid var(--outline);font-size:var(--fs-sm);
+  }
+  tbody td{padding:13px 18px;border-bottom:1px solid var(--surf-neutral);color:var(--text-2);vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td strong{color:var(--text);}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-mono);font-size:0.82rem;}
+  .hex-cell{font-family:var(--font-mono);font-size:0.8rem;letter-spacing:.02em;}
+  .sw-inline{display:inline-block;width:15px;height:15px;border-radius:5px;vertical-align:-3px;margin-right:8px;border:1px solid rgba(0,0,0,.08);}
+
+  /* =========================================================
+     Callouts
+     ========================================================= */
+  .callout{
+    display:flex;gap:16px;border-radius:var(--r-md);padding:18px 22px;margin:18px 0;
+    background:var(--surf-blue);border:1px solid transparent;
+  }
+  .callout .ic{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.9rem;color:#fff;}
+  .callout p{margin:0;font-size:var(--fs-sm);color:var(--text);line-height:1.55;}
+  .callout .ttl{font-weight:600;display:block;margin-bottom:2px;color:var(--text);}
+  .callout.info{background:var(--surf-blue);} .callout.info .ic{background:var(--g-blue-primary);}
+  .callout.ok{background:var(--surf-green);} .callout.ok .ic{background:var(--g-green);}
+  .callout.warn{background:var(--surf-yellow);} .callout.warn .ic{background:#B8860B;}
+  .callout.err{background:var(--surf-red);} .callout.err .ic{background:var(--g-red);}
+
+  blockquote{
+    margin:20px 0;padding:18px 24px;border-radius:var(--r-md);
+    background:var(--surf-neutral-2);border-left:4px solid var(--g-blue-primary);
+    font-size:1.12rem;color:var(--text);line-height:1.55;font-style:normal;
+  }
+  blockquote cite{display:block;margin-top:10px;font-size:var(--fs-sm);color:var(--text-2);font-style:normal;}
+
+  /* =========================================================
+     Type scale sample
+     ========================================================= */
+  .type-sample > *{margin:0;padding:10px 0;border-bottom:1px dashed var(--outline);}
+  .type-sample > *:last-child{border-bottom:none;}
+  .ts-label{font-family:var(--font-mono);font-size:11px;color:var(--text-2);float:right;font-weight:500;padding-top:1.1em;}
+
+  /* Grid diagram */
+  .grid-demo{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;height:180px;background:var(--surf-neutral-2);border-radius:var(--r-md);padding:16px;border:1px solid var(--outline);}
+  .grid-demo span{background:rgba(66,133,244,.16);border-radius:6px;}
+
+  /* contrast demo */
+  .contrast-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+  .ctile{flex:1 1 150px;border-radius:var(--r-md);padding:16px;font-weight:500;font-size:var(--fs-sm);}
+  .ctile .ratio{font-family:var(--font-mono);font-size:11px;font-weight:600;opacity:.9;display:block;margin-top:6px;}
+
+  /* ratio bar 60/30/10 */
+  .ratio-bar{display:flex;height:46px;border-radius:var(--r-full);overflow:hidden;box-shadow:var(--el-1);margin:6px 0 4px;}
+  .ratio-bar span{display:grid;place-items:center;font-size:var(--fs-xs);font-weight:600;color:#fff;letter-spacing:.02em;}
+
+  /* mockup */
+  .mockup{border:1px solid var(--outline);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--el-2);background:#fff;}
+  .mockup .mk-cover{background:linear-gradient(135deg,#1A73E8,#4285F4);color:#fff;padding:40px 40px 34px;}
+  .mockup .mk-cover .tag{font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600;}
+  .mockup .mk-cover h3{color:#fff;font-size:2rem;margin:12px 0 8px;font-weight:500;letter-spacing:-0.02em;}
+  .mockup .mk-cover .mk-sub{opacity:.9;font-size:var(--fs-sm);}
+  .mockup .mk-body{padding:32px 40px 36px;}
+  .mockup .mk-body h4{color:var(--g-blue-primary);font-size:var(--fs-h4);}
+
+  /* Do / Dont */
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .dd-col{border-radius:var(--r-lg);padding:22px 24px;border:1px solid transparent;}
+  .dd-do{background:var(--surf-green);}
+  .dd-dont{background:var(--surf-red);}
+  .dd-col h4{display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+  .dd-badge{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:.85rem;flex:none;}
+  .dd-do h4{color:var(--on-surf-green);} .dd-do .dd-badge{background:var(--g-green);}
+  .dd-dont h4{color:var(--on-surf-red);} .dd-dont .dd-badge{background:var(--g-red);}
+  .dd-col ul{margin:0;padding:0;list-style:none;}
+  .dd-col li{position:relative;padding:7px 0 7px 22px;font-size:var(--fs-sm);color:var(--text);border-bottom:1px solid rgba(0,0,0,.05);}
+  .dd-col li:last-child{border-bottom:none;}
+  .dd-col li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:8px;border-radius:50%;}
+  .dd-do li::before{background:var(--g-green);} .dd-dont li::before{background:var(--g-red);}
+
+  /* checklist */
+  .checklist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;}
+  .checklist li{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--surf-neutral-2);border-radius:var(--r-sm);font-size:var(--fs-sm);}
+  .checklist .box{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--g-blue-primary);display:grid;place-items:center;color:var(--g-blue-primary);font-size:12px;font-weight:700;margin-top:1px;}
+
+  /* spec table label */
+  .spec-badge{display:inline-block;font-size:var(--fs-xs);font-weight:600;color:var(--on-surf-blue);background:var(--surf-blue);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+
+  /* footer */
+  footer{margin-top:90px;padding:34px 0 0;border-top:1px solid var(--outline);color:var(--text-2);font-size:var(--fs-sm);}
+  footer .ci-note{background:var(--surf-yellow);color:var(--on-surf-yellow);border-radius:var(--r-md);padding:14px 18px;font-size:var(--fs-sm);margin-bottom:18px;display:flex;gap:10px;}
+
+  .divider{height:1px;background:var(--outline);border:none;margin:0;}
+
+  @media (max-width:720px){
+    .grid-2,.grid-3,.grid-4,.dd,.checklist{grid-template-columns:1fr;}
+    .hero{padding:48px 24px 40px;}
+    .hero h1{font-size:2.4rem;}
+    .band{padding:32px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 0. HERO / 표지 ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="brand-label">
+      <span class="brand-dots">
+        <i style="background:#4285F4"></i><i style="background:#EA4335"></i><i style="background:#FBBC04"></i><i style="background:#34A853"></i>
+      </span>
+      국민대학교 보고서 발간용 디자인 가이드 · 03
+    </span>
+
+    <h1>구글 스타일<br><span class="en">Google · Material&nbsp;3</span></h1>
+    <p class="philo">톤 서피스와 엘리베이션으로 <b>친근하고 명료하게</b>. 큰 라운딩과 구글 4색으로 정보를 부드럽게 감싸는, 5종 중 가장 컬러풀하고 둥근 스타일.</p>
+
+    <div class="swatch-row">
+      <div class="swatch"><div class="cap" style="background:#1A73E8"></div><div class="meta"><div class="nm">Primary</div><div class="hex">#1A73E8</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#4285F4"></div><div class="meta"><div class="nm">Blue</div><div class="hex">#4285F4</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#EA4335"></div><div class="meta"><div class="nm">Red</div><div class="hex">#EA4335</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#FBBC04"></div><div class="meta"><div class="nm">Yellow</div><div class="hex">#FBBC04</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#34A853"></div><div class="meta"><div class="nm">Green</div><div class="hex">#34A853</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#E8F0FE"></div><div class="meta"><div class="nm">Tonal Surf</div><div class="hex">#E8F0FE</div></div></div>
+      <div class="swatch"><div class="cap" style="background:#202124"></div><div class="meta"><div class="nm">Text</div><div class="hex">#202124</div></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- ============ 1. 개요 ============ -->
+  <section id="overview">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <div><p class="kicker">Overview</p><h2 class="section-title">개요 · 언제 쓰나</h2></div>
+    </div>
+    <p class="lead">Material 3는 구글의 오픈 디자인 시스템입니다. 흰 배경 위에 <strong>은은한 톤 컬러 서피스</strong>를 얹어 정보를 그룹으로 묶고, 부드러운 그림자(엘리베이션)와 큰 라운딩으로 화면을 친근하게 만듭니다. 딱딱한 표 대신 카드와 칩으로 읽는 부담을 낮춥니다.</p>
+    <div class="grid-3" style="margin-top:26px">
+      <div class="tcard blue"><div class="ico" style="background:#fff;color:#1A73E8">A</div><h4>적합한 문서</h4><p>워크숍·교육 자료, 온보딩 안내, 신규 제도 소개처럼 친근함이 중요한 문서.</p></div>
+      <div class="tcard green"><div class="ico" style="background:#fff;color:#34A853">B</div><h4>강점</h4><p>색으로 정보를 분류·안내. 여러 항목을 카드로 병렬 배치할 때 특히 명료.</p></div>
+      <div class="tcard yellow"><div class="ico" style="background:#fff;color:#B8860B">C</div><h4>주의</h4><p>격식 높은 공문·의전 문서에는 과할 수 있음 → 로얄블루/그린 권장.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 2. 디자인 원칙 ============ -->
+  <section id="principles">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <div><p class="kicker">Principles</p><h2 class="section-title">디자인 원칙</h2></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><span class="pri-n" style="color:var(--g-blue-primary)">01</span><h4>톤 서피스로 구조화</h4><p class="muted">배경은 흰색, 정보 그룹은 옅은 톤 컬러 밴드·카드로 감싼다. 색이 곧 구획이다.</p></div>
+      <div class="card"><span class="pri-n" style="color:var(--g-red)">02</span><h4>엘리베이션으로 위계</h4><p class="muted">중요한 요소일수록 부드러운 그림자를 더해 앞으로 띄운다. 선이 아닌 깊이로 구분.</p></div>
+      <div class="card"><span class="pri-n" style="color:var(--g-yellow)">03</span><h4>큰 라운딩 = 친근함</h4><p class="muted">카드 16~28px, 버튼·칩은 완전 알약형. 모서리를 둥글려 접근성 있는 인상을.</p></div>
+      <div class="card"><span class="pri-n" style="color:var(--g-green)">04</span><h4>4색은 의미로만</h4><p class="muted">블루·레드·옐로·그린은 상태·분류에 절제해 사용. 장식용 남발 금지.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. 색상 시스템 ============ -->
+  <section id="color">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <div><p class="kicker">Color System</p><h2 class="section-title">색상 시스템</h2></div>
+    </div>
+    <span class="spec-badge">SPEC · 명시 팔레트</span>
+
+    <table>
+      <thead><tr><th>Role</th><th>이름</th><th>HEX</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sw-inline" style="background:#1A73E8"></span><strong>Primary</strong></td><td>Blue Primary</td><td class="hex-cell">#1A73E8</td><td>주 강조·주요 버튼·링크</td></tr>
+        <tr><td><span class="sw-inline" style="background:#4285F4"></span>Blue</td><td>Google Blue</td><td class="hex-cell">#4285F4</td><td>강조·정보 계열</td></tr>
+        <tr><td><span class="sw-inline" style="background:#EA4335"></span>Red</td><td>Google Red</td><td class="hex-cell">#EA4335</td><td>경고·오류·삭제</td></tr>
+        <tr><td><span class="sw-inline" style="background:#FBBC04"></span>Yellow</td><td>Google Yellow</td><td class="hex-cell">#FBBC04</td><td>주의·하이라이트</td></tr>
+        <tr><td><span class="sw-inline" style="background:#34A853"></span>Green</td><td>Google Green</td><td class="hex-cell">#34A853</td><td>성공·완료·긍정</td></tr>
+        <tr><td><span class="sw-inline" style="background:#202124"></span>Text</td><td>Ink</td><td class="hex-cell">#202124</td><td>본문 텍스트</td></tr>
+        <tr><td><span class="sw-inline" style="background:#5F6368"></span>Text 2</td><td>Secondary</td><td class="hex-cell">#5F6368</td><td>보조 텍스트·캡션</td></tr>
+        <tr><td><span class="sw-inline" style="background:#DADCE0"></span>Outline</td><td>Outline</td><td class="hex-cell">#DADCE0</td><td>경계선·구분선</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:34px 0 12px">톤 서피스 (Tonal Surface)</h4>
+    <p class="muted" style="margin-bottom:16px;font-size:var(--fs-sm)">정보 그룹을 감싸는 옅은 컬러 배경. 각 서피스에는 대비를 확보한 전용 텍스트 색(on-surface)을 짝지어 사용합니다.</p>
+    <div class="grid-4">
+      <div class="tcard blue"><h4 style="margin-bottom:8px">Surface Blue</h4><p class="mono" style="opacity:1">#E8F0FE<br>on #174EA6</p></div>
+      <div class="tcard red"><h4 style="margin-bottom:8px">Surface Red</h4><p class="mono" style="opacity:1">#FCE8E6<br>on #B31412</p></div>
+      <div class="tcard yellow"><h4 style="margin-bottom:8px">Surface Yellow</h4><p class="mono" style="opacity:1">#FEF7E0<br>on #7A5900</p></div>
+      <div class="tcard green"><h4 style="margin-bottom:8px">Surface Green</h4><p class="mono" style="opacity:1">#E6F4EA<br>on #1E6E33</p></div>
+    </div>
+
+    <h4 style="margin:34px 0 10px">사용 비율 60 : 30 : 10</h4>
+    <div class="ratio-bar">
+      <span style="flex:60;background:#FFFFFF;color:#5F6368;box-shadow:inset 0 0 0 1px #DADCE0">60% · 흰 배경</span>
+      <span style="flex:30;background:#E8F0FE;color:#174EA6">30% · 톤 서피스</span>
+      <span style="flex:10;background:#1A73E8">10% · 강조</span>
+    </div>
+    <p class="muted" style="font-size:var(--fs-xs);margin-top:4px">흰 배경이 지배하고, 톤 서피스로 구획하며, 강한 컬러는 10% 미만으로 희소하게.</p>
+
+    <h4 style="margin:32px 0 8px">WCAG 대비 검증</h4>
+    <div class="contrast-row">
+      <div class="ctile" style="background:#1A73E8;color:#fff">흰 텍스트 / Primary<span class="ratio">4.7:1 · AA ✓</span></div>
+      <div class="ctile" style="background:#E8F0FE;color:#174EA6">on-blue / Surface<span class="ratio">7.1:1 · AAA ✓</span></div>
+      <div class="ctile" style="background:#FFFFFF;color:#202124;box-shadow:inset 0 0 0 1px #DADCE0">Ink / White<span class="ratio">15.8:1 · AAA ✓</span></div>
+      <div class="ctile" style="background:#FEF7E0;color:#7A5900">on-yellow / Surface<span class="ratio">6.2:1 · AA ✓</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 4. 타이포그래피 ============ -->
+  <section id="type">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <div><p class="kicker">Typography</p><h2 class="section-title">타이포그래피</h2></div>
+    </div>
+    <p class="muted">시그니처 서체는 <strong>Google Sans / Roboto</strong>. 오프라인 환경에서는 <span class="mono">"Google Sans","Roboto","Noto Sans KR",system-ui</span> 스택으로 폴백합니다. 제목은 Medium(500), 본문은 Regular(400)로 무게 대비를 만듭니다.</p>
+
+    <table style="margin-top:20px">
+      <thead><tr><th>단계</th><th class="num">크기</th><th class="num">굵기</th><th>용도</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Display</strong></td><td class="num">48.8px</td><td class="num">500</td><td>표지 대제목</td></tr>
+        <tr><td>H1</td><td class="num">39px</td><td class="num">500</td><td>장 제목</td></tr>
+        <tr><td>H2</td><td class="num">31.2px</td><td class="num">500</td><td>절 제목</td></tr>
+        <tr><td>H3</td><td class="num">25px</td><td class="num">500</td><td>소제목</td></tr>
+        <tr><td>H4</td><td class="num">20px</td><td class="num">500</td><td>항목 제목</td></tr>
+        <tr><td>Body</td><td class="num">17px</td><td class="num">400</td><td>본문</td></tr>
+        <tr><td>Caption</td><td class="num">13px</td><td class="num">500</td><td>캡션·라벨</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:var(--fs-xs);margin-top:8px">타입 스케일 비율 1.25 · 본문 행간 1.65 · 제목 음수 자간 −0.02~−0.035em</p>
+
+    <div class="card" style="margin-top:22px;border-radius:var(--r-lg)">
+      <div class="type-sample">
+        <div style="font-size:var(--fs-display);font-weight:500;letter-spacing:-0.035em;line-height:1.1"><span class="ts-label">Display 48.8</span>친근한 데이터</div>
+        <div style="font-size:var(--fs-h2);font-weight:500;letter-spacing:-0.025em"><span class="ts-label">H2 31.2</span>절 제목은 미디엄</div>
+        <div style="font-size:var(--fs-h4);font-weight:500"><span class="ts-label">H4 20</span>항목 제목 스타일</div>
+        <div style="font-size:var(--fs-body);color:var(--text-2)"><span class="ts-label">Body 17</span>본문은 Roboto 계열 400 무게에 넉넉한 1.65 행간으로 편안하게 읽힙니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. 레이아웃 / 그리드 ============ -->
+  <section id="layout">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <div><p class="kicker">Layout &amp; Grid</p><h2 class="section-title">레이아웃 · 그리드 · 여백</h2></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h4>A4 여백 (mm)</h4>
+        <table style="box-shadow:none;border:none;margin-top:6px">
+          <tbody>
+            <tr><td>상단</td><td class="num">25</td><td>하단</td><td class="num">25</td></tr>
+            <tr><td>좌</td><td class="num">22</td><td>우</td><td class="num">22</td></tr>
+            <tr><td>단 간격</td><td class="num">8</td><td>베이스라인</td><td class="num">8pt</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:var(--fs-xs);margin:12px 0 0">본문 콘텐츠 폭 940px 중앙 정렬. 8pt 기반 스페이싱 그리드.</p>
+      </div>
+      <div class="card">
+        <h4>12 컬럼 그리드</h4>
+        <div class="grid-demo" style="height:150px;margin-top:8px">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. 배경 / 표면 ============ -->
+  <section id="surface">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <div><p class="kicker">Background &amp; Surface</p><h2 class="section-title">배경 · 표면 처리</h2></div>
+    </div>
+    <p class="muted">Material 3의 핵심. 흰 배경 위에 <strong>톤 서피스 밴드</strong>를 풀블리드 또는 라운드 카드로 얹어 섹션을 구획합니다. 아래는 실제 톤 밴드 예시입니다.</p>
+  </section>
+
+  <div class="band band-blue rounded" style="margin-top:20px">
+    <span class="chip" style="background:#fff">Surface · Blue</span>
+    <h3 style="margin:14px 0 6px;color:var(--on-surf-blue)">정보 · 안내 밴드</h3>
+    <p style="margin:0;color:var(--on-surf-blue);opacity:.85">중립적 정보나 개요를 감쌀 때. 흰 배경과 가장 자연스럽게 어울리는 기본 톤 서피스입니다.</p>
+  </div>
+  <div class="grid-2" style="margin-top:18px">
+    <div class="band band-green rounded">
+      <span class="chip green" style="background:#fff">Surface · Green</span>
+      <h4 style="margin:12px 0 4px;color:var(--on-surf-green)">긍정 · 완료</h4>
+      <p style="margin:0;color:var(--on-surf-green);opacity:.85;font-size:var(--fs-sm)">성과·달성·성공 지표를 담는 밴드.</p>
+    </div>
+    <div class="band band-yellow rounded">
+      <span class="chip yellow" style="background:#fff">Surface · Yellow</span>
+      <h4 style="margin:12px 0 4px;color:var(--on-surf-yellow)">주의 · 하이라이트</h4>
+      <p style="margin:0;color:var(--on-surf-yellow);opacity:.85;font-size:var(--fs-sm)">유의사항·강조 포인트를 담는 밴드.</p>
+    </div>
+  </div>
+
+  <!-- ============ 7. 컴포넌트 ============ -->
+  <section id="components">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <div><p class="kicker">Components</p><h2 class="section-title">컴포넌트 라이브러리</h2></div>
+    </div>
+
+    <h4>버튼</h4>
+    <div class="btn-row" style="margin-bottom:12px">
+      <button class="btn btn-filled">Filled · 주요</button>
+      <button class="btn btn-tonal">Filled Tonal</button>
+      <button class="btn btn-outline">Outlined</button>
+      <button class="btn btn-text">Text</button>
+      <button class="btn fab" title="FAB">＋</button>
+    </div>
+
+    <h4 style="margin-top:28px">칩 (Chips)</h4>
+    <div class="chips" style="margin-bottom:6px">
+      <span class="chip"><i class="dot"></i>정보</span>
+      <span class="chip green"><i class="dot"></i>완료</span>
+      <span class="chip yellow"><i class="dot"></i>진행중</span>
+      <span class="chip red"><i class="dot"></i>지연</span>
+      <span class="chip outline">필터</span>
+      <span class="chip outline">태그</span>
+    </div>
+
+    <h4 style="margin-top:28px">카드</h4>
+    <div class="grid-3">
+      <div class="card"><h4>기본 카드</h4><p class="muted" style="margin:0;font-size:var(--fs-sm)">아웃라인 + 옅은 엘리베이션.</p></div>
+      <div class="card elev"><h4>Elevated</h4><p class="muted" style="margin:0;font-size:var(--fs-sm)">그림자를 키워 앞으로.</p></div>
+      <div class="tcard blue"><h4>Tonal</h4><p>톤 서피스 채움 카드.</p></div>
+    </div>
+
+    <h4 style="margin-top:28px">표</h4>
+    <table>
+      <thead><tr><th>항목</th><th class="num">2025</th><th class="num">2026</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td><strong>참가자 수</strong></td><td class="num">1,240</td><td class="num">1,680</td><td><span class="chip green" style="padding:4px 12px"><i class="dot"></i>증가</span></td></tr>
+        <tr><td>완료율</td><td class="num">82%</td><td class="num">94%</td><td><span class="chip green" style="padding:4px 12px"><i class="dot"></i>양호</span></td></tr>
+        <tr><td>대기 건수</td><td class="num">36</td><td class="num">58</td><td><span class="chip yellow" style="padding:4px 12px"><i class="dot"></i>주의</span></td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin-top:28px">콜아웃 &amp; 인용</h4>
+    <div class="callout info"><span class="ic">i</span><p><span class="ttl">참고</span>톤 서피스 콜아웃은 정보 유형에 따라 색을 바꿔 씁니다.</p></div>
+    <div class="callout ok"><span class="ic">✓</span><p><span class="ttl">권장</span>본문 대비를 항상 4.5:1 이상으로 유지하세요.</p></div>
+    <div class="callout warn"><span class="ic">!</span><p><span class="ttl">주의</span>강조색은 전체의 10% 미만으로 희소하게 사용합니다.</p></div>
+    <div class="callout err"><span class="ic">×</span><p><span class="ttl">금지</span>순수 #000 텍스트·순수 회색 배경은 피합니다.</p></div>
+
+    <blockquote>좋은 문서는 색으로 소리치지 않고, 색으로 안내한다.<cite>— Material Design 원칙 재해석</cite></blockquote>
+  </section>
+
+  <!-- ============ 8. 표지 / 간지 ============ -->
+  <section id="cover">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <div><p class="kicker">Cover &amp; Header</p><h2 class="section-title">표지 · 간지 · 머리말/꼬리말</h2></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><h4>표지</h4><p class="muted" style="font-size:var(--fs-sm)">Primary 블루 그라디언트 풀블리드 + 흰 제목. 하단에 4색 도트 라인으로 브랜드 시그니처.</p></div>
+      <div class="card"><h4>간지</h4><p class="muted" style="font-size:var(--fs-sm)">해당 장의 대표 톤 서피스로 채운 라운드 밴드 + 큰 번호 칩.</p></div>
+      <div class="card"><h4>머리말</h4><p class="muted" style="font-size:var(--fs-sm)">문서명(좌) · 장 제목(우), Caption 13px / Text2. 헤어라인 구분.</p></div>
+      <div class="card"><h4>꼬리말</h4><p class="muted" style="font-size:var(--fs-sm)">페이지 번호(우) 알약 칩 + 발간 기관(좌). 8pt 여백 기준.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 9. 적용 예시 (목업) ============ -->
+  <section id="example">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <div><p class="kicker">In Practice</p><h2 class="section-title">문서 적용 예시</h2></div>
+    </div>
+    <p class="muted" style="margin-bottom:18px">이 스타일로 렌더한 '워크숍 결과보고서' 미니 목업.</p>
+    <div class="mockup">
+      <div class="mk-cover">
+        <span class="tag">Workshop Report · 2026</span>
+        <h3>FactChat 실무 활용 워크숍 결과보고서</h3>
+        <div class="mk-sub">국민대학교 · 교육혁신팀 · 2026.07</div>
+      </div>
+      <div class="mk-body">
+        <h4>1. 개요</h4>
+        <p class="muted" style="font-size:var(--fs-sm)">본 워크숍은 생성형 AI 도구의 실무 적용 역량 강화를 목표로 2일간 진행되었으며, 총 3개 세션으로 구성되었다.</p>
+        <div class="callout ok" style="margin:16px 0"><span class="ic">✓</span><p><span class="ttl">핵심 성과</span>참가자 만족도 4.6/5.0, 실습 완료율 94% 달성.</p></div>
+        <table style="margin-top:6px">
+          <thead><tr><th>세션</th><th>주제</th><th class="num">만족도</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>AI 프롬프트 기초</td><td class="num">4.5</td></tr>
+            <tr><td>2</td><td>보고서 자동화 실습</td><td class="num">4.7</td></tr>
+            <tr><td>3</td><td>데이터 시각화</td><td class="num">4.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. Do / Don't ============ -->
+  <section id="dodont">
+    <div class="sec-head">
+      <span class="sec-num">10</span>
+      <div><p class="kicker">Guidelines</p><h2 class="section-title">Do / Don't</h2></div>
+    </div>
+    <div class="dd">
+      <div class="dd-col dd-do">
+        <h4><span class="dd-badge">✓</span>Do</h4>
+        <ul>
+          <li>흰 배경 + 톤 서피스로 구획한다</li>
+          <li>큰 라운딩(16~28px)을 일관 적용한다</li>
+          <li>4색은 상태·분류의 의미로만 쓴다</li>
+          <li>엘리베이션으로 위계를 만든다</li>
+          <li>on-surface 텍스트로 대비를 확보한다</li>
+        </ul>
+      </div>
+      <div class="dd-col dd-dont">
+        <h4><span class="dd-badge">×</span>Don't</h4>
+        <ul>
+          <li>4색을 장식으로 남발한다</li>
+          <li>순수 #000·순수 회색을 쓴다</li>
+          <li>각진 모서리와 둥근 모서리를 섞는다</li>
+          <li>진한 원색 배경에 톤 텍스트를 얹는다</li>
+          <li>그림자를 과하게 짙게 준다</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. 체크리스트 ============ -->
+  <section id="checklist">
+    <div class="sec-head">
+      <span class="sec-num">11</span>
+      <div><p class="kicker">Pre-flight</p><h2 class="section-title">발간 전 체크리스트</h2></div>
+    </div>
+    <ul class="checklist">
+      <li><span class="box">✓</span>배경 흰색 + 톤 서피스로 섹션 구획했는가</li>
+      <li><span class="box">✓</span>라운딩이 16~28px로 일관적인가</li>
+      <li><span class="box">✓</span>강조색 비중이 10% 미만인가</li>
+      <li><span class="box">✓</span>본문 대비 4.5:1(AA) 충족하는가</li>
+      <li><span class="box">✓</span>표 숫자에 tabular-nums 적용했는가</li>
+      <li><span class="box">✓</span>타입 스케일(1.25)이 일관적인가</li>
+      <li><span class="box">✓</span>엘리베이션이 위계에 맞게 쓰였는가</li>
+      <li><span class="box">✓</span>4색이 의미(상태·분류)로만 쓰였는가</li>
+    </ul>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <p>본 가이드는 <strong>교육/실습용 예시</strong>입니다. Material Design은 Google의 오픈 디자인 시스템이며, 본 문서는 그 원칙을 국민대 보고서 발간 맥락에 재해석한 참조용 스타일 가이드입니다.</p>
+    <p style="margin-top:14px">국민대학교 보고서 발간용 디자인 가이드 · 03 구글 스타일(Material 3) · <span class="mono">v1.0</span></p>
+  </footer>
+
+</main>
+</body>
+</html>

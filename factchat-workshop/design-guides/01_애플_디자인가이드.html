@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>애플 스타일 · 국민대학교 보고서 발간용 디자인 가이드</title>
+<style>
+  /* ============================================================
+     01 APPLE STYLE — 국민대학교 보고서 발간용 디자인 가이드
+     Self-contained. No external fonts/CDN/images.
+     Tokens: bg #FFFFFF / band #F5F5F7 / text #1D1D1F / secondary #6E6E73
+             hairline #D2D2D7 / accent blue #0071E3
+     ============================================================ */
+
+  :root {
+    --bg: #FFFFFF;
+    --band: #F5F5F7;
+    --band-2: #FBFBFD;
+    --text: #1D1D1F;
+    --text-2: #6E6E73;
+    --text-3: #86868B;
+    --hairline: #D2D2D7;
+    --accent: #0071E3;
+    --accent-hover: #0077ED;
+    --accent-press: #006EDB;
+    --success: #34C759;
+    --warn: #FF9F0A;
+    --danger: #FF3B30;
+
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "Helvetica Neue", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+    /* Type scale — 1.25 ratio */
+    --t-hero: 72px;
+    --t-h1: 48px;
+    --t-h2: 32px;
+    --t-h3: 24px;
+    --t-h4: 20px;
+    --t-lead: 21px;
+    --t-body: 17px;
+    --t-small: 14px;
+    --t-caption: 12px;
+
+    --maxw: 900px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  body {
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    font-size: var(--t-body);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+
+  /* Full-bleed band */
+  .band { background: var(--band); }
+  .band-white { background: var(--bg); }
+
+  /* ---------- Typography helpers ---------- */
+  h1, h2, h3, h4 { letter-spacing: -0.022em; line-height: 1.08; color: var(--text); }
+  .eyebrow {
+    font-size: var(--t-caption);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .lead { font-size: var(--t-lead); line-height: 1.5; color: var(--text-2); font-weight: 400; }
+  p { color: var(--text); }
+  p + p { margin-top: 14px; }
+  a { color: var(--accent); text-decoration: none; }
+
+  /* ---------- Section rhythm ---------- */
+  section { padding: 96px 0; }
+  section.tight { padding: 72px 0; }
+  .sec-num {
+    font-size: var(--t-caption);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 10px;
+  }
+  .sec-title { font-size: var(--t-h2); font-weight: 600; margin-bottom: 12px; }
+  .sec-intro { font-size: var(--t-lead); color: var(--text-2); max-width: 640px; margin-bottom: 44px; line-height: 1.5; }
+
+  /* ============================================================
+     0. HERO / COVER
+     ============================================================ */
+  .hero {
+    background: var(--bg);
+    padding: 120px 0 96px;
+    text-align: center;
+    position: relative;
+  }
+  .hero .brandline {
+    font-size: var(--t-small);
+    font-weight: 500;
+    color: var(--text-2);
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+  .hero .apple-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-size: var(--t-hero);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+  .hero .en {
+    display: block;
+    font-size: var(--t-h3);
+    font-weight: 500;
+    color: var(--text-3);
+    letter-spacing: 0.01em;
+    margin-top: 14px;
+  }
+  .hero .philosophy {
+    font-size: var(--t-lead);
+    color: var(--text-2);
+    max-width: 560px;
+    margin: 32px auto 0;
+    line-height: 1.5;
+  }
+
+  /* Palette swatch row */
+  .swatch-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 56px;
+  }
+  .swatch {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .swatch .chip {
+    width: 84px; height: 84px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  .swatch .chip.bordered { border: 1px solid var(--hairline); }
+  .swatch .hex {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .swatch .nm { font-size: 11px; color: var(--text-3); }
+
+  /* ============================================================
+     GENERIC BLOCKS
+     ============================================================ */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .card.soft {
+    background: var(--band);
+    border: none;
+  }
+  .card h4 { font-size: var(--t-h4); font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: var(--t-small); color: var(--text-2); line-height: 1.55; }
+
+  /* Principles */
+  .principle .no {
+    font-size: var(--t-h3);
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 14px;
+  }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--t-small);
+    font-variant-numeric: tabular-nums;
+  }
+  thead th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-2);
+    font-size: var(--t-caption);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  tbody td {
+    padding: 14px;
+    border-bottom: 1px solid var(--hairline);
+    color: var(--text);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
+  .cell-chip {
+    display: inline-block; width: 18px; height: 18px; border-radius: 5px;
+    vertical-align: middle; margin-right: 10px; border: 1px solid rgba(0,0,0,.08);
+  }
+
+  /* Color swatch grid (big) */
+  .colorgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .colorcell {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    background: var(--bg);
+  }
+  .colorcell .fill { height: 96px; }
+  .colorcell .meta { padding: 12px 14px; }
+  .colorcell .meta .role { font-size: var(--t-caption); color: var(--text-3); }
+  .colorcell .meta .h { font-family: var(--mono); font-size: 12px; color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* 60-30-10 bar */
+  .ratio-bar { display: flex; height: 56px; border-radius: var(--radius-sm); overflow: hidden; margin: 8px 0 12px; }
+  .ratio-bar > div { display: flex; align-items: center; justify-content: center; font-size: var(--t-caption); font-weight: 600; }
+  .ratio-legend { display: flex; gap: 24px; font-size: var(--t-small); color: var(--text-2); }
+  .ratio-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+
+  /* Contrast chips */
+  .contrast-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .contrast {
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    border: 1px solid var(--hairline);
+  }
+  .contrast .big { font-size: var(--t-h4); font-weight: 600; }
+  .contrast .ratio { font-size: var(--t-caption); font-weight: 600; margin-top: 8px; opacity: .85; }
+  .pass { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 20px; margin-left: 6px; }
+
+  /* Type scale samples */
+  .typescale-row {
+    display: grid; grid-template-columns: 130px 1fr; gap: 20px; align-items: baseline;
+    padding: 18px 0; border-bottom: 1px solid var(--hairline);
+  }
+  .typescale-row:last-child { border-bottom: none; }
+  .typescale-row .spec { font-family: var(--mono); font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .ts-hero { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .ts-h1 { font-size: var(--t-h1); font-weight: 600; letter-spacing: -0.025em; }
+  .ts-h2 { font-size: var(--t-h2); font-weight: 600; letter-spacing: -0.022em; }
+  .ts-h3 { font-size: var(--t-h3); font-weight: 600; }
+  .ts-body { font-size: var(--t-body); font-weight: 400; }
+  .ts-caption { font-size: var(--t-caption); font-weight: 400; color: var(--text-2); }
+
+  .weight-samples { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 8px; }
+  .weight-samples div span { display: block; font-size: 34px; letter-spacing: -0.02em; }
+  .weight-samples div small { font-size: 12px; color: var(--text-3); font-family: var(--mono); }
+  .w400 { font-weight: 400; } .w500 { font-weight: 500; } .w600 { font-weight: 600; } .w700 { font-weight: 700; }
+
+  /* Grid / spacing diagram */
+  .grid-diagram {
+    background: var(--bg);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    position: relative;
+  }
+  .grid-cols { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; height: 200px; }
+  .grid-cols > div { background: rgba(0,113,227,.08); border-radius: 3px; }
+  .margin-note { display: flex; justify-content: space-between; font-size: var(--t-caption); color: var(--text-3); margin-top: 12px; font-family: var(--mono); }
+
+  .spec-list { list-style: none; }
+  .spec-list li { display: flex; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--hairline); font-size: var(--t-small); }
+  .spec-list li:last-child { border-bottom: none; }
+  .spec-list li .k { color: var(--text-2); }
+  .spec-list li .v { font-family: var(--mono); color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* Surface examples */
+  .surface-demo { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--hairline); }
+  .surface-white { background: #fff; padding: 40px; }
+  .surface-band { background: var(--band); padding: 40px; }
+  .surface-tint { background: linear-gradient(180deg, #F5F9FF, #EDF4FF); padding: 40px; }
+  .surface-demo .label { font-size: var(--t-caption); color: var(--text-3); font-family: var(--mono); margin-bottom: 12px; }
+  .surface-demo h4 { font-size: var(--t-h4); font-weight: 600; }
+  .surface-demo p { font-size: var(--t-small); color: var(--text-2); margin-top: 6px; }
+
+  /* ---------- Components ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font);
+    font-size: var(--t-body);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: 980px;
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--accent); border-color: var(--accent); }
+  .btn-plain { background: transparent; color: var(--accent); padding: 12px 8px; }
+  .btn-sm { font-size: var(--t-small); padding: 8px 18px; }
+
+  .callout {
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+    background: var(--band);
+    border-left: 3px solid var(--accent);
+    font-size: var(--t-small);
+    color: var(--text);
+  }
+  .callout .ttl { font-weight: 600; margin-bottom: 4px; display: block; }
+
+  blockquote {
+    font-size: var(--t-h4);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    padding-left: 24px;
+    border-left: 2px solid var(--hairline);
+  }
+  blockquote cite { display: block; font-size: var(--t-small); color: var(--text-3); font-style: normal; margin-top: 12px; }
+
+  .comp-block { padding: 28px 0; border-bottom: 1px solid var(--hairline); }
+  .comp-block:last-child { border-bottom: none; }
+  .comp-label { font-size: var(--t-caption); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); margin-bottom: 18px; }
+  .comp-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+
+  /* Cover/divider mockups */
+  .mock { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--hairline); }
+  .mock-cover { background: #fff; aspect-ratio: 3/4; padding: 40px 34px; display: flex; flex-direction: column; }
+  .mock-cover .top { font-size: 11px; color: var(--text-3); letter-spacing: .04em; }
+  .mock-cover .mid { margin-top: auto; }
+  .mock-cover .mid .k { font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+  .mock-cover .mid h5 { font-size: 30px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; margin-top: 12px; }
+  .mock-cover .mid .sub { font-size: 13px; color: var(--text-2); margin-top: 10px; }
+  .mock-cover .foot { font-size: 11px; color: var(--text-3); margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--hairline); }
+
+  .mock-divider { background: var(--band); aspect-ratio: 3/4; padding: 40px 34px; display: flex; flex-direction: column; justify-content: center; }
+  .mock-divider .k { font-size: 40px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .mock-divider h5 { font-size: 22px; font-weight: 600; margin-top: 8px; }
+
+  .headfoot-demo { border: 1px solid var(--hairline); border-radius: var(--radius-md); overflow: hidden; }
+  .hf-head, .hf-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); padding: 12px 20px; }
+  .hf-head { border-bottom: 1px solid var(--hairline); }
+  .hf-foot { border-top: 1px solid var(--hairline); }
+  .hf-body { padding: 30px 20px; font-size: 13px; color: var(--text-3); text-align: center; }
+
+  /* Applied mockup — report */
+  .report-mock {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    background: #fff;
+  }
+  .report-mock .r-eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .report-mock h3 { font-size: 34px; font-weight: 700; letter-spacing: -0.025em; margin-top: 12px; }
+  .report-mock .r-sub { font-size: var(--t-body); color: var(--text-2); margin-top: 12px; }
+  .report-mock h4 { font-size: var(--t-h4); font-weight: 600; margin: 32px 0 12px; }
+  .report-mock p { font-size: var(--t-small); color: var(--text); line-height: 1.6; }
+
+  /* Do / Don't */
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .dd { border-radius: var(--radius-md); padding: 24px; border: 1px solid var(--hairline); }
+  .dd .head { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: var(--t-small); margin-bottom: 14px; }
+  .dd.do .head { color: var(--success); }
+  .dd.dont .head { color: var(--danger); }
+  .dd ul { list-style: none; }
+  .dd li { font-size: var(--t-small); color: var(--text-2); padding: 8px 0; padding-left: 22px; position: relative; line-height: 1.5; }
+  .dd.do li::before { content: "✓"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+  .dd.dont li::before { content: "✕"; position: absolute; left: 0; color: var(--danger); font-weight: 700; }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--hairline); font-size: var(--t-small); }
+  .checklist li:last-child { border-bottom: none; }
+  .checkbox { flex: 0 0 20px; width: 20px; height: 20px; border: 1.5px solid var(--hairline); border-radius: 6px; margin-top: 1px; }
+
+  /* Footer */
+  footer { padding: 56px 0 72px; }
+  footer .note { font-size: var(--t-caption); color: var(--text-3); line-height: 1.7; }
+  footer .divider { height: 1px; background: var(--hairline); margin-bottom: 28px; }
+
+  /* Utility */
+  .mt-s { margin-top: 16px; } .mt-m { margin-top: 28px; } .mt-l { margin-top: 44px; }
+  .center { text-align: center; }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 24px; }
+    :root { --t-hero: 48px; --t-h1: 36px; --t-h2: 27px; }
+    .grid-2, .grid-3, .dodont, .contrast-row, .colorgrid { grid-template-columns: 1fr; }
+    .colorgrid { grid-template-columns: 1fr 1fr; }
+    section { padding: 64px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- 0. HERO / COVER                                             -->
+<!-- ============================================================ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="brandline">국민대학교 · 보고서 발간용 디자인 가이드</div>
+    <div class="apple-mark" aria-hidden="true">
+      <svg width="40" height="48" viewBox="0 0 40 48" fill="#1D1D1F" xmlns="http://www.w3.org/2000/svg">
+        <path d="M33.2 25.4c-.06-6.1 4.98-9.02 5.2-9.16-2.84-4.15-7.26-4.72-8.83-4.78-3.76-.38-7.34 2.2-9.25 2.2-1.9 0-4.85-2.14-7.98-2.08-4.1.06-7.88 2.38-9.99 6.05-4.26 7.4-1.09 18.36 3.06 24.37 2.03 2.95 4.45 6.26 7.63 6.14 3.06-.12 4.22-1.98 7.93-1.98 3.7 0 4.75 1.98 7.99 1.92 3.3-.06 5.39-3.01 7.41-5.97 2.33-3.43 3.29-6.75 3.35-6.92-.07-.03-6.43-2.47-6.5-9.79z"/>
+        <path d="M27.1 7.53c1.69-2.05 2.83-4.9 2.52-7.73-2.43.1-5.38 1.62-7.13 3.66-1.57 1.81-2.94 4.71-2.57 7.48 2.71.21 5.48-1.38 7.18-3.41z"/>
+      </svg>
+    </div>
+    <h1>애플 스타일<span class="en">Apple · Human Interface Guidelines</span></h1>
+    <p class="philosophy">여백이 곧 디자인이다. 콘텐츠를 앞세우고, 장식을 덜어내고, 단 하나의 블루로 말한다.</p>
+
+    <div class="swatch-row">
+      <div class="swatch"><div class="chip bordered" style="background:#FFFFFF"></div><span class="hex">#FFFFFF</span><span class="nm">Background</span></div>
+      <div class="swatch"><div class="chip" style="background:#F5F5F7"></div><span class="hex">#F5F5F7</span><span class="nm">Band</span></div>
+      <div class="swatch"><div class="chip" style="background:#1D1D1F"></div><span class="hex">#1D1D1F</span><span class="nm">Text</span></div>
+      <div class="swatch"><div class="chip" style="background:#6E6E73"></div><span class="hex">#6E6E73</span><span class="nm">Secondary</span></div>
+      <div class="swatch"><div class="chip" style="background:#D2D2D7"></div><span class="hex">#D2D2D7</span><span class="nm">Hairline</span></div>
+      <div class="swatch"><div class="chip" style="background:#0071E3"></div><span class="hex">#0071E3</span><span class="nm">Accent</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- 1. 개요 · 언제 쓰나                                          -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">01 — OVERVIEW</div>
+    <h2 class="sec-title">개요 · 언제 쓰나</h2>
+    <p class="sec-intro">애플 스타일은 절제된 여백과 명료한 위계로 콘텐츠 자체를 주인공으로 만드는 방식입니다. 5종 가이드 중 가장 미니멀하고 프리미엄한 톤을 지향합니다.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <h4>성격</h4>
+        <p>Clarity(명료), Deference(콘텐츠 우선), Depth(질서 있는 위계). 차분하고 신뢰감 있는 프리미엄 톤.</p>
+      </div>
+      <div class="card">
+        <h4>적합한 문서</h4>
+        <p>대외 발표 자료, 성과·비전 보고서, 임원 브리핑, 요약 리포트 등 '적게 말하고 강하게 남기는' 문서.</p>
+      </div>
+      <div class="card">
+        <h4>피해야 할 곳</h4>
+        <p>정보 밀도가 매우 높은 통계 대장, 촘촘한 양식 문서에는 여백 손실이 커 부적합.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. 디자인 원칙                                               -->
+<!-- ============================================================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-num">02 — PRINCIPLES</div>
+    <h2 class="sec-title">디자인 원칙</h2>
+    <p class="sec-intro">애플 HIG의 세 기둥에 '강조의 희소성'을 더한 네 가지 원칙으로 문서를 설계합니다.</p>
+
+    <div class="grid-2">
+      <div class="card soft principle">
+        <div class="no">01</div>
+        <h4>여백이 디자인이다</h4>
+        <p>요소 사이 넉넉한 공간이 곧 위계이고 품격입니다. 채우기보다 덜어내고, 한 화면에 하나의 초점만 둡니다.</p>
+      </div>
+      <div class="card soft principle">
+        <div class="no">02</div>
+        <h4>콘텐츠 우선 (Deference)</h4>
+        <p>테두리·그림자·색은 콘텐츠를 방해하지 않을 만큼만. 장식은 물러서고 메시지가 앞섭니다.</p>
+      </div>
+      <div class="card soft principle">
+        <div class="no">03</div>
+        <h4>단 하나의 블루</h4>
+        <p>강조는 오직 <strong style="color:var(--accent)">#0071E3</strong> 하나로. 전체 지면의 10% 미만에만 등장시켜 클릭·핵심을 명확히 합니다.</p>
+      </div>
+      <div class="card soft principle">
+        <div class="no">04</div>
+        <h4>질서 있는 깊이 (Depth)</h4>
+        <p>헤어라인과 아주 옅은 그림자만으로 층을 나눕니다. 강한 테두리·짙은 그림자는 쓰지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. 색상 시스템                                               -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">03 — COLOR</div>
+    <h2 class="sec-title">색상 시스템</h2>
+    <p class="sec-intro">웜 뉴트럴 그레이스케일 위에 단일 블루를 얹습니다. 순수 검정(#000)·순수 회색(#888)은 쓰지 않습니다.</p>
+
+    <!-- Palette table -->
+    <div class="card" style="padding:8px 24px;">
+      <table>
+        <thead>
+          <tr><th style="width:26%">Role</th><th style="width:22%">이름</th><th style="width:22%">HEX</th><th>용도</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="cell-chip" style="background:#FFFFFF;border-color:#D2D2D7"></span>Background</td><td>White</td><td class="mono">#FFFFFF</td><td>기본 지면</td></tr>
+          <tr><td><span class="cell-chip" style="background:#F5F5F7"></span>Surface / Band</td><td>Light Gray</td><td class="mono">#F5F5F7</td><td>풀블리드 밴드·카드 배경</td></tr>
+          <tr><td><span class="cell-chip" style="background:#1D1D1F"></span>Text</td><td>Near Black</td><td class="mono">#1D1D1F</td><td>제목·본문</td></tr>
+          <tr><td><span class="cell-chip" style="background:#6E6E73"></span>Secondary</td><td>Gray</td><td class="mono">#6E6E73</td><td>보조 설명·캡션</td></tr>
+          <tr><td><span class="cell-chip" style="background:#D2D2D7"></span>Hairline</td><td>Divider</td><td class="mono">#D2D2D7</td><td>구분선·테두리</td></tr>
+          <tr><td><span class="cell-chip" style="background:#0071E3"></span>Accent</td><td>Blue</td><td class="mono">#0071E3</td><td>링크·버튼·핵심 강조 (단일)</td></tr>
+          <tr><td><span class="cell-chip" style="background:#34C759"></span>Success</td><td>Green</td><td class="mono">#34C759</td><td>긍정 상태 (희소)</td></tr>
+          <tr><td><span class="cell-chip" style="background:#FF9F0A"></span>Warning</td><td>Orange</td><td class="mono">#FF9F0A</td><td>주의 (희소)</td></tr>
+          <tr><td><span class="cell-chip" style="background:#FF3B30"></span>Danger</td><td>Red</td><td class="mono">#FF3B30</td><td>경고·오류 (희소)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Big swatches -->
+    <div class="colorgrid mt-l">
+      <div class="colorcell"><div class="fill" style="background:#FFFFFF;border-bottom:1px solid #D2D2D7"></div><div class="meta"><div class="role">Background</div><div class="h">#FFFFFF</div></div></div>
+      <div class="colorcell"><div class="fill" style="background:#F5F5F7"></div><div class="meta"><div class="role">Band</div><div class="h">#F5F5F7</div></div></div>
+      <div class="colorcell"><div class="fill" style="background:#1D1D1F"></div><div class="meta"><div class="role">Text</div><div class="h">#1D1D1F</div></div></div>
+      <div class="colorcell"><div class="fill" style="background:#0071E3"></div><div class="meta"><div class="role">Accent Blue</div><div class="h">#0071E3</div></div></div>
+    </div>
+
+    <!-- 60-30-10 -->
+    <h4 style="font-size:var(--t-h4);font-weight:600;margin:52px 0 4px;">사용 비율 · 60 / 30 / 10</h4>
+    <p style="font-size:var(--t-small);color:var(--text-2);margin-bottom:16px;">지면의 대부분은 흰 배경, 표면 밴드로 약 30%, 강조 블루는 10% 미만.</p>
+    <div class="ratio-bar">
+      <div style="flex:60;background:#FFFFFF;color:#6E6E73;border:1px solid #D2D2D7;">60% · White</div>
+      <div style="flex:30;background:#F5F5F7;color:#6E6E73;">30% · Band</div>
+      <div style="flex:10;background:#0071E3;color:#fff;">10% · Blue</div>
+    </div>
+
+    <!-- Contrast -->
+    <h4 style="font-size:var(--t-h4);font-weight:600;margin:52px 0 16px;">대비 · WCAG AA</h4>
+    <div class="contrast-row">
+      <div class="contrast" style="background:#FFFFFF;">
+        <div class="big" style="color:#1D1D1F;">본문 텍스트 Aa 국민대</div>
+        <div class="ratio" style="color:#6E6E73;">#1D1D1F on #FFFFFF · 16.1:1 <span class="pass" style="background:#34C759;color:#fff;">AAA</span></div>
+      </div>
+      <div class="contrast" style="background:#F5F5F7;">
+        <div class="big" style="color:#1D1D1F;">밴드 위 텍스트 Aa</div>
+        <div class="ratio" style="color:#6E6E73;">#1D1D1F on #F5F5F7 · 15.0:1 <span class="pass" style="background:#34C759;color:#fff;">AAA</span></div>
+      </div>
+      <div class="contrast" style="background:#0071E3;">
+        <div class="big" style="color:#FFFFFF;">블루 버튼 텍스트 Aa</div>
+        <div class="ratio" style="color:#DCEBFF;">#FFFFFF on #0071E3 · 4.6:1 <span class="pass" style="background:#fff;color:#0071E3;">AA</span></div>
+      </div>
+      <div class="contrast" style="background:#FFFFFF;">
+        <div class="big" style="color:#6E6E73;">보조 텍스트 Aa</div>
+        <div class="ratio" style="color:#6E6E73;">#6E6E73 on #FFFFFF · 4.6:1 <span class="pass" style="background:#34C759;color:#fff;">AA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. 타이포그래피                                              -->
+<!-- ============================================================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-num">04 — TYPOGRAPHY</div>
+    <h2 class="sec-title">타이포그래피</h2>
+    <p class="sec-intro">San Francisco(시스템 폰트)를 시그니처로, 한글은 Pretendard / Apple SD Gothic Neo. 제목은 음수 자간, 본문은 넉넉한 행간.</p>
+
+    <div class="grid-2" style="align-items:start;">
+      <div class="card">
+        <div class="comp-label">서체 스택</div>
+        <p class="mono" style="font-size:12px;color:var(--text);line-height:1.7;">-apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Pretendard", "Apple SD Gothic Neo", sans-serif</p>
+        <div class="weight-samples">
+          <div><span class="w400">Aa 국민</span><small>Regular · 400</small></div>
+          <div><span class="w500">Aa 국민</span><small>Medium · 500</small></div>
+          <div><span class="w600">Aa 국민</span><small>Semibold · 600</small></div>
+          <div><span class="w700">Aa 국민</span><small>Bold · 700</small></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="comp-label">타입 스케일 (1.25 비율)</div>
+        <ul class="spec-list">
+          <li><span class="k">Hero</span><span class="v">72 / 700 / -3%</span></li>
+          <li><span class="k">H1</span><span class="v">48 / 600 / -2.5%</span></li>
+          <li><span class="k">H2</span><span class="v">32 / 600 / -2.2%</span></li>
+          <li><span class="k">H3</span><span class="v">24 / 600 / -1.5%</span></li>
+          <li><span class="k">Lead</span><span class="v">21 / 400 / 1.5행간</span></li>
+          <li><span class="k">Body</span><span class="v">17 / 400 / 1.6행간</span></li>
+          <li><span class="k">Caption</span><span class="v">12 / 400 / 대문자</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hierarchy sample -->
+    <div class="card mt-m" style="padding:40px;">
+      <div class="comp-label">실제 위계 샘플</div>
+      <div class="typescale-row"><div class="spec">72 · 700</div><div class="ts-hero">여백이 곧 디자인</div></div>
+      <div class="typescale-row"><div class="spec">48 · 600</div><div class="ts-h1">콘텐츠를 앞세운다</div></div>
+      <div class="typescale-row"><div class="spec">32 · 600</div><div class="ts-h2">명료함과 절제의 균형</div></div>
+      <div class="typescale-row"><div class="spec">24 · 600</div><div class="ts-h3">질서 있는 정보 위계</div></div>
+      <div class="typescale-row"><div class="spec">17 · 400</div><div class="ts-body">본문은 17px, 행간 1.6으로 편안하게 읽힙니다. 장식을 덜어내면 문장 자체가 또렷해지고, 넉넉한 여백이 각 단락에 숨 쉴 공간을 줍니다.</div></div>
+      <div class="typescale-row"><div class="spec">12 · UPPER</div><div class="ts-caption">CAPTION · 보조 정보와 라벨</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. 레이아웃 · 그리드 · 여백                                  -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">05 — LAYOUT</div>
+    <h2 class="sec-title">레이아웃 · 그리드 · 여백</h2>
+    <p class="sec-intro">A4 기준 넉넉한 여백과 12단 그리드. 여백을 아끼지 않는 것이 이 스타일의 핵심입니다.</p>
+
+    <div class="grid-2" style="align-items:start;">
+      <div>
+        <div class="grid-diagram">
+          <div class="comp-label">12-Column Grid</div>
+          <div class="grid-cols">
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+          </div>
+          <div class="margin-note"><span>← 25mm margin</span><span>gutter 5mm</span><span>25mm margin →</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="comp-label">A4 규격</div>
+        <ul class="spec-list">
+          <li><span class="k">용지</span><span class="v">210 × 297 mm</span></li>
+          <li><span class="k">상·하 여백</span><span class="v">25 mm</span></li>
+          <li><span class="k">좌·우 여백</span><span class="v">25 mm</span></li>
+          <li><span class="k">단 구성</span><span class="v">12 columns</span></li>
+          <li><span class="k">거터</span><span class="v">5 mm</span></li>
+          <li><span class="k">베이스라인</span><span class="v">8 pt grid</span></li>
+          <li><span class="k">본문 폭</span><span class="v">~ 900 px / 62자</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout mt-m">
+      <span class="ttl">여백 원칙</span>
+      섹션 간 수직 간격은 최소 64px, 프리미엄 문서는 96px 이상. 요소를 채우고 싶은 충동을 참는 것이 애플 스타일입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. 배경 · 표면 처리                                          -->
+<!-- ============================================================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-num">06 — SURFACE</div>
+    <h2 class="sec-title">배경 · 표면 처리</h2>
+    <p class="sec-intro">순백 지면 위에 간헐적 #F5F5F7 풀블리드 밴드를 얹어 리듬을 만듭니다. 텍스처는 쓰지 않고, 층은 헤어라인과 아주 옅은 그림자로만.</p>
+
+    <div class="grid-3">
+      <div class="surface-demo">
+        <div class="surface-white">
+          <div class="label">SURFACE · White</div>
+          <h4>기본 지면</h4>
+          <p>#FFFFFF. 대부분의 본문이 놓이는 순백 표면.</p>
+        </div>
+      </div>
+      <div class="surface-demo">
+        <div class="surface-band">
+          <div class="label">SURFACE · Band</div>
+          <h4>강조 밴드</h4>
+          <p>#F5F5F7. 섹션을 구분하는 풀블리드 회색 밴드.</p>
+        </div>
+      </div>
+      <div class="surface-demo">
+        <div class="surface-tint">
+          <div class="label">SURFACE · Tint (희소)</div>
+          <h4>블루 틴트</h4>
+          <p>핵심 정보 카드에만 아주 옅은 블루 틴트.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3 mt-m">
+      <div class="card" style="border-radius:12px;">
+        <div class="comp-label">Radius</div>
+        <p>카드 12–18px, 버튼 알약형(980px). 모서리는 항상 부드럽게.</p>
+      </div>
+      <div class="card" style="box-shadow:var(--shadow-md);border-color:transparent;">
+        <div class="comp-label">Shadow</div>
+        <p>0 4px 20px rgba(0,0,0,.06). 존재를 느끼되 보이지 않을 만큼.</p>
+      </div>
+      <div class="card">
+        <div class="comp-label">Hairline</div>
+        <p>1px #D2D2D7. 강한 테두리 대신 얇은 선 하나로 층을 나눕니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. 컴포넌트                                                  -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">07 — COMPONENTS</div>
+    <h2 class="sec-title">컴포넌트</h2>
+    <p class="sec-intro">실제 스타일링된 라이브 샘플. 알약형 버튼, 라운드 카드, 헤어라인 표, 절제된 콜아웃.</p>
+
+    <div class="card" style="padding:8px 32px;">
+      <div class="comp-block">
+        <div class="comp-label">Buttons</div>
+        <div class="comp-row">
+          <button class="btn btn-primary">주 버튼</button>
+          <button class="btn btn-ghost">보조 버튼</button>
+          <button class="btn btn-plain">텍스트 버튼 →</button>
+          <button class="btn btn-primary btn-sm">Small</button>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="comp-label">Cards</div>
+        <div class="grid-2">
+          <div class="card" style="box-shadow:var(--shadow-md);border-color:transparent;">
+            <h4>성과 요약</h4>
+            <p>라운드 18px, 옅은 그림자. 카드는 콘텐츠를 담는 조용한 그릇입니다.</p>
+            <button class="btn btn-plain" style="padding-left:0;margin-top:8px;">자세히 →</button>
+          </div>
+          <div class="card soft">
+            <h4>표면 카드</h4>
+            <p>#F5F5F7 배경, 테두리 없음. 배경 밴드 위에서 자연스럽게 떠오릅니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="comp-label">Table (Hairline)</div>
+        <table>
+          <thead><tr><th>구분</th><th>2024</th><th>2025</th><th>증감</th></tr></thead>
+          <tbody>
+            <tr><td>참여 인원</td><td>1,240</td><td>1,580</td><td style="color:var(--success)">+27.4%</td></tr>
+            <tr><td>만족도</td><td>4.2</td><td>4.6</td><td style="color:var(--success)">+0.4</td></tr>
+            <tr><td>운영 예산</td><td>8,400</td><td>8,100</td><td style="color:var(--text-2)">−3.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="comp-block">
+        <div class="comp-label">Callout</div>
+        <div class="callout">
+          <span class="ttl">핵심 요약</span>
+          강조는 왼쪽 3px 블루 라인과 밴드 배경만으로. 색을 남발하지 않아도 시선이 모입니다.
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="comp-label">Quote</div>
+        <blockquote>
+          단순함이란 궁극의 정교함이다. 덜어낼 것이 없을 때 디자인은 완성된다.
+          <cite>— 애플 디자인 철학</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. 표지 · 간지 · 머리말/꼬리말                               -->
+<!-- ============================================================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-num">08 — COVER & FRAME</div>
+    <h2 class="sec-title">표지 · 간지 · 머리말/꼬리말</h2>
+    <p class="sec-intro">표지는 여백으로 압도하고, 간지는 큰 번호로 구간을 나눕니다. 머리·꼬리말은 헤어라인 위 최소 정보만.</p>
+
+    <div class="grid-3" style="align-items:start;">
+      <div class="mock">
+        <div class="mock-cover">
+          <div class="top">국민대학교 · 2025</div>
+          <div class="mid">
+            <div class="k">Annual Report</div>
+            <h5>연간 성과<br>보고서</h5>
+            <div class="sub">교육혁신 · 디지털 전환 · 지역 상생</div>
+          </div>
+          <div class="foot">발간 2025.12 · 기획처</div>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="mock-divider">
+          <div class="k">02</div>
+          <h5>추진 성과</h5>
+        </div>
+      </div>
+      <div class="headfoot-demo">
+        <div class="hf-head"><span>연간 성과 보고서</span><span>국민대학교</span></div>
+        <div class="hf-body">— 본문 영역 —</div>
+        <div class="hf-foot"><span>기획처</span><span>12</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. 문서 적용 예시                                            -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">09 — IN PRACTICE</div>
+    <h2 class="sec-title">문서 적용 예시</h2>
+    <p class="sec-intro">애플 스타일로 렌더된 '워크숍 결과 보고서' 미니 목업입니다.</p>
+
+    <div class="report-mock">
+      <div class="r-eyebrow">Workshop Report · 2025</div>
+      <h3>AI 활용 실무 워크숍<br>결과 보고서</h3>
+      <p class="r-sub">전 부서 대상 생성형 AI 실습 과정 · 참여 만족도 및 성과 정리</p>
+
+      <h4>추진 개요</h4>
+      <p>2025년 하반기 3개월간 전 부서 실무자를 대상으로 생성형 AI 활용 워크숍을 운영했습니다. 총 6회차, 회차당 2시간 실습 중심으로 진행되었으며 실제 업무 산출물 제작을 목표로 했습니다.</p>
+
+      <h4>핵심 성과</h4>
+      <table style="margin-top:4px;">
+        <thead><tr><th>지표</th><th>목표</th><th>실적</th><th>달성률</th></tr></thead>
+        <tbody>
+          <tr><td>참여 인원</td><td>120명</td><td>158명</td><td style="color:var(--success)">132%</td></tr>
+          <tr><td>과정 만족도</td><td>4.0</td><td>4.6</td><td style="color:var(--success)">115%</td></tr>
+          <tr><td>업무 적용률</td><td>60%</td><td>74%</td><td style="color:var(--success)">123%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout" style="margin-top:24px;">
+        <span class="ttl">시사점</span>
+        실습 중심 설계가 높은 업무 적용률로 이어졌습니다. 차기 과정은 부서별 심화 트랙을 신설할 것을 제안합니다.
+      </div>
+
+      <div style="margin-top:28px;">
+        <button class="btn btn-primary btn-sm">전체 보고서 보기</button>
+        <button class="btn btn-plain btn-sm">부록 다운로드 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. Do / Don't                                              -->
+<!-- ============================================================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-num">10 — DO / DON'T</div>
+    <h2 class="sec-title">Do / Don't</h2>
+    <p class="sec-intro">애플 스타일을 지키는 구체적 기준입니다.</p>
+
+    <div class="dodont">
+      <div class="dd do">
+        <div class="head">✓ Do</div>
+        <ul>
+          <li>여백을 아끼지 않는다 — 섹션 간 96px, 한 화면 한 초점</li>
+          <li>강조는 블루 하나로, 지면의 10% 미만에만</li>
+          <li>텍스트는 #1D1D1F, 보조는 #6E6E73 웜 뉴트럴</li>
+          <li>층은 헤어라인과 아주 옅은 그림자로만 표현</li>
+          <li>제목엔 음수 자간, 본문엔 넉넉한 행간</li>
+        </ul>
+      </div>
+      <div class="dd dont">
+        <div class="head">✕ Don't</div>
+        <ul>
+          <li>여러 강조색을 섞지 않는다 — 블루 외 색 남용 금지</li>
+          <li>순수 검정(#000)·순수 회색(#888)을 쓰지 않는다</li>
+          <li>짙은 그림자·두꺼운 테두리로 요소를 가두지 않는다</li>
+          <li>배경에 텍스처·그라데이션·패턴을 넣지 않는다</li>
+          <li>여백을 채우려 요소를 억지로 늘리지 않는다</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 11. 발간 전 체크리스트                                       -->
+<!-- ============================================================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-num">11 — CHECKLIST</div>
+    <h2 class="sec-title">발간 전 체크리스트</h2>
+    <p class="sec-intro">인쇄·배포 전 마지막으로 확인합니다.</p>
+
+    <div class="card" style="padding:12px 32px;">
+      <ul class="checklist">
+        <li><span class="checkbox"></span><span>강조 블루가 전체 지면의 10% 미만인가</span></li>
+        <li><span class="checkbox"></span><span>텍스트가 #1D1D1F / #6E6E73 웜 뉴트럴로 통일됐는가</span></li>
+        <li><span class="checkbox"></span><span>본문 대비가 WCAG AA(4.5:1) 이상인가</span></li>
+        <li><span class="checkbox"></span><span>타입 스케일(1.25)이 일관되게 적용됐는가</span></li>
+        <li><span class="checkbox"></span><span>섹션 간 여백이 충분한가(64px 이상)</span></li>
+        <li><span class="checkbox"></span><span>표는 헤어라인만 사용하고 숫자는 tabular-nums인가</span></li>
+        <li><span class="checkbox"></span><span>그림자·테두리가 과하지 않은가</span></li>
+        <li><span class="checkbox"></span><span>A4 인쇄 시 여백(25mm)이 유지되는가</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                      -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="divider"></div>
+    <p class="note">
+      <strong style="color:var(--text-2)">국민대학교 보고서 발간용 디자인 가이드 · 01 애플 스타일</strong><br>
+      본 가이드는 교육/실습용 예시입니다. 애플, SF Pro, Human Interface Guidelines는 Apple Inc.의 자산이며, 본 문서는 해당 디자인 언어의 원칙을 학습·참고 목적으로 재구성한 것입니다. 실제 발간물에는 기관 정책과 접근성 기준에 맞춰 조정해 사용하십시오.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
